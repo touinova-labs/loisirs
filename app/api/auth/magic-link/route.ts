@@ -16,7 +16,7 @@ export async function POST(req: Request) {
       email: email,
       options: {
         // L'URL où l'utilisateur atterrit après avoir cliqué
-        redirectTo: `https://www.loisirs-prive.fr/`  
+        redirectTo: `https://www.loisirs-prive.fr/`
       }
     });
 
