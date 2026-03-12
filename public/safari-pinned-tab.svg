@@ -1,0 +1,5 @@
+<svg width="512" height="512" viewBox="180 110 320 320" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="340" cy="270" r="150" stroke="black" stroke-width="12" fill="none"/>
+  <text x="385" y="325" text-anchor="middle" font-family="serif" font-size="160" font-weight="900" fill="black">P</text>
+  <text x="310" y="295" text-anchor="middle" font-family="serif" font-size="170" font-weight="900" fill="black" stroke="white" stroke-width="15" paint-order="stroke fill">L</text>
+</svg>

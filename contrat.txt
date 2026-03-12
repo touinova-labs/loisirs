@@ -1,0 +1,78 @@
+Voici un modèle de contrat d'**Apporteur d'Affaires (Mandat de Commercialisation)** structuré spécifiquement pour **LoisirsPrivé**. Il est conçu pour être protecteur pour toi, tout en rassurant l'hôtelier sur sa liberté et son prix.
+
+---
+
+# CONTRAT DE PARTENARIAT ET D'APPORT D'AFFAIRES
+
+### (Mandat de commercialisation non-exclusif)
+
+**ENTRE LES SOUSSIGNÉS :**
+
+**[Ton Entreprise / Nom]**, [Forme juridique], au capital de [Montant] €, dont le siège social est situé au [Ton Adresse], immatriculée au RCS de [Ville] sous le numéro [SIRET].
+Ci-après dénommée « **L’Apporteur** » ou « **LoisirsPrivé** ».
+
+**ET :**
+
+**[Nom de l’Établissement]**, [Forme juridique], au capital de [Montant] €, dont le siège social est situé au [Adresse de l’hôtel], immatriculée au RCS de [Ville] sous le numéro [SIRET].
+Ci-après dénommé « **Le Partenaire** ».
+
+---
+
+### ARTICLE 1 : OBJET DU CONTRAT
+
+Le Partenaire mandate LoisirsPrivé pour présenter et promouvoir ses prestations (nuitées, services annexes) auprès d’une clientèle de membres privés via la plateforme de ventes aux enchères **LoisirsPrivé.fr**.
+
+### ARTICLE 2 : NON-EXCLUSIVITÉ
+
+Le présent contrat est conclu de manière **non-exclusive**. Le Partenaire conserve la liberté totale de commercialiser ses prestations par tout autre canal (direct, OTAs, agences) sans aucune restriction.
+
+### ARTICLE 3 : MODALITÉS DES VENTES (ENCHÈRES)
+
+3.1. **Prix de Réserve :** Pour chaque prestation mise en ligne, le Partenaire fixe un **Prix de Réserve** (prix net vendeur minimum). Si l'enchère n'atteint pas ce prix, aucune vente n'est conclue.
+3.2. **Disponibilité (Allotissement) :** Le Partenaire s'engage à bloquer la disponibilité de la prestation durant toute la durée de l'enchère (période définie d'un commun accord, ex: 24h ou 48h).
+3.3. **Confidentialité de l'offre :** Afin de protéger l'image du Partenaire, son identité exacte n'est révélée au client final qu'après validation du paiement.
+
+### ARTICLE 4 : RÉMUNÉRATION (COMMISSION)
+
+LoisirsPrivé perçoit une commission de **[X]% HT** calculée sur le montant total de la vente réalisée sur la plateforme.
+
+* Si aucune vente n'est réalisée : aucune commission n'est due.
+* Le prix payé par le client inclut la commission de l’Apporteur.
+
+### ARTICLE 5 : FLUX FINANCIERS ET PAIEMENT
+
+5.1. **Encaissement :** LoisirsPrivé encaisse le montant total de la vente auprès du client final via un prestataire de paiement sécurisé (Stripe).
+5.2. **Reversement :** Les fonds dus au Partenaire (Montant de la vente moins la commission) sont reversés au Partenaire selon le calendrier suivant : [Ex: 7 jours après la date de séjour ou fin de mois].
+
+### ARTICLE 6 : ANNULATIONS ET LITIGES
+
+6.1. **Droit de rétractation :** Conformément à l'article L.221-28 du Code de la Consommation, les prestations de services d'hébergement fournies à une date déterminée ne font pas l'objet d'un droit de rétractation. Toute vente validée est ferme et définitive.
+6.2. **Responsabilité :** Le Partenaire est seul responsable de la bonne exécution de la prestation vendue.
+
+### ARTICLE 7 : DURÉE ET RÉSILIATION
+
+Le présent contrat est conclu pour une durée indéterminée. Chaque partie peut y mettre fin à tout moment, sans préavis et sans indemnité, par simple notification écrite (email), sous réserve d'honorer les réservations déjà confirmées.
+
+### ARTICLE 8 : CONFIDENTIALITÉ
+
+Chaque partie s'engage à ne pas divulguer les termes financiers de cet accord ainsi que les données relatives aux clients apportés par LoisirsPrivé, conformément au RGPD.
+
+---
+
+Fait à **[Ville]**, le **[Date du jour]** en deux exemplaires.
+
+**Signature de l’Apporteur (LoisirsPrivé)**
+*(Signature et tampon)*
+
+**Signature du Partenaire (Hôtel)**
+*(Signature et tampon)*
+
+---
+
+### Pourquoi ce contrat est parfait pour toi :
+
+1. **Mandat d'apporteur d'affaires :** Tu n'es pas une agence de voyage physique, tu es une plateforme de mise en relation (plus simple juridiquement).
+2. **Rassurant :** Le terme "Prix de réserve" et "Non-exclusivité" lève 90% des barrières.
+3. **Flexible :** "Résiliation à tout moment par simple email" montre que tu es sûr de ta valeur et que tu ne veux pas les "emprisonner".
+
+**Souhaites-tu que je t'explique comment configurer Stripe Connect pour que le partage de la commission (le split automatique) se fasse sans que tu n'aies à faire de virements manuels ?**

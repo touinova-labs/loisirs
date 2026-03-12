@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+:root {
+  /* PREMIUM THEME (Default - Light) */
+  --bg-primary: #F9FAFB;
+  --bg-secondary: #FFFFFF;
+  --bg-tertiary: #F3F4F6;
+  
+  --text-primary: #1E293B;
+  --text-secondary: #64748B;
+  --text-tertiary: #94A3B8;
+  
+  --accent-gold: #FBBF24;
+  --accent-light: #FCD34D;
+  
+  --border-primary: #E2E8F0;
+  --border-accent: #FBBF24;
+  
+  --radius-card: 12px;
+  --radius-button: 8px;
+  
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+html.theme-luxe {
+  /* LUXE THEME (Dark Elite) - Emerald Green */
+  --bg-primary: #020617;
+  --bg-secondary: #0F172A;
+  --bg-tertiary: #1E293B;
+  
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-tertiary: #64748B;
+  
+  --accent-gold: #10B981;
+  --accent-light: #6EE7B7;
+  
+  --border-primary: #2D3748;
+  --border-accent: #10B981;
+  
+  --radius-card: 4px;
+  --radius-button: 4px;
+  
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.6);
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: Arial, Helvetica, sans-serif;
+}

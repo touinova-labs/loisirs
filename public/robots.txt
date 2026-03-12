@@ -1,0 +1,46 @@
+# Robots.txt for LoisirsPrivé Luxury Auctions Platform
+# https://www.robotstxt.org/
+
+# Default rules for all bots
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /account/
+Disallow: /api/
+Disallow: /*.json$
+Disallow: /api/webhooks/
+Disallow: /_next/
+Disallow: /__nextjs_original-stack-frame
+Crawl-delay: 2
+Request-rate: 30/60
+
+# Google Bot - More aggressive crawling allowed
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /account/
+Disallow: /api/
+Crawl-delay: 1
+Request-rate: 100/60
+
+# Bing Bot
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /account/
+Disallow: /api/
+Crawl-delay: 2
+
+# Block bad bots
+User-agent: MJ12bot
+User-agent: AhrefsBot
+User-agent: SemrushBot
+User-agent: DotBot
+Disallow: /
+
+# Sitemap location
+Sitemap: https://loisirsprive.fr/sitemap.xml
+Sitemap: https://loisirsprive.fr/sitemap-auctions.xml

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@800&family=Montserrat:wght@500;700;900&display=swap');
+        body { font-family: 'Montserrat', sans-serif; background-color: white !important; color: black !important; margin: 0; padding: 0; }
+        .font-header { font-family: 'Cinzel', serif; }
+        @page { size: A4; margin: 0; }
+        @media print { .no-print { display: none; } .page-container { height: 296mm !important; border: 12px solid black !important; } }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div class="page-container bg-white w-[210mm] h-[297mm] mx-auto p-12 flex flex-col border-[12px] border-black box-border">
+        
+        <header class="flex justify-between items-end border-b-8 border-black pb-6">
+            <div>
+                <h1 class="text-4xl font-[900] italic uppercase tracking-tighter leading-none">
+                    Loisirs<span class="text-emerald-600">Privé.</span>
+                </h1>
+                <p class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 mt-2 italic">Ingénierie de Vente & Prestige</p>
+            </div>
+            <div class="text-right">
+                <p class="text-[10px] font-black uppercase tracking-widest border-4 border-black px-4 py-2">Session 2026</p>
+            </div>
+        </header>
+
+        <main class="flex-grow flex flex-col justify-around py-6">
+            
+            <div>
+                <p class="text-xs font-black uppercase tracking-[0.5em] text-emerald-600 mb-2">Le Plein Serein.</p>
+                <h2 class="font-header text-5xl font-black uppercase tracking-tight leading-[0.95] mb-8">
+                    L'Exception mérite <br><span class="text-emerald-600">la discrétion.</span>
+                </h2>
+                <div class="max-w-2xl text-[17px] font-bold italic text-gray-800 leading-relaxed border-l-8 border-emerald-500 pl-8">
+                    Optimisez vos disponibilités via un écosystème de ventes aux enchères privées, protégeant votre image et votre intégrité tarifaire.
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-6">
+                <div class="p-6 border-2 border-black">
+                    <h3 class="text-[11px] font-black uppercase tracking-widest text-emerald-600 mb-2 italic">01. Stock Maîtrisé</h3>
+                    <p class="text-sm font-black uppercase mb-2">Blocage Temporaire</p>
+                    <p class="text-[12px] text-gray-700 font-semibold leading-snug">
+                        Pas d'exclusivité permanente. Seul un allotissement limité est bloqué durant l'enchère. Si l'offre n'est pas vendue, le stock est libéré immédiatement.
+                    </p>
+                </div>
+                
+                <div class="p-6 border-2 border-black">
+                    <h3 class="text-[11px] font-black uppercase tracking-widest text-emerald-600 mb-2 italic">02. Performance</h3>
+                    <p class="text-sm font-black uppercase mb-2">Zéro Frais Fixes</p>
+                    <p class="text-[12px] text-gray-700 font-semibold leading-snug">
+                        Aucun abonnement ni droit d'entrée. Notre rémunération est strictement indexée sur le volume de ventes que nous générons pour vous.
+                    </p>
+                </div>
+
+                <div class="p-6 border-2 border-black">
+                    <h3 class="text-[11px] font-black uppercase tracking-widest text-emerald-600 mb-2 italic">03. Valorisation</h3>
+                    <p class="text-sm font-black uppercase mb-2">Prix de Réserve</p>
+                    <p class="text-[12px] text-gray-700 font-semibold leading-snug">
+                        Vous gardez le contrôle total sur vos marges : vous fixez le prix plancher de chaque vente. Votre prestige n'est jamais bradé.
+                    </p>
+                </div>
+
+                <div class="p-6 border-2 border-black">
+                    <h3 class="text-[11px] font-black uppercase tracking-widest text-emerald-600 mb-2 italic">04. Prestige</h3>
+                    <p class="text-sm font-black uppercase mb-2">Confidentialité</p>
+                    <p class="text-[12px] text-gray-700 font-semibold leading-snug">
+                        Ventes en cercle fermé. Votre identité précise et votre localisation ne sont révélées au client qu'après la transaction confirmée.
+                    </p>
+                </div>
+
+                <div class="col-span-2 p-6 bg-emerald-50 border-l-8 border-emerald-600 flex items-center justify-between">
+                    <div class="max-w-md">
+                        <p class="text-xs font-black uppercase mb-1 italic text-emerald-800">05. Transparence</p>
+                        <p class="text-xl font-black uppercase">Commission au succès</p>
+                        <p class="text-[11px] text-emerald-900 font-bold mt-1 uppercase">
+                            Marketing digital et rayonnement haut de gamme intégralement financés par LoisirsPrivé.
+                        </p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-5xl font-black text-emerald-600 italic tracking-tighter">[X]%</p>
+                        <p class="text-[10px] font-bold uppercase">Taux Standard</p>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="pt-6 border-t-8 border-black flex justify-between items-center">
+                <div>
+                    <p class="text-[9px] font-bold uppercase tracking-[0.4em] text-gray-400">Direction des Partenariats</p>
+                    <p class="text-2xl font-[900] italic uppercase">partners@loisirsprive.fr</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-xs font-black uppercase bg-black text-white px-6 py-3">Candidature : www.loisirsprive.fr</p>
+                    <p class="text-[8px] font-bold text-gray-400 mt-2 italic uppercase tracking-widest">Document Confidentiel — © 2026</p>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <button onclick="window.print()" class="no-print fixed bottom-8 right-8 bg-black text-white px-8 py-4 rounded-full font-black uppercase text-xs tracking-widest shadow-2xl">
+        Générer le PDF (A4)
+    </button>
+
+</body>
+</html>
