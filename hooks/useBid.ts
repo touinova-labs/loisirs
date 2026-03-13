@@ -1,67 +1,102 @@
 'use client'
 
 import { useState } from 'react'
-import { supabase } from '@/lib/supabase'
 import { Auction } from '@/types'
 import { ToastType } from '@/components/Toast'
 
-export function useBid(auction: Auction | null,
+// Messages d'erreur centralisés
+const ERROR_MESSAGES: Record<string, string> = {
+    'AUCTION_NOT_FOUND': 'Cette enchère n\'existe pas',
+    'AUCTION_ENDED': 'L\'enchère est clôturée',
+    'BID_TOO_LOW': 'Quelqu\'un a surenchéri entre-temps !',
+    'MISSING_PARAMS': 'Données manquantes',
+    'INVALID_AMOUNT': 'Le montant n\'est pas valide',
+    'INTERNAL_ERROR': 'Une erreur interne s\'est produite',
+}
+
+// Helper pour l'appel API bid
+async function placeBidToApi(
+    auctionId: string,
+    userId: string,
+    amount: number,
+    showToast: (msg: string, type: ToastType) => void
+): Promise<boolean> {
+    try {
+        const response = await fetch('/api/bid', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                auctionId,
+                userId,
+                amount,
+            }),
+        })
+
+        const result = await response.json()
+
+        if (result.success) {
+            showToast("Mise confirmée avec succès !", 'success')
+            return true
+        } else {
+            const message = ERROR_MESSAGES[result.code] || result.error || "Une erreur est survenue"
+            showToast(message, 'error')
+            return false
+        }
+    } catch (err: any) {
+        showToast("Une erreur inattendue est survenue", "error")
+        console.error(err)
+        return false
+    }
+}
+
+export function useBid(
+    auction: Auction | null,
     user: any,
-    onAuthRequired: () => void,
-    showToast: (msg: string, type: ToastType) => void) {
+    onAuthRequired: (() => void) | undefined,
+    showToast: (msg: string, type: ToastType) => void
+) {
     const [loading, setLoading] = useState(false)
 
-    const placeBid = async () => {
-        if (!auction) return
+    const placeBid = async (bidAmount?: number) => {
+        if (!auction) return false
 
         // 1. Protection : Vérifier l'utilisateur
         if (!user) {
-            onAuthRequired()
-            return
+            onAuthRequired?.()
+            return false
         }
 
         setLoading(true)
 
         try {
-            // 2. Calcul du montant (Incrément de 1€)
-            const bidAmount = auction.current_price + 1
+            // 2. Calcul du montant (Incrément de 1€ par défaut ou montant custom)
+            const amount = bidAmount || (auction.current_price + 1)
 
-            // 3. Insertion en base de données
-            const { error: bidError } = await supabase
-                .from('bids')
-                .insert({
-                    auction_id: auction.id,
-                    user_id: user.id,
-                    amount: bidAmount
-                })
-
-            if (bidError) {
-                let message = "Une erreur est survenue.";
-
-                // On cherche les mots-clés définis dans le SQL
-                if (bidError.message.includes("ENCHERE_TERMINEE")) {
-                    message = "L'enchère est clôturée ou déjà vendue.";
-                }
-                else if (bidError.message.includes("MISE_INSUFFISANTE")) {
-                    // On peut même extraire le prix actuel si on veut être précis
-                    message = "Quelqu'un a surenchéri entre-temps ! Veuillez augmenter votre mise.";
-                }
-                else if (bidError.message.includes("ENCHERE_INTROUVABLE")) {
-                    message = "Cette enchère n'existe plus.";
-                }
-
-                showToast(message, 'error');
-                return;
-            }
-            console.log(bidError)
-            showToast("Mise confirmée avec succès !", 'success')
-        } catch (err: any) {
-            showToast("Une erreur inattendue est survenue", "error")
-            console.error(err)
+            // 3. Appel API via helper
+            return await placeBidToApi(auction.id, user.id, amount, showToast)
         } finally {
             setLoading(false)
         }
     }
 
     return { placeBid, loading }
+}
+
+// Hook générique pour les pages sans enchère unique (comme la page d'accueil)
+export function useBidApi(showToast: (msg: string, type: ToastType) => void) {
+    const [loading, setLoading] = useState(false)
+
+    const bid = async (userId: string, auctionId: string, amount: number) => {
+        setLoading(true)
+
+        try {
+            return await placeBidToApi(auctionId, userId, amount, showToast)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    return { bid, loading }
 }

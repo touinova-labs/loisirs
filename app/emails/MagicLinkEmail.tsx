@@ -1,149 +1,114 @@
 import {
-  Body,
-  Container,
-  Head,
-  Heading,
-  Html,
-  Preview,
-  Section,
-  Text,
-  Button,
+	Body,
+	Container,
+	Head,
+	Heading,
+	Html,
+	Preview,
+	Section,
+	Text,
+	Link,
 } from "@react-email/components";
+import { WebSiteTheme } from "../providers/ThemeProvider";
+interface IProps {
+	magicLink: string;
+	theme: WebSiteTheme,
+	is_new: boolean
+}
 
+export const MagicLinkEmail = ({ magicLink, theme, is_new }: IProps) => {
+	// Sélection des couleurs en fonction du thème
+	const isLuxe = theme === "theme-luxe";
 
-export const MagicLinkEmail = ({ magicLink }: { magicLink: string }) => (
-  <Html>
-    <Head />
-    <Preview>Votre accès privilégié aux enchères Loisirs Privé 🔑</Preview>
-    <Body style={main}>
-      <Container style={container}>
-        <Section style={logoSection}>
-          <Heading style={logo}>L/P</Heading>
-        </Section>
+	const colors = {
+		bg: isLuxe ? "#020617" : "#F9FAFB",
+		card: isLuxe ? "#0F172A" : "#FFFFFF",
+		accent: isLuxe ? "#10B981" : "#FBBF24", // Vert Émeraude vs Or Ambre
+		textMain: isLuxe ? "#F8FAFC" : "#1E293B",
+		textMuted: isLuxe ? "#94A3B8" : "#64748B",
+		border: isLuxe ? "#1E293B" : "#E2E8F0",
+	};
 
-        <Section style={content}>
-          <Heading style={h1}>Bienvenue au Club</Heading>
+	const heading = is_new ? "Vos privilèges commencent ici" : "Ravi de vous revoir";
+	const previewText = is_new
+		? "Accès membre : Vos privilèges Loisirs Privé 🔑"
+		: "Bon retour parmi nous : Votre accès sécurisé 🔑";
 
-          <Text style={text}>
-            Votre demande d'accès sécurisé a été validée. 
-            Découvrez dès maintenant nos **enchères de prestige** et nos 
-            **ventes privées** sélectionnées pour vous.
-          </Text>
+	const mainMessage = is_new
+		? "Votre invitation est prête. Finalisez votre adhésion pour profiter de nos"
+		: "Votre accès sécurisé est prêt. Retrouvez dès maintenant nos";
 
-          <Section style={buttonContainer}>
-            <Button style={button} href={magicLink}>
-              Entrer dans le Club
-            </Button>
-          </Section>
+	return (
+		<Html>
+			<Head />
+			<Preview>{previewText}</Preview>
+			<Body style={{ ...main, backgroundColor: colors.bg }}>
+				<Container style={{ ...container, backgroundColor: colors.card, borderColor: colors.border }}>
 
-          <Text style={details}>
-            Hôtels d'exception • Gastronomie • Évasions sur-mesure
-          </Text>
-        </Section>
+					<Section style={logoSection}>
+						<Text style={{ ...logo, color: colors.accent, borderBottom: `2px solid ${colors.accent}` }}>
+							L/P
+						</Text>
+					</Section>
 
-        <Section style={footer}>
-          <Text style={footerText}>
-            © {new Date().getFullYear()} **Loisirs Privé**. L'art de l'enchère haut de gamme.
-          </Text>
-          <Text style={footerAddress}>
-            Ce lien est à usage unique et expire dans 15 minutes. 
-            Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer cet e-mail.
-          </Text>
-        </Section>
-      </Container>
-    </Body>
-  </Html>
-);
+					<Section style={content}>
+						<Heading style={{ ...h1, color: colors.textMain }}>{heading}</Heading>
 
-// Styles mis à jour pour un rendu "Premium"
+						<Text style={{ ...text, color: colors.textMuted }}>
+							{mainMessage}
+							<strong style={{ color: colors.textMain }}> ventes privées aux tarifs négociés</strong> et tentez de remporter nos
+							<strong style={{ color: colors.textMain }}> enchères exclusives</strong>.
+						</Text>
+
+						<Section style={buttonContainer}>
+							<Link href={magicLink} style={{ ...button, backgroundColor: colors.accent, color: isLuxe ? "#020617" : "#FFFFFF" }}>
+								ACCÉDER AU CLUB
+							</Link>
+						</Section>
+
+						<Text style={{ ...details, color: colors.textMuted }}>
+							Tarifs Négociés • Enchères de Prestige • Évasions
+						</Text>
+					</Section>
+
+					<Section style={{ ...footer, borderTop: `1px solid ${colors.border}` }}>
+						<Text style={{ ...footerText, color: colors.textMain }}>
+							© {new Date().getFullYear()} LOISIRS PRIVÉ
+						</Text>
+						<Text style={{ ...footerNote, color: colors.textMuted }}>
+							Ce lien expire dans 15 minutes.<br />
+							<strong>Loisirs Privé : Le privilège des tarifs négociés.</strong>
+						</Text>
+					</Section>
+				</Container>
+			</Body>
+		</Html>
+	);
+};
+
+// Styles de base (sans les couleurs dynamiques)
 const main = {
-  backgroundColor: "#f9fafb", // Gris très clair pour le fond d'écran
-  fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
-  padding: "40px 0",
+	fontFamily: 'HelveticaNeue,Helvetica,Arial,sans-serif',
+	padding: "40px 0",
 };
 
 const container = {
-  margin: "0 auto",
-  width: "560px",
-  backgroundColor: "#ffffff", // Fond blanc pour le contenu (très propre)
-  borderRadius: "12px",
-  border: "1px solid #e5e7eb",
-  overflow: "hidden" as const,
+	margin: "0 auto",
+	width: "500px",
+	borderRadius: "4px",
+	borderStyle: "solid",
+	borderWidth: "1px",
+	padding: "40px",
 };
 
-const logoSection = {
-  backgroundColor: "#0f172a", // Bleu/Noir profond pour le bandeau logo
-  padding: "30px",
-  textAlign: "center" as const,
-};
-
-const logo = {
-  color: "#fbbf24", // Ambre/Or
-  fontSize: "28px",
-  fontWeight: "bold",
-  letterSpacing: "5px",
-  margin: "0",
-};
-
-const content = {
-  padding: "40px 50px",
-  textAlign: "center" as const,
-};
-
-const h1 = {
-  color: "#111827",
-  fontSize: "24px",
-  fontWeight: "700",
-  margin: "0 0 20px",
-};
-
-const text = {
-  color: "#4b5563",
-  fontSize: "16px",
-  lineHeight: "26px",
-  margin: "0 0 30px",
-};
-
-const buttonContainer = {
-  margin: "30px 0",
-};
-
-const button = {
-  backgroundColor: "#0f172a", // Bouton sombre pour le contraste "Luxe"
-  borderRadius: "8px",
-  color: "#ffffff",
-  fontSize: "15px",
-  fontWeight: "600",
-  textDecoration: "none",
-  textAlign: "center" as const,
-  display: "block",
-  width: "100%",
-  padding: "16px 0",
-};
-
-const details = {
-  color: "#9ca3af",
-  fontSize: "11px",
-  textTransform: "uppercase" as const,
-  letterSpacing: "1px",
-  marginTop: "24px",
-};
-
-const footer = {
-  padding: "0 50px 40px",
-  textAlign: "center" as const,
-};
-
-const footerText = {
-  color: "#374151",
-  fontSize: "13px",
-  fontWeight: "600",
-  margin: "0 0 8px",
-};
-
-const footerAddress = {
-  color: "#9ca3af",
-  fontSize: "11px",
-  lineHeight: "16px",
-  margin: "0",
-};
+const logoSection = { textAlign: "center" as const, marginBottom: "30px" };
+const logo = { fontSize: "32px", fontWeight: "bold", letterSpacing: "8px", display: "inline-block", paddingBottom: "8px" };
+const content = { textAlign: "center" as const };
+const h1 = { fontSize: "22px", fontWeight: "600", textTransform: "uppercase" as const, letterSpacing: "1px", margin: "30px 0 20px" };
+const text = { fontSize: "15px", lineHeight: "24px", marginBottom: "30px" };
+const buttonContainer = { textAlign: "center" as const, margin: "30px 0" };
+const button = { borderRadius: "4px", fontSize: "13px", fontWeight: "bold", textDecoration: "none", display: "inline-block", padding: "16px 32px", letterSpacing: "1px" };
+const details = { fontSize: "10px", textTransform: "uppercase" as const, letterSpacing: "2px", marginTop: "40px", opacity: 0.6 };
+const footer = { marginTop: "40px", textAlign: "center" as const, paddingTop: "20px" };
+const footerText = { fontSize: "12px", fontWeight: "bold", margin: "0 0 10px" };
+const footerNote = { fontSize: "11px", lineHeight: "18px" };

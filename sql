@@ -40,6 +40,11 @@ CREATE TABLE bids (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- Trigger pour valider et mettre à jour les enchères
+CREATE TRIGGER bid_before_insert
+BEFORE INSERT ON bids
+FOR EACH ROW
+EXECUTE FUNCTION handle_new_bid();
 
 CREATE OR REPLACE FUNCTION handle_new_bid()
 RETURNS TRIGGER AS $$
@@ -47,6 +52,7 @@ DECLARE
     v_current_price DECIMAL;
     v_end_at TIMESTAMPTZ;
     v_status TEXT;
+    v_first_name TEXT;
 BEGIN
     -- 1. Verrouillage et récupération avec vérification d'existence
     SELECT current_price, end_at, status 
@@ -69,18 +75,20 @@ BEGIN
         RAISE EXCEPTION 'MISE_INSUFFISANTE:%', v_current_price;
     END IF;
 
-    -- 6. Anti-sniping
+    -- Anti-sniping
     IF (v_end_at - NOW()) < INTERVAL '30 seconds' THEN
         v_end_at := NOW() + INTERVAL '60 seconds';
     END IF;
 
-    -- 7. Mise à jour Enchère
+    -- Mise à jour Enchère
     UPDATE auctions 
     SET current_price = NEW.amount,
         end_at = v_end_at,
         updated_at = NOW()
     WHERE id = NEW.auction_id;
 
+    SELECT first_name INTO v_first_name FROM profiles WHERE id = NEW.user_id;
+    NEW.user_nickname := COALESCE(v_first_name, 'Anonyme');
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
@@ -155,3 +163,42 @@ ALTER TABLE auctions
 ADD COLUMN IF NOT EXISTS booking_url TEXT, -- Pour les agences avec réservation en ligne
 ADD COLUMN IF NOT EXISTS partner_email TEXT, -- Pour les agences traditionnelles (mise en relation)
 ADD COLUMN IF NOT EXISTS partner_name TEXT; -- Pour afficher le nom du partenaire sur l'enchère
+
+
+
+-- Table des profils (liée à auth.users)
+create table public.profiles (
+  id uuid references auth.users on delete cascade primary key,
+  first_name text,
+  last_name text,
+  interests text[], -- Array pour stocker (Gastronomie, Hôtels, etc.)
+  onboarding_completed boolean default false,
+  updated_at timestamp with time zone
+);
+
+-- RLS (Sécurité) : L'utilisateur ne peut modifier que son propre profil
+alter table public.profiles enable row level security;
+
+
+-- 1. Fonction qui sera appelée par le trigger
+create or replace function public.handle_new_user()
+returns trigger
+language plpgsql
+security definer set search_path = public
+as $$
+begin
+  insert into public.profiles (id, onboarding_completed, updated_at)
+  values (new.id, false, now());
+  return new;
+end;
+$$;
+
+-- 2. Le Trigger qui s'exécute après chaque "INSERT" dans auth.users
+create or replace trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute procedure public.handle_new_user();
+alter table public.profiles add column email text;
+
+
+ALTER TABLE bids ADD COLUMN IF NOT EXISTS user_nickname TEXT;
+ALTER TABLE profiles ADD COLUMN IF NOT EXISTS accepted_newsletter BOOLEAN DEFAULT FALSE;

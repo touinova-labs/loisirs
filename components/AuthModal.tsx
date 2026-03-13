@@ -2,11 +2,13 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Mail, Sparkles } from 'lucide-react'
+import { useTheme } from '@/app/providers/ThemeProvider'
 
 export default function AuthModal({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
 	const [email, setEmail] = useState('')
 	const [loading, setLoading] = useState(false)
 	const [sent, setSent] = useState(false)
+	const { theme } = useTheme();
 
 	const handleMagicLink = async (e: React.FormEvent) => {
 		e.preventDefault()
@@ -16,7 +18,7 @@ export default function AuthModal({ isOpen, onClose }: { isOpen: boolean, onClos
 			const response = await fetch('/api/auth/magic-link', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ email })
+				body: JSON.stringify({ email, theme })
 			})
 
 			const data = await response.json()

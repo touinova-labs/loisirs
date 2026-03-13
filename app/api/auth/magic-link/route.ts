@@ -2,47 +2,56 @@ import { MagicLinkEmail } from '@/app/emails/MagicLinkEmail';
 import { supabaseAdmin } from '@/lib/supabaseAdmin';
 import { render } from '@react-email/render';
 import sgMail, { MailDataRequired } from '@sendgrid/mail';
-import { json } from 'stream/consumers';
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 
 export async function POST(req: Request) {
-  try {
-    const { email } = await req.json();
+	try {
+		const { email, theme } = await req.json();
 
-    // 1. GÉNÉRER LE LIEN D'AUTHENTIFICATION
-    const { data, error } = await supabaseAdmin.auth.admin.generateLink({
-      type: 'magiclink',
-      email: email,
-      options: {
-        // L'URL où l'utilisateur atterrit après avoir cliqué
-        redirectTo: `https://www.loisirs-prive.fr/`
-      }
-    });
+		// 1. Vérifier si l'utilisateur a déjà complété son onboarding
+		const { data: profile } = await supabaseAdmin
+			.from('profiles')
+			.select('onboarding_completed')
+			.eq('email', email)
+			.single();
 
-    if (error) throw error;
+		const is_new = !profile || profile.onboarding_completed === false;
 
-    // Le lien magique généré par Supabase
-    const magicLink = data.properties.action_link;
-    console.log(magicLink)
+		// 2. Générer le lien magique via Supabase
+		const { data, error } = await supabaseAdmin.auth.admin.generateLink({
+			type: 'magiclink',
+			email: email,
+			options: {
+				// Si nouveau, on l'envoie vers l'onboarding, sinon vers les enchères
+				redirectTo: is_new
+					? `${process.env.NEXT_PUBLIC_SITE_URL}/onboarding`
+					: `${process.env.NEXT_PUBLIC_SITE_URL}/`
+			}
+		});
 
-    // ICI : Ajoute le await car render est asynchrone
-    const emailHtml = await render(MagicLinkEmail({ magicLink }));
+		if (error) throw error;
 
-    const msg: MailDataRequired = {
-      to: email,
-      from: {
-        name: 'Loisirs Privé', // Ton Company Name / Sender Name
-        email: 'club@loisirs-prive.fr',
-      },
-      subject: 'Votre accès privé 🔑',
-      html: emailHtml, // Maintenant c'est bien un string, pas une Promise
-    };
+		// Le lien magique généré par Supabase
+		const magicLink = data.properties.action_link;
 
-    await sgMail.send(msg);
-    return Response.json({ success: true });
-  } catch (error) {
-    console.error(error);
-    return Response.json({ error: 'Failed to send' }, { status: 500 });
-  }
+		// ICI : Ajoute le await car render est asynchrone
+		const emailHtml = await render(MagicLinkEmail({ magicLink, theme, is_new }));
+
+		const msg: MailDataRequired = {
+			to: email,
+			from: {
+				name: 'Loisirs Privé', // Ton Company Name / Sender Name
+				email: 'club@loisirs-prive.fr',
+			},
+			subject: 'Votre accès privé 🔑',
+			html: emailHtml, // Maintenant c'est bien un string, pas une Promise
+		};
+
+		await sgMail.send(msg);
+		return Response.json({ success: true });
+	} catch (error) {
+		console.error(error);
+		return Response.json({ error: 'Failed to send' }, { status: 500 });
+	}
 }

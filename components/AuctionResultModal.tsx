@@ -92,7 +92,7 @@ export function AuctionResultModal({ winnerData, user, isFinished, auction_id }:
 
               <div className="rounded-lg p-6 mb-8 border" style={{ backgroundColor: 'var(--bg-tertiary)', borderColor: 'var(--border-primary)' }}>
                 <p className="text-[10px] font-semibold uppercase mb-1" style={{ color: 'var(--text-secondary)' }}>Prix Adjugé</p>
-                <p className="text-4xl font-bold italic leading-none" style={{ color: 'var(--accent-gold)' }}>{winnerData.winning_bid}€</p>
+                <p className="text-4xl font-bold italic leading-none" style={{ color: 'var(--accent-gold)' }}>{winnerData?.winning_bid}€</p>
               </div>
 
               <p className="text-sm mb-8 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>

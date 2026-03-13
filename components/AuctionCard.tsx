@@ -1,11 +1,11 @@
 'use client'
 import { Auction } from '@/types'
-import { Gavel, ShoppingBag, Clock } from 'lucide-react'
+import { Gavel, ShoppingBag, Clock, Lock } from 'lucide-react'
 import Link from 'next/link'
 
 const getTimeLeft = (status: string, startDate: string, endDate: string): string => {
   const now = Date.now();
-  
+
   // 1. Gestion des états terminés (Sécurité)
   if (status !== 'active' && status !== 'upcoming') return "Terminé";
 
@@ -20,28 +20,42 @@ const getTimeLeft = (status: string, startDate: string, endDate: string): string
   // 3. Calcul des unités
   const MS_PER_DAY = 1000 * 60 * 60 * 24;
   const MS_PER_HOUR = 1000 * 60 * 60;
-  
+  const MS_PER_MIN = 1000 * 60;
+  const MS_PER_SEC = 1000;
+
   const days = Math.floor(diff / MS_PER_DAY);
   const hours = Math.floor((diff % MS_PER_DAY) / MS_PER_HOUR);
+  const mins = Math.floor((diff % MS_PER_HOUR) / MS_PER_MIN);
 
-  // 4. Formatage du message
-  const timeStr = days > 0 ? `${days}j ${hours}h` : `${hours}h`;
+  let finalTimeStr = "";
 
-  return status === 'active' ? `${timeStr} restant` : `Dans ${timeStr}`;
+  // Logique de formatage granulaire
+  if (days > 0) {
+    finalTimeStr = `${days}j ${hours}h`;
+  } else if (hours > 0) {
+    finalTimeStr = `${hours}h ${mins}m`;
+  } else {
+    finalTimeStr = `${mins}m`;
+  }
+
+  // Gestion du message selon le statut
+  return status === 'active' ? `${finalTimeStr} restant` : `Dans ${finalTimeStr}`;
 };
 
 interface AuctionCardProps {
   auction: Auction;
   onBid: (amount: number) => void;
+  isConnected?: boolean;
+  onAuthClick?: () => void;
 }
 
 
-export default function AuctionCard({ auction, onBid }: AuctionCardProps) {
+export default function AuctionCard({ auction, onBid, isConnected = false, onAuthClick }: AuctionCardProps) {
 
   const isFixedPrice = auction.type === 'fixed';
 
   return (
-    <div 
+    <div
       className="group border rounded-lg overflow-hidden flex flex-col h-full transition-all duration-300 hover:shadow-lg"
       style={{
         backgroundColor: 'var(--bg-secondary)',
@@ -71,32 +85,64 @@ export default function AuctionCard({ auction, onBid }: AuctionCardProps) {
             <span className="h-2 w-2 rounded-full animate-pulse" style={{ backgroundColor: isFixedPrice ? '#3b82f6' : 'var(--accent-gold)' }} />
             <span>{isFixedPrice ? '✦ Vente Privée' : '⚡ Enchère Live'}</span>
           </div>
+
+          {/* Badge Tarif Privé si non connecté */}
+          {!isConnected && (
+            <div
+              className="flex items-center gap-2 px-3 py-2 rounded-lg border shadow-md backdrop-blur-sm font-semibold text-xs uppercase tracking-wider"
+              style={{
+                backgroundColor: 'rgba(168, 85, 247, 0.15)',
+                borderColor: 'rgba(168, 85, 247, 0.4)',
+                color: '#a855f7',
+              }}
+            >
+              <Lock size={14} />
+              <span>Tarif Privé</span>
+            </div>
+          )}
         </div>
       </Link>
 
       {/* 2. ZONE INFOS */}
       <div className="p-5 flex flex-col flex-grow space-y-4">
 
-        {/* Prix */}
+        {/* Prix ou Tarif Privé */}
         <div className="flex justify-between items-end gap-3">
           <div className="flex flex-col">
-            <span 
-              className="text-2xl font-bold tabular-nums"
-              style={{ color: isFixedPrice ? 'var(--text-primary)' : 'var(--accent-gold)' }}
-            >
-              {isFixedPrice
-                ? `${auction.buy_now_price?.toLocaleString('fr-FR')} €`
-                : `${auction.current_price?.toLocaleString('fr-FR')} €`
-              }
-            </span>
-            <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-secondary)' }}>
-              {isFixedPrice ? 'Prix fixe' : 'Offre actuelle'}
-            </span>
+            {isConnected ? (
+              <>
+                <span
+                  className="text-2xl font-bold tabular-nums"
+                  style={{ color: isFixedPrice ? 'var(--text-primary)' : 'var(--accent-gold)' }}
+                >
+                  {isFixedPrice
+                    ? `${auction.buy_now_price?.toLocaleString('fr-FR')} €`
+                    : `${auction.current_price?.toLocaleString('fr-FR')} €`
+                  }
+                </span>
+                <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-secondary)' }}>
+                  {isFixedPrice ? 'Prix fixe' : 'Offre actuelle'}
+                </span>
+              </>
+            ) : (
+              <>
+                <div
+                  className="text-2xl font-bold flex items-center gap-2"
+                  style={{ color: 'var(--accent-gold)' }}
+                >
+                  <Lock size={20} />
+                  <span>Privé</span>
+                </div>
+                <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-secondary)' }}>
+                  Connectez-vous pour voir
+                </span>
+              </>
+            )}
           </div>
 
           {/* Indicateur de temps */}
           {!isFixedPrice && (
-            <div 
+            <div
               className="flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-lg border uppercase tracking-wide"
               style={{
                 backgroundColor: 'var(--bg-tertiary)',
@@ -120,13 +166,22 @@ export default function AuctionCard({ auction, onBid }: AuctionCardProps) {
           </p>
         </div>
 
-        <div 
+        <div
           className="h-px w-full"
           style={{ backgroundColor: 'var(--border-primary)' }}
         />
 
         {/* Boutons d'action */}
-        {isFixedPrice ? (
+        {!isConnected ? (
+          <button
+            onClick={(e) => { e.preventDefault(); onAuthClick?.(); }}
+            className="w-full h-11 rounded-lg font-semibold text-xs uppercase tracking-wide transition-all active:scale-95 flex items-center justify-center gap-2 shadow-sm hover:shadow-md text-white"
+            style={{ backgroundColor: 'var(--accent-gold)' }}
+          >
+            <Lock size={16} />
+            Se connecter pour voir le prix
+          </button>
+        ) : isFixedPrice ? (
           <button
             className="w-full h-11 rounded-lg font-semibold text-xs uppercase tracking-wide transition-all active:scale-95 flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
             style={{

@@ -1,20 +1,19 @@
 'use client'
 
-import { LogOut, ShieldCheck, Moon, Sun } from 'lucide-react'
+import { LogOut, Moon, Sun } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { useTheme } from '@/app/providers/ThemeProvider'
-import { useState } from 'react'
 import { Logo } from './Logo'
+import { UserData } from '@/hooks/UserContext'
 
 interface NavbarProps {
-    user: any;
+    user: UserData | null;
     onAuthClick: () => void;
 }
 
 export default function Navbar({ user, onAuthClick }: NavbarProps) {
     const { theme, toggleTheme } = useTheme()
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     const handleSignOut = async () => {
         const { error } = await supabase.auth.signOut()
@@ -72,7 +71,7 @@ export default function Navbar({ user, onAuthClick }: NavbarProps) {
                                     color: 'var(--text-secondary)',
                                     border: '1px solid var(--border-primary)'
                                 }}>
-                                {user.email?.split('@')[0]}
+                                {user.firstName} {user.lastName}
                             </div>
                             <button
                                 onClick={handleSignOut}
