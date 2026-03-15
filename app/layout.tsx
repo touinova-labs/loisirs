@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-	metadataBase: new URL("https://loisirsprive.fr"),
+	metadataBase: new URL("https://loisirs-prive.fr"),
 	title: {
 		default: "LoisirsPrivé | L'Art de l'Enchère pour Séjours d'Exception",
 		template: "%s | LoisirsPrivé"
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 	description: "Accédez à une sélection exclusive de séjours et expériences d'exception en ventes privées et enchères. Privilèges réservés aux membres.",
 	applicationName: "LoisirsPrivé",
 	keywords: ["ventes privées", "enchères", "séjours de luxe", "expériences exclusives", "privilèges"],
-	authors: [{ name: "LoisirsPrivé", url: "https://loisirsprive.fr" }],
+	authors: [{ name: "LoisirsPrivé", url: "https://loisirs-prive.fr" }],
 	creator: "LoisirsPrivé",
 	publisher: "LoisirsPrivé",
 	formatDetection: {
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
 	openGraph: {
 		type: "website",
 		locale: "fr_FR",
-		url: "https://loisirsprive.fr",
+		url: "https://loisirs-prive.fr",
 		siteName: "LoisirsPrivé",
 		title: "LoisirsPrivé | L'Art de l'Enchère pour Séjours d'Exception",
 		description: "Accédez à une sélection exclusive de séjours et expériences d'exception en ventes privées et enchères.",
@@ -103,7 +103,7 @@ export const metadata: Metadata = {
 		},
 	},
 	alternates: {
-		canonical: "https://loisirsprive.fr",
+		canonical: "https://loisirs-prive.fr",
 	},
 };
 
@@ -126,9 +126,10 @@ export default function RootLayout({
 							<Link href="/legal/cgu">CGU</Link>
 							<Link href="/legal/cgv">CGV</Link>
 							<Link href="/legal/privacy">Confidentialité</Link>
-							<Link href="/legal/mentions">Mentions Légales</Link>
+							<Link href="/legal/mentions-legales">Mentions Légales</Link>
+							<Link href="/partners">Partenaires</Link>
 						</div>
-						<p>© 2026 LoisirsPrivé. Tous droits réservés.</p>
+						<p className="flex justify-center">© 2026 LoisirsPrivé. Tous droits réservés.</p>
 					</footer>
 				</ThemeProvider>
 			</body>

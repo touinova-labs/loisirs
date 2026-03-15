@@ -151,3 +151,44 @@ https://www.voyage-prive.com/login/index#signin
 
 
 Veux-tu que je te rédige un modèle de mail professionnel pour démarcher ta première agence de voyage partenaire ?
+
+
+
+
+Mise à jour de ton UI (Interface Enchère)
+Pour que l'utilisateur comprenne sans être découragé, utilise ces libellés :
+
+Si en dessous du prix de réserve : > Offre actuelle : 85€
+
+<span style={{ color: "var(--text-tertiary)", fontSize: "10px" }}>Prix de réserve non atteint</span>
+
+Dès que le prix est dépassé : > Offre actuelle : 125€
+
+<span style={{ color: "#10b981", fontSize: "10px" }}>✓ Prix de réserve atteint</span>
+
+
+
+
+-------------
+1. La "Preuve d'Engagement" (Sécurité de Paiement)
+Dans ton modèle, le client paie à l'hôtel. Mais qu'est-ce qui l'empêche de gagner une enchère et de ne jamais se présenter ? L'hôtel perd une vente et toi ta commission.
+
+La solution : Capturer une empreinte bancaire (Stripe Setup Intent) au moment de l'onboarding ou de la première mise.
+
+La règle : Si le client gagne et ne paie pas l'hôtel (No-show), tu prélèves des "frais de dédit" de 50€ (ta commission) directement sur sa carte.
+-----------
+
+2. Le "Voucher" Dynamique (Le sésame du membre)
+Une fois l'enchère gagnée, l'utilisateur a besoin d'un document officiel à présenter à l'hôtel.
+
+Ce qu'il nous faut : Un générateur de PDF ou une page "Mes Invitations" qui récapitule :
+
+Le code de réservation unique.
+
+Le prix final à payer à l'hôtel.
+
+Les services inclus (Petit-déjeuner, Spa, etc.).
+
+La mention légale : "Tarif négocié via Loisirs-Privé - Partenaire Apporteur d'Affaires".
+---------------
+Monsieur le Directeur, Loisirs-Privé est un outil de Yield Management pur. Nous augmentons votre RevPAR en capturant une demande additionnelle sur vos chambres vacantes, sans jamais cannibaliser votre segment de clientèle plein tarif.

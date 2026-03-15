@@ -10,7 +10,6 @@ import { AuctionAttributes } from '@/types'
 import AuctionGallery from '@/components/AuctionGallery'
 import BidHistory from '@/components/BidHistory'
 import Toast, { ToastType } from '@/components/Toast'
-import StructuredData, { auctionSchema, breadcrumbSchema } from '@/components/StructuredData'
 import { AuctionResultModal } from '@/components/AuctionResultModal'
 import {
     HeaderNavigation,
@@ -68,8 +67,10 @@ export default function AuctionDetailsPage() {
             return
         }
         if (auction) {
-            const bidAmount = auction.current_price + 1
-            await bid(user.id, auction.id, bidAmount)
+            if(auction.type == "auction"){
+                const bidAmount = auction.current_price + 1
+                await bid(user.id, auction.id, bidAmount)
+            }
         }
     }
 
@@ -102,31 +103,8 @@ export default function AuctionDetailsPage() {
     const attr = (auction.attributes as AuctionAttributes) || {}
     const isFinished = new Date(auction.end_at) < new Date() || auction.status !== 'active'
 
-    // Generate schemas for structured data
-    const auctionStructuredData = auctionSchema({
-        id: auction.id,
-        title: auction.title,
-        description: auction.description || '',
-        image: auction.images?.[0] || '/og-image.png',
-        startPrice: auction.start_price || 0,
-        currentBid: bids?.[0]?.amount || auction.start_price,
-        status: auction.status as 'upcoming' | 'active' | 'completed',
-        startDate: auction.start_at,
-        endDate: auction.end_at,
-        location: auction.location_name,
-    })
-
-    const breadcrumbs = breadcrumbSchema([
-        { name: 'Accueil', url: 'https://loisirsprive.fr' },
-        { name: 'Catalogue', url: 'https://loisirsprive.fr/auctions' },
-        { name: auction.title, url: `https://loisirsprive.fr/auctions/${auction.id}` },
-    ])
-
     return (
         <main className="pb-32" style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
-            {/* STRUCTURED DATA FOR SEO */}
-            <StructuredData schema={auctionStructuredData} />
-            <StructuredData schema={breadcrumbs} />
 
             {/* MODALS & NOTIFICATIONS */}
             <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />

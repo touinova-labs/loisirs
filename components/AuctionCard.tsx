@@ -1,209 +1,257 @@
 'use client'
+import { useState, useEffect, useMemo } from 'react'
 import { Auction } from '@/types'
-import { Gavel, ShoppingBag, Clock, Lock } from 'lucide-react'
+import { Lock, ArrowRight, Gavel, Star, Users, Coffee, Sparkles, Clock } from 'lucide-react'
 import Link from 'next/link'
-
-const getTimeLeft = (status: string, startDate: string, endDate: string): string => {
-  const now = Date.now();
-
-  // 1. Gestion des états terminés (Sécurité)
-  if (status !== 'active' && status !== 'upcoming') return "Terminé";
-
-  const targetDate = status === 'active' ? Date.parse(endDate) : Date.parse(startDate);
-  const diff = targetDate - now;
-
-  // 2. Gestion des expirations de temps
-  if (diff <= 0) {
-    return status === 'active' ? "Terminé" : "Commence bientôt";
-  }
-
-  // 3. Calcul des unités
-  const MS_PER_DAY = 1000 * 60 * 60 * 24;
-  const MS_PER_HOUR = 1000 * 60 * 60;
-  const MS_PER_MIN = 1000 * 60;
-  const MS_PER_SEC = 1000;
-
-  const days = Math.floor(diff / MS_PER_DAY);
-  const hours = Math.floor((diff % MS_PER_DAY) / MS_PER_HOUR);
-  const mins = Math.floor((diff % MS_PER_HOUR) / MS_PER_MIN);
-
-  let finalTimeStr = "";
-
-  // Logique de formatage granulaire
-  if (days > 0) {
-    finalTimeStr = `${days}j ${hours}h`;
-  } else if (hours > 0) {
-    finalTimeStr = `${hours}h ${mins}m`;
-  } else {
-    finalTimeStr = `${mins}m`;
-  }
-
-  // Gestion du message selon le statut
-  return status === 'active' ? `${finalTimeStr} restant` : `Dans ${finalTimeStr}`;
-};
+import { getPriceLabel } from '@/app/ventes/[id]/_components/PricingSidebar';
 
 interface AuctionCardProps {
   auction: Auction;
-  onBid: (amount: number) => void;
   isConnected?: boolean;
   onAuthClick?: () => void;
 }
 
+export default function AuctionCard({ auction, isConnected = false, onAuthClick }: AuctionCardProps) {
+  const [timerText, setTimerText] = useState<string>("");
+  const isFixed = auction.type === 'fixed';
+  const attr = auction.attributes;
+  const isHotel = attr?.type === "hotel";
 
-export default function AuctionCard({ auction, onBid, isConnected = false, onAuthClick }: AuctionCardProps) {
+  // 1. Calcul du Timer (Active ou Upcoming)
+  useEffect(() => {
+    if (isFixed || !['active', 'upcoming'].includes(auction.status)) return;
 
-  const isFixedPrice = auction.type === 'fixed';
+    const updateTimer = () => {
+      const targetDate = auction.status === 'active' ? auction.end_at : auction.start_at;
+      const diff = new Date(targetDate).getTime() - Date.now();
+
+      if (diff <= 0) {
+        setTimerText(auction.status === 'active' ? "Clôturé" : "En cours...");
+        return;
+      }
+
+      const d = Math.floor(diff / 864e5), h = Math.floor((diff % 864e5) / 36e5),
+        m = Math.floor((diff % 36e5) / 6e4), s = Math.floor((diff % 6e4) / 1000);
+
+      const parts = [];
+      if (d > 0) parts.push(`${d}j`);
+      if (h > 0 || d > 0) parts.push(`${h}h`); 
+      if (m > 0 || h > 0 || d > 0) parts.push(`${m}m`);
+      parts.push(`${s}s`); 
+
+      setTimerText(parts.join(" "));
+    };
+
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
+    return () => clearInterval(interval);
+  }, [auction, isFixed]);
+
+  // 2. Mémos pour les libellés et styles
+  const discount = useMemo(() => {
+    const sell_price = isFixed ? (auction.buy_now_price || 0) : auction.current_price
+    return attr?.value_real ? Math.round(100 - ((sell_price) / attr.value_real) * 100) : 0
+  }
+    , [auction, attr, isFixed]);
+
+  const statusConfig = useMemo(() => {
+    switch (auction.status) {
+      case 'active':
+        return {
+          label: isFixed ? 'Vente Privée' : 'Enchère Live',
+          style: isFixed ? 'bg-blue-600/30 border-blue-400/40 text-blue-100' : 'bg-[var(--accent-gold)]/20 border-[var(--accent-gold)]/50 text-white',
+          dot: 'animate-pulse bg-current'
+        };
+      case 'upcoming':
+        return { label: 'Bientôt disponible', style: 'bg-black/40 border-white/20 text-white/70', dot: 'bg-blue-400' };
+      default:
+        return { label: 'Adjugé', style: 'bg-black/40 border-white/20 text-white/50', dot: 'bg-gray-500' };
+    }
+  }, [auction.status, isFixed]);
 
   return (
-    <div
-      className="group border rounded-lg overflow-hidden flex flex-col h-full transition-all duration-300 hover:shadow-lg"
-      style={{
-        backgroundColor: 'var(--bg-secondary)',
-        borderColor: 'var(--border-primary)',
-      }}
-    >
+    <div className="group flex flex-col h-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-xl overflow-hidden transition-all duration-500 hover:shadow-2xl">
 
-      {/* 1. ZONE IMAGE */}
-      <Link href={`/auctions/${auction.id}`} className="relative block aspect-[16/10] overflow-hidden">
-        <img
-          src={auction.main_image}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          style={{ backgroundColor: 'var(--bg-tertiary)' }}
-          alt={auction.title}
-        />
+      {/* ZONE IMAGE */}
+      <div className="relative aspect-[16/10] overflow-hidden bg-[var(--bg-tertiary)]">
+        <img src={auction.main_image} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt="" />
 
-        <div className="absolute top-4 left-4 flex flex-col gap-2 pointer-events-none">
-          {/* Badge de Mode */}
-          <div
-            className="flex items-center gap-2 px-3 py-2 rounded-lg border shadow-md backdrop-blur-sm font-semibold text-xs uppercase tracking-wider"
-            style={{
-              backgroundColor: isFixedPrice ? 'rgba(59, 130, 246, 0.1)' : 'rgba(251, 191, 36, 0.1)',
-              borderColor: isFixedPrice ? 'rgba(59, 130, 246, 0.3)' : 'rgba(251, 191, 36, 0.3)',
-              color: isFixedPrice ? '#3b82f6' : 'var(--accent-gold)',
-            }}
-          >
-            <span className="h-2 w-2 rounded-full animate-pulse" style={{ backgroundColor: isFixedPrice ? '#3b82f6' : 'var(--accent-gold)' }} />
-            <span>{isFixedPrice ? '✦ Vente Privée' : '⚡ Enchère Live'}</span>
+        {/* Badges Flottants */}
+        <div className="absolute top-3 left-3 flex flex-col gap-2 z-10">
+          <div className={`backdrop-blur-xl px-3 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest flex items-center gap-2 border shadow-lg ${statusConfig.style}`}>
+            <span className={`h-1.5 w-1.5 rounded-full ${statusConfig.dot}`} />
+            {statusConfig.label}
           </div>
 
-          {/* Badge Tarif Privé si non connecté */}
-          {!isConnected && (
-            <div
-              className="flex items-center gap-2 px-3 py-2 rounded-lg border shadow-md backdrop-blur-sm font-semibold text-xs uppercase tracking-wider"
-              style={{
-                backgroundColor: 'rgba(168, 85, 247, 0.15)',
-                borderColor: 'rgba(168, 85, 247, 0.4)',
-                color: '#a855f7',
-              }}
-            >
-              <Lock size={14} />
-              <span>Tarif Privé</span>
+          {isHotel && attr?.rating && (
+            <div className="flex items-center gap-1 bg-black/40 backdrop-blur-md px-2 py-1 rounded-full border border-white/10 w-fit">
+              <Star size={8} fill="var(--accent-gold)" className="text-[var(--accent-gold)]" />
+              <span className="text-[9px] font-bold text-white">{Math.floor(attr.rating)}*</span>
             </div>
           )}
         </div>
-      </Link>
 
-      {/* 2. ZONE INFOS */}
-      <div className="p-5 flex flex-col flex-grow space-y-4">
+        {/* Timer : Design Précision Horlogère */}
+        {!isFixed && ['active', 'upcoming'].includes(auction.status) && (
+          <div className="absolute bottom-3 left-3 right-3 z-10">
+            <div className="backdrop-blur-xl bg-black/60 border border-white/10 p-2.5 rounded-xl flex items-center gap-3 shadow-2xl overflow-hidden group/timer">
 
-        {/* Prix ou Tarif Privé */}
-        <div className="flex justify-between items-end gap-3">
-          <div className="flex flex-col">
-            {isConnected ? (
-              <>
-                <span
-                  className="text-2xl font-bold tabular-nums"
-                  style={{ color: isFixedPrice ? 'var(--text-primary)' : 'var(--accent-gold)' }}
-                >
-                  {isFixedPrice
-                    ? `${auction.buy_now_price?.toLocaleString('fr-FR')} €`
-                    : `${auction.current_price?.toLocaleString('fr-FR')} €`
-                  }
+              {/* Icône animée */}
+              <div className="relative flex items-center justify-center">
+                <Clock size={14} className={`transition-colors duration-500 ${auction.status === 'active' ? 'text-[var(--accent-gold)]' : 'text-blue-400'}`} />
+                {auction.status === 'active' && (
+                  <span className="absolute inset-0 rounded-full bg-[var(--accent-gold)]/20 animate-ping" />
+                )}
+              </div>
+
+              <div className="flex flex-col flex-grow min-w-0">
+                <span className="text-[7px] font-black uppercase tracking-[0.2em] text-white/50 leading-none mb-1">
+                  {auction.status === 'active' ? 'Temps restant' : 'Début de l\'offre'}
                 </span>
-                <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-secondary)' }}>
-                  {isFixedPrice ? 'Prix fixe' : 'Offre actuelle'}
-                </span>
-              </>
-            ) : (
-              <>
-                <div
-                  className="text-2xl font-bold flex items-center gap-2"
-                  style={{ color: 'var(--accent-gold)' }}
-                >
-                  <Lock size={20} />
-                  <span>Privé</span>
+
+                <div className="flex items-baseline gap-1">
+                  <span className={`text-[11px] font-mono font-bold tabular-nums tracking-wider ${auction.status === 'active' ? 'text-[var(--accent-gold)]' : 'text-white'
+                    }`}>
+                    {timerText}
+                  </span>
+
+                  {/* Indicateur visuel discret de seconde */}
+                  {auction.status === 'active' && (
+                    <span className="h-1 w-1 rounded-full bg-[var(--accent-gold)] animate-pulse" />
+                  )}
                 </div>
-                <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-secondary)' }}>
-                  Connectez-vous pour voir
+              </div>
+
+              {/* Progress Bar subtile en fond (Optionnel : nécessite un calcul de % restant) */}
+              <div className="absolute bottom-0 left-0 h-[1.5px] bg-gradient-to-r from-transparent via-[var(--accent-gold)] to-transparent opacity-30 w-full" />
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* CONTENU */}
+      <div className="p-5 flex flex-col flex-grow">
+        <div className="mb-6 group/title">
+          <h3 className="text-xl font-black italic uppercase tracking-tighter leading-[1.1] mb-2 
+                 transition-colors duration-300 group-hover/title:text-[var(--accent-gold)]">
+            <span className="line-clamp-2 min-h-[2.2em] block">
+              {auction.title}
+            </span>
+          </h3>
+
+          <div className="flex items-center gap-2 overflow-hidden">
+            <div className="w-[2px] h-3 bg-[var(--accent-gold)] scale-y-0 group-hover/title:scale-y-100 transition-transform duration-500 origin-bottom" />
+            <p className="text-[10px] uppercase tracking-[0.25em] text-[var(--text-tertiary)] font-bold italic truncate">
+              {auction.location_name || "Destination Confidentielle"}
+            </p>
+          </div>
+        </div>
+
+        {/* Atouts */}
+        <div className="flex flex-wrap items-center gap-y-2.5 gap-x-4 mb-5 border-y border-[var(--border-primary)]/30 py-3">
+          {discount > 0 && isConnected && (
+            <span className="text-[10px] font-black text-[var(--accent-gold)] bg-[var(--accent-gold)]/10 px-2 py-0.5 rounded italic">-{discount}%</span>
+          )}
+          {isHotel && attr?.rating && (
+            <div className="flex items-center gap-1">
+              <Star size={10} fill="var(--accent-gold)" className="text-[var(--accent-gold)]" />
+              <span className="text-[10px] font-black tracking-tighter">{Math.floor(attr.rating)}*</span>
+            </div>
+          )}
+          {attr?.guests && <Feature icon={<Users size={12} />} text={`${attr.guests} pers.`} />}
+          {attr?.breakfast && <Feature icon={<Coffee size={12} />} text="Inclus" />}
+          {attr?.spa_access && <Feature icon={<Sparkles size={11} />} text="Spa" highlight />}
+        </div>
+
+        {/* Pricing Section */}
+        <div className="mt-auto pt-2">
+          {/* TOP ROW: Labels & Preuve Sociale */}
+          <div className="flex justify-between items-center mb-3">
+            <div className="flex flex-col gap-1">
+              <span className="text-[7px] font-black uppercase tracking-[0.25em] text-[var(--text-tertiary)] leading-none">
+                {getPriceLabel(isFixed, auction.status, auction.total_bids)}
+              </span>
+              {/* Petite ligne de soulignement design */}
+              <div className="h-[1.5px] w-5 bg-[var(--accent-gold)]/30 rounded-full" />
+            </div>
+
+            {!isFixed && isConnected && auction.status === 'active' && (
+              <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[var(--accent-gold)]/10 border border-[var(--accent-gold)]/20 rounded-md">
+                <Gavel size={10} className="text-[var(--accent-gold)] animate-pulse" strokeWidth={3} />
+                <span className="text-[9px] font-black text-[var(--accent-gold)] uppercase tracking-tight">
+                  {auction.total_bids || 0} {auction.total_bids > 1 ? 'offres' : 'offre'}
                 </span>
-              </>
+              </div>
             )}
           </div>
 
-          {/* Indicateur de temps */}
-          {!isFixedPrice && (
-            <div
-              className="flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-lg border uppercase tracking-wide"
-              style={{
-                backgroundColor: 'var(--bg-tertiary)',
-                borderColor: 'var(--border-primary)',
-                color: 'var(--text-secondary)',
-              }}
-            >
-              <Clock size={12} style={{ color: 'var(--accent-gold)' }} />
-              <span>{getTimeLeft(auction.status, auction.start_at, auction.end_at)}</span>
-            </div>
-          )}
+          {/* MIDDLE ROW: Prix ou Accès Privé */}
+          <div className="mb-5">
+            {isConnected ? (
+              <div className="flex flex-col">
+                <div className="flex items-baseline gap-2.5">
+                  <span className={`text-3xl font-black italic tracking-tighter tabular-nums leading-none ${auction.status !== 'active' ? 'text-gray-500/50' : 'text-[var(--text-primary)]'
+                    }`}>
+                    {(isFixed ? auction.buy_now_price : auction.current_price)?.toLocaleString('fr-FR')}€
+                  </span>
+                  {attr?.value_real && (
+                    <span className="text-[11px] line-through text-[var(--text-tertiary)] opacity-40 font-bold italic decoration-[1.5px]">
+                      {attr.value_real.toLocaleString('fr-FR')}€
+                    </span>
+                  )}
+                </div>
+                {/* Badge d'économie si connecté */}
+                {attr?.value_real && auction.status === 'active' && (
+                  <span className="text-[8px] font-black uppercase tracking-widest text-[var(--accent-gold)] mt-1">
+                    Économie estimée : {Math.round(100 - ((isFixed ? (auction.buy_now_price || 0) : auction.current_price) / attr.value_real) * 100)}%
+                  </span>
+                )}
+              </div>
+            ) : (
+              <button
+                onClick={onAuthClick}
+                className="w-full h-14 flex items-center justify-between bg-[var(--bg-tertiary)] px-5 rounded-xl border border-dashed border-[var(--border-primary)] hover:border-[var(--accent-gold)] transition-all duration-300 group/lock"
+              >
+                <div className="flex flex-col items-start">
+                  <span className="text-xl font-black italic blur-[5px] opacity-20 tracking-tighter select-none">888 888€</span>
+                  <span className="text-[6px] font-black uppercase tracking-[0.3em] text-[var(--accent-gold)] opacity-0 group-hover/lock:opacity-100 transition-opacity">Membre uniquement</span>
+                </div>
+                <div className="flex items-center gap-2 bg-black/20 px-3 py-1.5 rounded-lg text-[8px] font-black uppercase text-[var(--accent-gold)] border border-white/5 group-hover/lock:scale-105 transition-transform">
+                  <Lock size={10} strokeWidth={3} /> Privé
+                </div>
+              </button>
+            )}
+          </div>
+
+          {/* BOTTOM ROW: Action Button */}
+          <Link
+            href={`/ventes/${auction.id}`}
+            className={`w-full h-12 flex items-center justify-between px-6 rounded-lg transition-all duration-500 font-black text-[9px] uppercase tracking-[0.2em] shadow-sm ${auction.status !== 'active' && auction.status !== 'upcoming'
+              ? 'bg-gray-200 text-gray-500 cursor-not-allowed opacity-50'
+              : !isConnected
+                ? 'bg-[var(--text-primary)] text-[var(--bg-primary)] hover:bg-[var(--accent-gold)] hover:text-white'
+                : 'bg-[var(--bg-tertiary)] border border-[var(--border-primary)] text-[var(--text-primary)] hover:border-[var(--accent-gold)] hover:shadow-lg hover:-translate-y-0.5'
+              }`}
+          >
+            <span>
+              {auction.status === 'upcoming' ? 'Aperçu du lot' : auction.status === 'active' ? (isConnected ? 'Accéder à la vente' : 'S\'inscrire / Connexion') : 'Vente Clôturée'}
+            </span>
+            <ArrowRight size={14} strokeWidth={3} className="group-hover:translate-x-1 transition-transform" />
+          </Link>
         </div>
-
-        {/* Titre & Description */}
-        <div className="space-y-2 flex-grow">
-          <h3 className="text-lg font-semibold line-clamp-2 group-hover:text-accent transition-colors" style={{ color: 'var(--text-primary)' }}>
-            {auction.title}
-          </h3>
-          <p className="text-xs line-clamp-1" style={{ color: 'var(--text-secondary)' }}>
-            {isFixedPrice ? 'Disponible immédiatement' : 'Enchère de départ accessible'}
-          </p>
-        </div>
-
-        <div
-          className="h-px w-full"
-          style={{ backgroundColor: 'var(--border-primary)' }}
-        />
-
-        {/* Boutons d'action */}
-        {!isConnected ? (
-          <button
-            onClick={(e) => { e.preventDefault(); onAuthClick?.(); }}
-            className="w-full h-11 rounded-lg font-semibold text-xs uppercase tracking-wide transition-all active:scale-95 flex items-center justify-center gap-2 shadow-sm hover:shadow-md text-white"
-            style={{ backgroundColor: 'var(--accent-gold)' }}
-          >
-            <Lock size={16} />
-            Se connecter pour voir le prix
-          </button>
-        ) : isFixedPrice ? (
-          <button
-            className="w-full h-11 rounded-lg font-semibold text-xs uppercase tracking-wide transition-all active:scale-95 flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
-            style={{
-              backgroundColor: 'var(--bg-tertiary)',
-              color: 'var(--text-primary)',
-              borderColor: 'var(--border-primary)',
-            }}
-          >
-            <ShoppingBag size={16} />
-            Acheter maintenant
-          </button>
-        ) : (
-          <button
-            onClick={(e) => { e.preventDefault(); onBid(auction.current_price + 1); }}
-            className="w-full h-11 rounded-lg font-semibold text-xs uppercase tracking-wide transition-all active:scale-95 flex items-center justify-center gap-2 shadow-sm hover:shadow-md text-white"
-            style={{ backgroundColor: 'var(--accent-gold)' }}
-          >
-            <Gavel size={16} />
-            Placer une offre
-          </button>
-        )}
       </div>
     </div>
   )
+}
+
+// Sous-composant pour les atouts
+function Feature({ icon, text, highlight = false, opacity = "opacity-60" }: { icon: React.ReactNode, text: string, highlight?: boolean, opacity?: string }) {
+  return (
+    <div className={`flex items-center gap-1.5 ${highlight ? 'text-[var(--accent-gold)]' : opacity}`}>
+      <span className="flex-shrink-0">{icon}</span>
+      <span className={`text-[10px] font-bold ${!highlight && 'tracking-tight'} ${highlight && 'uppercase text-[9px] font-black tracking-widest'}`}>
+        {text}
+      </span>
+    </div>
+  );
 }

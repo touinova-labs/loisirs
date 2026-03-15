@@ -84,6 +84,7 @@ BEGIN
     UPDATE auctions 
     SET current_price = NEW.amount,
         end_at = v_end_at,
+        total_bids = total_bids + 1,
         updated_at = NOW()
     WHERE id = NEW.auction_id;
 
@@ -93,6 +94,8 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
+
+ALTER TABLE auctions ADD COLUMN total_bids INTEGER DEFAULT 0;
 
 -- Vue pour les clients (Gagnants)
 CREATE OR REPLACE VIEW auction_winners AS
@@ -202,3 +205,4 @@ alter table public.profiles add column email text;
 
 ALTER TABLE bids ADD COLUMN IF NOT EXISTS user_nickname TEXT;
 ALTER TABLE profiles ADD COLUMN IF NOT EXISTS accepted_newsletter BOOLEAN DEFAULT FALSE;
+

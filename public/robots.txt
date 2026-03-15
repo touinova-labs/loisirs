@@ -42,5 +42,5 @@ User-agent: DotBot
 Disallow: /
 
 # Sitemap location
-Sitemap: https://loisirsprive.fr/sitemap.xml
-Sitemap: https://loisirsprive.fr/sitemap-auctions.xml
+Sitemap: https://loisirs-prive.fr/sitemap.xml
+Sitemap: https://loisirs-prive.fr/sitemap-auctions.xml

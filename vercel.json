@@ -27,7 +27,7 @@
       ]
     },
     {
-      "source": "/auctions/:path*",
+      "source": "/ventes/:path*",
       "headers": [
         {
           "key": "Cache-Control",

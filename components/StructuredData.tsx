@@ -52,41 +52,6 @@ export const organizationSchema = {
   },
 };
 
-export const auctionSchema = (auction: {
-  id: string;
-  title: string;
-  description: string;
-  image: string;
-  startPrice: number;
-  currentBid?: number;
-  status: 'upcoming' | 'active' | 'completed';
-  startDate?: string;
-  endDate?: string;
-  location?: string;
-}) => ({
-  '@context': 'https://schema.org',
-  '@type': 'Product',
-  '@id': `https://loisirsprive.fr/auctions/${auction.id}`,
-  name: auction.title,
-  description: auction.description,
-  image: auction.image,
-  url: `https://loisirsprive.fr/auctions/${auction.id}`,
-  offers: {
-    '@type': 'AggregateOffer',
-    priceCurrency: 'EUR',
-    lowPrice: auction.startPrice.toString(),
-    highPrice: (auction.currentBid || auction.startPrice).toString(),
-    offerCount: 1,
-    availability: auction.status === 'active' ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
-  },
-  ...(auction.status === 'active' && auction.endDate && {
-    priceValidUntil: auction.endDate,
-  }),
-  ...(auction.location && {
-    areaServed: auction.location,
-  }),
-});
-
 export const breadcrumbSchema = (items: Array<{ name: string; url: string }>) => ({
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',

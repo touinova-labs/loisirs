@@ -117,7 +117,7 @@ export function PricingSidebar({
             style={{ backgroundColor: 'var(--accent-gold)' }}
           >
             {isFixedPrice ? <ShoppingBag size={22} /> : <Gavel size={22} />}
-            {isBidding ? 'Envoi...' : isFixedPrice ? 'Acheter' : `Miser ${auction.current_price + 1}€`}
+            {isBidding ? 'Envoi...' : isFixedPrice ? 'Acheter' : `Placer ${auction.current_price + 1}€`}
           </button>
         )}
 
@@ -138,7 +138,7 @@ export function PricingSidebar({
 
 
 
-const getPriceLabel = (isFixedPrice: boolean, status: string, bidCount: number) => {
+export const getPriceLabel = (isFixedPrice: boolean, status: string, bidCount: number) => {
   if (isFixedPrice) return "Prix Membre";
 
   switch (status) {
@@ -146,7 +146,10 @@ const getPriceLabel = (isFixedPrice: boolean, status: string, bidCount: number) 
       return "Mise de départ";
     case 'active':
       return bidCount > 0 ? "Offre actuelle" : "Première mise";
-    case 'finished':
+    case 'finished_reserve_not_met':
+    case 'finished_unpaid':
+    case 'finished_paid':
+    case 'completed':
       return "Prix final";
     default:
       return "Valeur";
