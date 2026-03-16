@@ -149,9 +149,19 @@ export default function OnboardingPage() {
 										target="_blank"
 										className="underline hover:text-[var(--accent-gold)] transition-colors"
 										style={{ color: "var(--text-primary)" }}
-										onClick={(e) => e.stopPropagation()} // Empêche de cocher la case en cliquant ici
+										onClick={(e) => e.stopPropagation()}
 									>
 										mentions légales
+									</a>
+									, les{" "}
+									<a
+										href="/cgu"
+										target="_blank"
+										className="underline hover:text-[var(--accent-gold)] transition-colors"
+										style={{ color: "var(--text-primary)" }}
+										onClick={(e) => e.stopPropagation()}
+									>
+										CGU
 									</a>
 									, les{" "}
 									<a
@@ -163,7 +173,16 @@ export default function OnboardingPage() {
 									>
 										CGV
 									</a>{" "}
-									et je reconnais que chaque enchère posée constitue un engagement d'achat ferme.
+									et la{" "}
+									<a
+										href="/politique-confidentialite"
+										target="_blank"
+										className="underline hover:text-[var(--accent-gold)] transition-colors"
+										style={{ color: "var(--text-primary)" }}
+										onClick={(e) => e.stopPropagation()}
+									>
+										politique de confidentialité
+									</a>.
 								</p>
 							</div>
 

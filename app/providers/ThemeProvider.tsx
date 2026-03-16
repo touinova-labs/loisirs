@@ -13,7 +13,7 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-	const defaultTheme = (process.env.NEXT_PUBLIC_DEFAULT_THEME as WebSiteTheme) || 'theme-premium'
+	const defaultTheme = (process.env.NEXT_PUBLIC_DEFAULT_THEME as WebSiteTheme) || 'theme-luxe'
 	const [theme, setThemeState] = useState<WebSiteTheme>(defaultTheme)
 	const [mounted, setMounted] = useState(false)
 

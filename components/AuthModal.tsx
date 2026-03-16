@@ -1,10 +1,10 @@
 'use client'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Mail, Sparkles } from 'lucide-react'
+import { X, Mail, Sparkles, ShieldCheck } from 'lucide-react'
 import { useTheme } from '@/app/providers/ThemeProvider'
 
-export default function AuthModal({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
+export default function AuthModal({ isOpen, onClose, mode }: { isOpen: boolean, onClose: () => void, mode?: 'login' | 'alert' }) {
 	const [email, setEmail] = useState('')
 	const [loading, setLoading] = useState(false)
 	const [sent, setSent] = useState(false)
@@ -35,49 +35,74 @@ export default function AuthModal({ isOpen, onClose }: { isOpen: boolean, onClos
 		}
 	}
 
+	const content = {
+		login: {
+			title: "Accès Membre",
+			desc: <>Identifiez-vous pour accéder aux **ventes privées** <br /> et participer aux **enchères flash**.</>,
+			button: "Entrer dans le cercle"
+		},
+		alert: {
+			title: "Liste Prioritaire",
+			desc: "Toutes nos suites sont réservées. Inscrivez-vous pour être alerté en priorité de la prochaine collection.",
+			button: "Rejoindre la liste d'accès"
+		}
+	};
+
+	const current = mode === 'alert' ? content.alert : content.login;
 
 	return (
 		<AnimatePresence>
+			
 			{isOpen && (
 				<>
-					{/* Fond sombre */}
+					{/* Fond sombre avec flou artistique */}
 					<motion.div
 						initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
 						onClick={onClose}
-						className="fixed inset-0 backdrop-blur-sm z-[100]"
-						style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}
+						className="fixed inset-0 backdrop-blur-md z-[100]"
+						style={{ backgroundColor: 'rgba(0, 0, 0, 0.85)' }}
 					/>
 
 					{/* Fenêtre Modale */}
 					<motion.div
-						initial={{ opacity: 0, scale: 0.9, y: 20 }}
+						initial={{ opacity: 0, scale: 0.95, y: 20 }}
 						animate={{ opacity: 1, scale: 1, y: 0 }}
-						exit={{ opacity: 0, scale: 0.9, y: 20 }}
-						className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-md border p-8 rounded-2xl shadow-lg z-[101]"
+						exit={{ opacity: 0, scale: 0.95, y: 20 }}
+						className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-md border p-10 rounded-[2.5rem] shadow-2xl z-[101]"
 						style={{
 							backgroundColor: 'var(--bg-secondary)',
 							borderColor: 'var(--border-primary)',
 						}}
 					>
-						<button onClick={onClose} className="absolute top-4 right-4 transition-colors" style={{ color: 'var(--text-secondary)' }}>
-							<X size={20} />
+						<button onClick={onClose} className="absolute top-6 right-6 transition-colors opacity-50 hover:opacity-100" style={{ color: 'var(--text-secondary)' }}>
+							<X size={24} />
 						</button>
 
 						{!sent ? (
 							<div className="text-center">
-								<div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6" style={{ backgroundColor: 'var(--accent-gold)', opacity: 0.1 }}>
-									<Sparkles size={32} style={{ color: 'var(--accent-gold)' }} />
+								{/* Icône Premium */}
+								<div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-8 border border-white/5 shadow-inner" style={{ backgroundColor: 'rgba(212, 175, 55, 0.05)' }}>
+									<Sparkles size={38} style={{ color: 'var(--accent-gold)' }} />
 								</div>
-								<h2 className="text-2xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>Rejoignez l'enchère</h2>
-								<p className="mb-8" style={{ color: 'var(--text-secondary)' }}>Entrez votre email pour miser en un clic.</p>
 
-								<form onSubmit={handleMagicLink} className="space-y-4">
+								<h2 className="text-2xl font-light tracking-widest uppercase mb-4" style={{ color: 'var(--text-primary)' }}>
+									{current.title}
+								</h2>
+
+								<p className="mb-10 text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+									{current.desc}
+								</p>
+
+								<form onSubmit={handleMagicLink} className="space-y-6">
 									<div className="relative">
-										<Mail className="absolute left-4 top-1/2 -translate-y-1/2" size={18} style={{ color: 'var(--text-secondary)' }} />
+										<Mail className="absolute left-5 top-1/2 -translate-y-1/2 opacity-30" size={20} style={{ color: 'var(--text-primary)' }} />
 										<input
-											type="email" placeholder="nom@exemple.com" required
-											value={email} onChange={(e) => setEmail(e.target.value)}
-											className="w-full border rounded-lg py-3 pl-12 pr-4 outline-none transition-all"
+											type="email"
+											placeholder="votre@email.com"
+											required
+											value={email}
+											onChange={(e) => setEmail(e.target.value)}
+											className="w-full border rounded-full py-4 pl-14 pr-6 outline-none transition-all text-sm tracking-wide"
 											style={{
 												backgroundColor: 'var(--bg-tertiary)',
 												borderColor: 'var(--border-primary)',
@@ -85,20 +110,49 @@ export default function AuthModal({ isOpen, onClose }: { isOpen: boolean, onClos
 											}}
 										/>
 									</div>
+
 									<button
 										disabled={loading}
-										className="w-full font-bold py-3 rounded-lg shadow-md transition-all disabled:opacity-50 text-white"
+										className="w-full font-bold py-4 rounded-full shadow-lg transition-all disabled:opacity-50 text-black uppercase text-[10px] tracking-[0.3em]"
 										style={{ backgroundColor: 'var(--accent-gold)' }}
 									>
-										{loading ? "Envoi..." : "Recevoir mon lien magique"}
+										{loading ? "Vérification..." : current.button}
 									</button>
 								</form>
+
+								<div className="mt-8 flex items-center justify-center gap-2 opacity-30">
+									<ShieldCheck size={14} />
+									<span className="text-[10px] uppercase tracking-widest">Connexion sécurisée sans mot de passe</span>
+								</div>
 							</div>
 						) : (
-							<div className="text-center py-8">
-								<div className="text-5xl mb-4">📩</div>
-								<h2 className="text-2xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>Vérifiez vos emails</h2>
-								<p style={{ color: 'var(--text-secondary)' }}>On vous a envoyé un lien magique pour vous connecter instantanément.</p>
+							<div className="text-center py-10">
+								<div className="text-6xl mb-6 animate-bounce">
+									{mode === 'alert' ? '✨' : '📩'}
+								</div>
+								<h2 className="text-xl font-light tracking-widest uppercase mb-4" style={{ color: 'var(--text-primary)' }}>
+									{mode === 'alert' ? 'Demande Enregistrée' : 'Lien d’accès envoyé'}
+								</h2>
+								<p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+									{mode === 'alert' ? (
+										<>
+											Vous faites désormais partie de la <strong>liste prioritaire</strong>. <br />
+											Vous recevrez une invitation exclusive dès l'ouverture de la prochaine collection.
+										</>
+									) : (
+										<>
+											Nous venons de vous envoyer votre lien magique. <br />
+											Consultez votre boîte mail pour accéder immédiatement au cercle.
+										</>
+									)}
+								</p>
+
+								<button
+									onClick={() => setSent(false)}
+									className="mt-10 text-[10px] uppercase tracking-[0.2em] opacity-40 hover:opacity-100 transition-all border-b border-transparent hover:border-current pb-1"
+								>
+									{mode === 'alert' ? "S'inscrire avec un autre email" : "Renvoyer le lien"}
+								</button>
 							</div>
 						)}
 					</motion.div>

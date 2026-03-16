@@ -39,7 +39,7 @@ export function MobileActionBar({ auction, attr, isFixedPrice, user, onPlaceBid 
           className="flex-grow h-14 rounded-lg font-bold uppercase text-xs tracking-widest shadow-md active:scale-95 transition-transform text-white"
           style={{ backgroundColor: 'var(--accent-gold)' }}
         >
-          {isFixedPrice ? 'Acheter' : 'Enchérir'}
+          {isFixedPrice ? 'Réserver maintenant' : 'Enchérir'}
         </button>
       </div>
     </div>

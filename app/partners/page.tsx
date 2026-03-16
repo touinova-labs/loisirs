@@ -33,7 +33,7 @@ export default function PartnersPage() {
                         </div>
 
                         <div className="flex flex-col gap-5 lg:items-end">
-                            <Link href="mailto:partners@loisirs-prive.fr" className="h-20 w-full lg:w-80 rounded-lg flex items-center justify-center gap-4 text-[11px] font-bold uppercase tracking-widest hover:scale-105 transition-all duration-500 group shadow-md text-white" style={{ backgroundColor: 'var(--accent-gold)' }}>
+                            <Link href="mailto:partenaires@loisirs-prive.fr" className="h-20 w-full lg:w-80 rounded-lg flex items-center justify-center gap-4 text-[11px] font-bold uppercase tracking-widest hover:scale-105 transition-all duration-500 group shadow-md text-white" style={{ backgroundColor: 'var(--accent-gold)' }}>
                                 Ouvrir un Canal Partenaire
                                 <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform" />
                             </Link>
@@ -177,7 +177,7 @@ export default function PartnersPage() {
                         Prêt à booster <br /> <span style={{ color: 'var(--accent-gold)' }}>votre RevPAR ?</span>
                     </h2>
                     <div className="pt-10 flex flex-col items-center gap-6">
-                        <Link href="mailto:partners@loisirs-prive.fr" className="h-24 px-16 rounded-2xl flex items-center gap-6 text-xl font-black uppercase tracking-widest transition-all hover:scale-105 shadow-lg text-white" style={{ backgroundColor: 'var(--accent-gold)' }}>
+                        <Link href="mailto:partenaires@loisirs-prive.fr" className="h-24 px-16 rounded-2xl flex items-center gap-6 text-xl font-black uppercase tracking-widest transition-all hover:scale-105 shadow-lg text-white" style={{ backgroundColor: 'var(--accent-gold)' }}>
                             Devenir Partenaire
                             <ArrowRight size={28} />
                         </Link>

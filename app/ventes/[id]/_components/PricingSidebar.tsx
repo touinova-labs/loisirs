@@ -117,7 +117,7 @@ export function PricingSidebar({
             style={{ backgroundColor: 'var(--accent-gold)' }}
           >
             {isFixedPrice ? <ShoppingBag size={22} /> : <Gavel size={22} />}
-            {isBidding ? 'Envoi...' : isFixedPrice ? 'Acheter' : `Placer ${auction.current_price + 1}€`}
+            {isBidding ? 'Envoi...' : isFixedPrice ? 'Réserver maintenant' : `Placer ${auction.current_price + 1}€`}
           </button>
         )}
 

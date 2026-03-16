@@ -192,3 +192,55 @@ Les services inclus (Petit-déjeuner, Spa, etc.).
 La mention légale : "Tarif négocié via Loisirs-Privé - Partenaire Apporteur d'Affaires".
 ---------------
 Monsieur le Directeur, Loisirs-Privé est un outil de Yield Management pur. Nous augmentons votre RevPAR en capturant une demande additionnelle sur vos chambres vacantes, sans jamais cannibaliser votre segment de clientèle plein tarif.
+
+
+Voici un modèle de mail de bienvenue conçu pour instaurer immédiatement ce sentiment d'exclusivité. L'idée est de faire comprendre au membre qu'il ne vient pas de s'inscrire sur un site de voyage classique, mais qu'il vient de franchir les portes d'un **Cercle**.
+
+---
+
+### Objet : Bienvenue au Cercle, [Prénom]. Votre accès est activé.
+
+**Corps du mail :**
+
+**Loisirs-Privé**
+*L'art du voyage confidentiel.*
+
+---
+
+Félicitations [Prénom],
+
+Votre demande d'adhésion a été validée. Vous faites désormais partie de **Loisirs-Privé**, un cercle restreint de voyageurs exigeants pour qui le luxe ne doit souffrir d'aucun compromis.
+
+**Ce qui vous attend désormais :**
+
+* **L'Exclusivité :** Des suites royales et des villas privées négociées directement avec nos partenaires hôteliers, inaccessibles au grand public à ces conditions.
+* **L'Adrénaline :** Nos enchères de prestige où le dernier mot vous appartient.
+* **La Confidentialité :** Des tarifs protégés par le secret de notre communauté.
+
+**Votre première étape :**
+Le prochain lot d'exception vient d'être mis en ligne. Une Suite avec vue sur la lagune de Venise vous attend peut-être déjà.
+
+[ **ACCÉDER AUX ENCHÈRES EN COURS** ] *(Bouton doré)*
+
+*Note : Pour préserver la qualité de nos relations avec les établissements partenaires, nous vous rappelons que les tarifs affichés sur votre interface sont strictement confidentiels.*
+
+Bienvenue parmi nous. Le voyage commence ici.
+
+**L'équipe Loisirs-Privé**
+
+---
+
+### Quelques astuces pour ce mail :
+
+1. **Le Design :** Utilise une police serif élégante (type Bodoni ou Playfair Display) pour les titres et beaucoup d'espaces blancs.
+2. **L'Expéditeur :** N'utilise pas `noreply@`. Utilise quelque chose comme `conciergerie@loisirs-prive.com` ou `le-cercle@...`.
+3. **L'image de signature :** Une signature minimaliste, peut-être juste ton logo en version dorée sur fond noir.
+
+**Souhaites-tu que je te prépare le code d'une "Landing Page" de confirmation d'inscription qui reprend cette esthétique pour accueillir l'utilisateur juste après son clic sur ta pub ?**
+
+
+
+Tes utilisateurs sont des gens qui aiment le beau et le confort, mais qui sont fiers de faire une "bonne affaire". Ils cherchent le frisson de s'offrir un 5* au prix d'un 3* standard.
+
+
+Bonjour, j'ai envoyé un dossier à l'attention de la Direction mardi après-midi comme convenu avec vos services. Je souhaitais simplement m'assurer qu'il leur a bien été transmis avant notre point téléphonique.

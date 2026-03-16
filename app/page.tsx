@@ -7,12 +7,16 @@ import AuctionCard from '@/components/AuctionCard'
 import AuthModal from '@/components/AuthModal'
 import Navbar from '@/components/Navbar'
 import Toast, { ToastType } from '@/components/Toast'
-import StructuredData, { organizationSchema } from '@/components/StructuredData'
 import {
     Gavel as GavelIcon,
     ArrowRight,
     Globe,
-    User} from 'lucide-react'
+    User,
+    CheckCircle,
+    Zap,
+    ShieldCheck,
+    Lock
+} from 'lucide-react'
 import { useBidApi } from '@/hooks/useBid'
 import { useUser } from '@/hooks/UserContext'
 import SearchBar from './_components/SearchBar'
@@ -27,7 +31,7 @@ export default function Home() {
     const [isClient, setIsClient] = useState(false)
     const [membersOnline, setMembersOnline] = useState(0)
 
-    const [isAuthOpen, setIsAuthOpen] = useState(false)
+    const [authMode, setAuthMode] = useState<"login" | "alert">()
     const [filter, setFilter] = useState<'all' | 'auction' | 'fixed'>('all')
     const [toast, setToast] = useState<{ msg: string | null; type: ToastType }>({ msg: null, type: null })
 
@@ -78,52 +82,109 @@ export default function Home() {
         <main className="min-h-screen text-base selection:opacity-30 pb-24"
             style={{ backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)' }}>
 
-            <StructuredData schema={organizationSchema} />
-            <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
+            <AuthModal isOpen={!!authMode} onClose={() => setAuthMode(undefined)} mode={authMode} />
             <Toast message={toast.msg} type={toast.type} onClose={() => setToast({ msg: null, type: null })} />
-            <Navbar user={user} onAuthClick={() => setIsAuthOpen(true)} />
+            <Navbar user={user} onAuthClick={() => setAuthMode("login")} />
 
             {/* --- HERO SECTION OPTIMISÉE MOBILE --- */}
-            <section className="relative h-[55vh] md:h-[70vh] flex items-end pb-8 md:pb-16 px-6 overflow-hidden">
-                <div className="absolute inset-0 z-0">
-                    <img
-                        src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1600&q=80"
-                        className="w-full h-full object-cover brightness-[0.4] md:brightness-[0.6]"
-                        alt="Luxury Hotel"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)] via-transparent to-transparent" />
-                </div>
-
-                <div className="relative z-10 w-full max-w-7xl mx-auto space-y-4 md:space-y-6">
-                    {/* Badge d'audience live */}
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-gold)] bg-black/40 backdrop-blur-md">
-                        <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-                        <span className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-white">
-                            Cercle Privé : {membersOnline} membres actifs
-                        </span>
+            <>
+                {/* SECTION 1 : HERO */}
+                <section className="relative h-[65vh] md:h-[80vh] flex items-center md:items-end pb-12 md:pb-24 px-6 overflow-hidden">
+                    {/* Background & Overlay */}
+                    <div className="absolute inset-0 z-0">
+                        <img
+                            src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1600&q=80"
+                            className="w-full h-full object-cover brightness-[0.4] md:brightness-[0.6]"
+                            alt="Luxury Hotel"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)] via-transparent to-transparent" />
                     </div>
 
-                    {/* Titre & Ton nouveau texte thématique */}
-                    <div className="space-y-3 md:space-y-4">
-                        <h1 className="text-4xl md:text-8xl font-black italic uppercase tracking-tighter leading-[0.9] text-white">
-                            L'Exception <br /> <span style={{ color: 'var(--accent-gold)' }}>Hors-Radar.</span>
-                        </h1>
+                    {/* Content Hero */}
+                    <div className="relative z-10 w-full max-w-7xl mx-auto space-y-6 md:space-y-8">
+                        {/* Badge d'audience live */}
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-gold)] bg-black/40 backdrop-blur-md w-fit">
+                            <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                            <span className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-white">
+                                Cercle Privé : {membersOnline} membres actifs
+                            </span>
+                        </div>
 
-                        <p className="text-[10px] md:text-lg font-bold italic text-gray-400 max-w-sm md:max-w-xl leading-relaxed">
-                            Accédez aux disponibilités confidentielles des plus beaux établissements, <span className="text-white">hors de portée du grand public.</span>
-                        </p>
+                        {/* Titre & Texte */}
+                        <div className="space-y-4 md:space-y-6">
+                            <h1 className="text-4xl md:text-8xl font-black italic uppercase tracking-tighter leading-[0.9] text-white">
+                                L'Exception <br /> <span style={{ color: 'var(--accent-gold)' }}>Hors-Radar.</span>
+                            </h1>
+
+                            <p className="text-[12px] md:text-xl font-bold italic text-gray-300 max-w-sm md:max-w-2xl leading-relaxed">
+                                Accédez aux disponibilités confidentielles des plus beaux établissements. Le luxe à sa juste valeur, <span className="text-white">hors de portée du grand public.</span>
+                            </p>
+                        </div>
+
+                        {/* Bouton CTA */}
+                        <button
+                            onClick={() => document.getElementById('catalogue')?.scrollIntoView({ behavior: 'smooth' })}
+                            className="h-12 md:h-16 px-8 md:px-12 bg-[var(--accent-gold)] text-black text-[10px] md:text-sm font-black uppercase tracking-widest rounded-xl shadow-2xl flex items-center gap-4 hover:scale-105 active:scale-95 transition-all w-fit"
+                        >
+                            Découvrir les lots actifs
+                            <ArrowRight size={18} />
+                        </button>
                     </div>
+                </section>
 
-                    {/* Bouton d'action direct */}
-                    <button
-                        onClick={() => document.getElementById('catalogue')?.scrollIntoView({ behavior: 'smooth' })}
-                        className="h-12 md:h-16 px-8 md:px-12 bg-[var(--accent-gold)] text-white text-[10px] md:text-sm font-black uppercase tracking-widest rounded-xl shadow-2xl flex items-center gap-4 hover:scale-105 active:scale-95 transition-all w-fit"
-                    >
-                        Explorer les ventes
-                        <ArrowRight size={18} />
-                    </button>
+                {/* SECTION 2 : BARRE DE RÉASSURANCE (Sortie du Hero) */}
+                <div className="relative z-20 -mt-10 md:-mt-16 px-6">
+                    <div className="max-w-7xl mx-auto bg-black/80 backdrop-blur-2xl border border-white/10 p-8 md:p-12 rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.7)]">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-6">
+
+                            {/* Item 1 */}
+                            <div className="flex flex-col gap-3">
+                                <div className="flex items-center gap-2 text-[var(--accent-gold)]">
+                                    <ShieldCheck size={18} />
+                                    <span className="text-[10px] md:text-[11px] font-black uppercase tracking-widest">Adhésion Libre</span>
+                                </div>
+                                <p className="text-[11px] md:text-xs text-gray-400 font-bold italic leading-snug">
+                                    Accès au cercle sans frais <br className="hidden md:block" /> ni abonnement.
+                                </p>
+                            </div>
+
+                            {/* Item 2 */}
+                            <div className="flex flex-col gap-3">
+                                <div className="flex items-center gap-2 text-[var(--accent-gold)]">
+                                    <Zap size={18} />
+                                    <span className="text-[10px] md:text-[11px] font-black uppercase tracking-widest">Zéro Intermédiaire</span>
+                                </div>
+                                <p className="text-[11px] md:text-xs text-gray-400 font-bold italic leading-snug">
+                                    Réservation directe auprès <br className="hidden md:block" /> de l'établissement.
+                                </p>
+                            </div>
+
+                            {/* Item 3 */}
+                            <div className="flex flex-col gap-3">
+                                <div className="flex items-center gap-2 text-[var(--accent-gold)]">
+                                    <CheckCircle size={18} />
+                                    <span className="text-[10px] md:text-[11px] font-black uppercase tracking-widest">Lots Vérifiés</span>
+                                </div>
+                                <p className="text-[11px] md:text-xs text-gray-400 font-bold italic leading-snug">
+                                    Uniquement des hôtels <br className="hidden md:block" /> 4* & 5* sélectionnés.
+                                </p>
+                            </div>
+
+                            {/* Item 4 */}
+                            <div className="flex flex-col gap-3">
+                                <div className="flex items-center gap-2 text-[var(--accent-gold)]">
+                                    <Lock size={18} />
+                                    <span className="text-[10px] md:text-[11px] font-black uppercase tracking-widest">Prix Confidentiels</span>
+                                </div>
+                                <p className="text-[11px] md:text-xs text-gray-400 font-bold italic leading-snug">
+                                    Offres protégées et <br className="hidden md:block" /> invisibles sur le web.
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
-            </section>
+            </>
 
 
             <div id="catalogue" className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-16">
@@ -156,7 +217,6 @@ export default function Home() {
                 </div>
 
                 {/* GRILLE VOYAGEUR */}
-
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
                     {loading ? (
                         // SKELETON LUXE AVEC SHIMMER
@@ -170,24 +230,74 @@ export default function Home() {
                                 }}
                             />
                         ))
-                    ) : (
-                        filteredAuctions.map((auction, index) => (
-                            <div
-                                key={auction.id}
-                                className="animate-card-entry"
-                                style={{
-                                    // Décalage de 100ms entre chaque carte pour l'effet cascade
-                                    animationDelay: `${index * 100}ms`
-                                }}
-                            >
-                                <AuctionCard
-                                    auction={auction}
-                                    isConnected={!!user}
-                                    onAuthClick={() => setIsAuthOpen(true)}
-                                />
+                    ) :
+                        filteredAuctions.length > 0 ?
+                            filteredAuctions.map((auction, index) => (
+                                <div
+                                    key={auction.id}
+                                    className="animate-card-entry"
+                                    style={{
+                                        // Décalage de 100ms entre chaque carte pour l'effet cascade
+                                        animationDelay: `${index * 100}ms`
+                                    }}
+                                >
+                                    <AuctionCard
+                                        auction={auction}
+                                        isConnected={!!user}
+                                        onAuthClick={() => setAuthMode("login")}
+                                    />
+                                </div>
+                            ))
+                            :
+                            <div className="col-span-full py-20 px-6 flex flex-col items-center justify-center border border-white/5 rounded-[2.5rem] bg-gradient-to-b from-white/[0.02] to-transparent text-center animate-card-entry">
+                                {/* Icône Statut */}
+                                <div className="relative flex h-3 w-3 mb-6">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-gold"></span>
+                                </div>
+
+                                {/* Titre : Majuscules + Espacement luxe */}
+                                <h3 className="text-xl md:text-2xl font-light tracking-[0.25em] uppercase mb-6 text-white">
+                                    Nouvelle collection en préparation
+                                </h3>
+
+                                {/* Sous-titre : Équilibré et pro */}
+                                <div className="max-w-2xl space-y-4">
+                                    <p className="text-sm md:text-base text-gray-300 leading-relaxed font-light">
+                                        Le cercle a été particulièrement actif et toutes nos suites ont été adjugées.
+                                        Nos experts finalisent actuellement de nouveaux partenariats pour la semaine prochaine.
+                                    </p>
+                                    <p className="text-xs md:text-sm text-gray-500 tracking-wide">
+                                        Les prochaines <span className="text-gray-300">Enchères Flash</span> et <span className="text-gray-300">Ventes Privées</span> sont sur le point d'être révélées. Restez à l'affût.
+                                    </p>
+                                </div>
+
+                                {/* Bouton d'action intelligent */}
+                                <div className="mt-10">
+                                    {user ? (
+                                        // Si l'utilisateur est déjà connecté, on le rassure
+                                        <div className="flex flex-col items-center gap-3">
+                                            <div className="px-8 py-3 rounded-full border border-[#D4AF37]/30 bg-[#D4AF37]/5 text-[10px] tracking-[0.2em] uppercase text-[#D4AF37]">
+                                                Vous êtes sur la liste prioritaire
+                                            </div>
+                                            <p className="text-[9px] text-gray-500 uppercase tracking-widest">
+                                                Notification active pour {user.email}
+                                            </p>
+                                        </div>
+                                    ) : (
+                                        // Si l'utilisateur n'est pas connecté, on ouvre la modale en mode alerte
+                                        <button
+                                            className="px-10 py-4 rounded-full border border-white/10 text-[10px] tracking-[0.3em] uppercase font-bold hover:bg-white hover:text-black transition-all duration-500 ease-in-out"
+                                            onClick={() => {
+                                                setAuthMode("alert");
+                                            }}
+                                        >
+                                            Être alerté de l'ouverture
+                                        </button>
+                                    )}
+                                </div>
                             </div>
-                        ))
-                    )}
+                    }
                 </div>
             </div>
 
@@ -237,7 +347,7 @@ export default function Home() {
                 {/* BOUTON PROFIL / LOGIN */}
                 <button
                     className="flex flex-col items-center gap-1 transition-all active:scale-90"
-                    onClick={() => user ? (window.location.href = '/profile') : setIsAuthOpen(true)}
+                    onClick={() => user ? (window.location.href = '/profile') : setAuthMode("login")}
                     style={{ color: user ? 'var(--accent-gold)' : 'var(--text-tertiary)' }}
                 >
                     <User size={20} />
