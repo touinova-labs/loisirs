@@ -206,3 +206,5 @@ alter table public.profiles add column email text;
 ALTER TABLE bids ADD COLUMN IF NOT EXISTS user_nickname TEXT;
 ALTER TABLE profiles ADD COLUMN IF NOT EXISTS accepted_newsletter BOOLEAN DEFAULT FALSE;
 
+ALTER TABLE auctions ADD COLUMN IF NOT EXISTS enabled BOOLEAN DEFAULT FALSE;
+

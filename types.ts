@@ -42,6 +42,7 @@ export interface Auction {
   booking_url: string
   partner_email: string
   total_bids : number
+  enabled: boolean
 }
 
 

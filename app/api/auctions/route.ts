@@ -6,6 +6,7 @@ export async function GET() {
         const { data, error } = await supabaseAdmin
             .from('auctions')
             .select('*')
+            .eq('enabled', true)
             .order('created_at', { ascending: false });
 
         if (error) throw error;
