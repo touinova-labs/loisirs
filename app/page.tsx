@@ -18,8 +18,9 @@ import {
     Lock
 } from 'lucide-react'
 import { useBidApi } from '@/hooks/useBid'
-import { useUser } from '@/hooks/UserContext'
+import { UserData, useUser } from '@/hooks/UserContext'
 import SearchBar from './_components/SearchBar'
+import PartnerReassurance from './_components/PartnerReassurance'
 
 export default function Home() {
     // --- ÉTATS & HOOKS ---
@@ -249,55 +250,9 @@ export default function Home() {
                                 </div>
                             ))
                             :
-                            <div className="col-span-full py-20 px-6 flex flex-col items-center justify-center border border-white/5 rounded-[2.5rem] bg-gradient-to-b from-white/[0.02] to-transparent text-center animate-card-entry">
-                                {/* Icône Statut */}
-                                <div className="relative flex h-3 w-3 mb-6">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold opacity-75"></span>
-                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-gold"></span>
-                                </div>
-
-                                {/* Titre : Majuscules + Espacement luxe */}
-                                <h3 className="text-xl md:text-2xl font-light tracking-[0.25em] uppercase mb-6 text-white">
-                                    Nouvelle collection en préparation
-                                </h3>
-
-                                {/* Sous-titre : Équilibré et pro */}
-                                <div className="max-w-2xl space-y-4">
-                                    <p className="text-sm md:text-base text-gray-300 leading-relaxed font-light">
-                                        Le cercle a été particulièrement actif et toutes nos suites ont été adjugées.
-                                        Nos experts finalisent actuellement de nouveaux partenariats pour la semaine prochaine.
-                                    </p>
-                                    <p className="text-xs md:text-sm text-gray-500 tracking-wide">
-                                        Les prochaines <span className="text-gray-300">Enchères Flash</span> et <span className="text-gray-300">Ventes Privées</span> sont sur le point d'être révélées. Restez à l'affût.
-                                    </p>
-                                </div>
-
-                                {/* Bouton d'action intelligent */}
-                                <div className="mt-10">
-                                    {user ? (
-                                        // Si l'utilisateur est déjà connecté, on le rassure
-                                        <div className="flex flex-col items-center gap-3">
-                                            <div className="px-8 py-3 rounded-full border border-[#D4AF37]/30 bg-[#D4AF37]/5 text-[10px] tracking-[0.2em] uppercase text-[#D4AF37]">
-                                                Vous êtes sur la liste prioritaire
-                                            </div>
-                                            <p className="text-[9px] text-gray-500 uppercase tracking-widest">
-                                                Notification active pour {user.email}
-                                            </p>
-                                        </div>
-                                    ) : (
-                                        // Si l'utilisateur n'est pas connecté, on ouvre la modale en mode alerte
-                                        <button
-                                            className="px-10 py-4 rounded-full border border-white/10 text-[10px] tracking-[0.3em] uppercase font-bold hover:bg-white hover:text-black transition-all duration-500 ease-in-out"
-                                            onClick={() => {
-                                                setAuthMode("alert");
-                                            }}
-                                        >
-                                            Être alerté de l'ouverture
-                                        </button>
-                                    )}
-                                </div>
-                            </div>
+                            <EmptyState onBtnClick={() => setAuthMode("alert")} />
                     }
+                    <PartnerReassurance />
                 </div>
             </div>
 
@@ -357,5 +312,105 @@ export default function Home() {
                 </button>
             </nav>
         </main>
+    )
+}
+
+
+
+function EmptyState({ onBtnClick }: { onBtnClick: () => void }) {
+    const { user } = useUser()
+
+    return (
+        <div className="col-span-full py-24 px-6 flex flex-col items-center justify-center border animate-card-entry text-center"
+            style={{
+                borderColor: 'var(--border-primary)',
+                borderRadius: 'var(--radius-card)',
+                backgroundColor: 'var(--bg-secondary)',
+                background: 'linear-gradient(to bottom, var(--bg-tertiary), transparent)'
+            }}>
+
+            {/* Icône Statut : Utilise la couleur accent (Gold ou Émeraude) */}
+            <div className="relative flex h-4 w-4 mb-8">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+                    style={{ backgroundColor: 'var(--accent-gold)' }}></span>
+                <span className="relative inline-flex rounded-full h-4 w-4"
+                    style={{ backgroundColor: 'var(--accent-gold)' }}></span>
+            </div>
+
+            {/* Titre : Adapté aux variables de texte et d'espacement */}
+            <h3 className="text-2xl md:text-3xl font-light tracking-[0.3em] uppercase mb-8"
+                style={{ color: 'var(--text-primary)' }}>
+                Nouvelle collection en préparation
+            </h3>
+
+            {/* Corps de texte : Plus lisible et contrasté */}
+            <div className="max-w-2xl space-y-8"> {/* Espace augmenté entre les paragraphes */}
+                <p className="text-lg md:text-xl leading-relaxed font-light"
+                    style={{ color: 'var(--text-secondary)' }}>
+                    Nos membres ont été très réactifs : toutes les offres sont <span className="font-normal" style={{ color: 'var(--text-primary)' }}>complètes</span>.
+                    <br className="hidden md:block" />
+                    Nous préparons actuellement les prochaines opportunités pour la semaine prochaine.
+                </p>
+
+                <div className="flex flex-col items-center gap-3">
+                    <p className="text-xs md:text-sm tracking-[0.2em] uppercase font-medium"
+                        style={{ color: 'var(--text-tertiary)' }}>
+                        Prochaines ouvertures
+                    </p>
+                    <div className="flex gap-4">
+                        <span className="px-3 py-1 border text-[10px] tracking-widest uppercase"
+                            style={{ borderColor: 'var(--border-primary)', color: 'var(--text-primary)' }}>
+                            Enchères Flash
+                        </span>
+                        <span className="px-3 py-1 border text-[10px] tracking-widest uppercase"
+                            style={{ borderColor: 'var(--border-primary)', color: 'var(--text-primary)' }}>
+                            Ventes Privées
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            {/* Bouton d'action intelligent */}
+            <div className="mt-12">
+                {user ? (
+                    <div className="flex flex-col items-center gap-4">
+                        <div className="px-10 py-4 border text-[11px] tracking-[0.25em] uppercase font-bold"
+                            style={{
+                                borderColor: 'var(--border-accent)',
+                                color: 'var(--accent-gold)',
+                                borderRadius: 'var(--radius-button)',
+                                backgroundColor: 'rgba(var(--accent-gold-rgb), 0.1)' // Optionnel : fond léger
+                            }}>
+                            Vous êtes sur la liste prioritaire
+                        </div>
+                        <p className="text-[10px] uppercase tracking-[0.2em]"
+                            style={{ color: 'var(--text-tertiary)' }}>
+                            Notification active pour <span style={{ color: 'var(--text-secondary)' }}>{user.email}</span>
+                        </p>
+                    </div>
+                ) : (
+                    <button
+                        className="px-12 py-5 border text-[11px] tracking-[0.3em] uppercase font-bold transition-all duration-500 ease-in-out hover:scale-105"
+                        style={{
+                            borderColor: 'var(--border-primary)',
+                            color: 'var(--text-primary)',
+                            borderRadius: 'var(--radius-button)',
+                            backgroundColor: 'transparent'
+                        }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = 'var(--text-primary)';
+                            e.currentTarget.style.color = 'var(--bg-primary)';
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = 'transparent';
+                            e.currentTarget.style.color = 'var(--text-primary)';
+                        }}
+                        onClick={onBtnClick}
+                    >
+                        Être alerté de l'ouverture
+                    </button>
+                )}
+            </div>
+        </div>
     )
 }

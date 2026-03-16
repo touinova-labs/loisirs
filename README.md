@@ -15,7 +15,6 @@ Je me permets de vous contacter car j'admire le positionnement de **[Nom de l'H�
 Je lance **LoisirsPrivé**, un club de ventes aux enchères privé dédié aux établissements d'exception. Notre concept est simple : nous monétisons vos disponibilités de dernière minute auprès d'une clientèle ciblée, tout en protégeant strictement votre image de marque (l'identité de l'hôtel n'est révélée qu'après la vente).
 
 **Pourquoi nous sommes différents :**
-
 * **Prix de réserve :** Vous fixez le prix minimum, votre prestation n'est jamais bradée.
 * **Zéro frais fixes :** Pas d'abonnement, commission uniquement sur les ventes réalisées.
 * **Liberté totale :** Allotissement temporaire uniquement durant l'enchère.
