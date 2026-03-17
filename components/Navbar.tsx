@@ -58,7 +58,7 @@ export default function Navbar({ user, onAuthClick }: NavbarProps) {
                         }}
                         title="Changer thème"
                     >
-                        {theme === 'theme-premium' ? <Moon size={18} /> : <Sun size={18} />}
+                        {theme === 'theme-signature' ? <Moon size={18} /> : <Sun size={18} />}
                     </button>
 
                     {user ? (
