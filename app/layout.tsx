@@ -127,7 +127,7 @@ export default function RootLayout({
 							<Link href="/legal/cgv">CGV</Link>
 							<Link href="/legal/privacy">Confidentialité</Link>
 							<Link href="/legal/mentions-legales">Mentions Légales</Link>
-							<Link href="/partners">Partenaires</Link>
+							<Link href="/partners">Proposer mes offres</Link>
 						</div>
 						<p className="flex justify-center">© 2026 LoisirsPrivé. Tous droits réservés.</p>
 					</footer>

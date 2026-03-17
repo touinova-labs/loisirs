@@ -37,14 +37,14 @@ export default function AuthModal({ isOpen, onClose, mode }: { isOpen: boolean, 
 
 	const content = {
 		login: {
-			title: "Accès Membre",
-			desc: <>Identifiez-vous pour accéder aux **ventes privées** <br /> et participer aux **enchères flash**.</>,
-			button: "Entrer dans le cercle"
+			title: "Accès au Cercle",
+			desc: <>Identifiez-vous pour accéder aux <strong>offres exclusives</strong> <br /> et profiter de chambres confidentielles à prix avantageux.</>,
+			button: "Entrer dans le Cercle"
 		},
 		alert: {
 			title: "Liste Prioritaire",
-			desc: "Toutes nos suites sont réservées. Inscrivez-vous pour être alerté en priorité de la prochaine collection.",
-			button: "Rejoindre la liste d'accès"
+			desc: "Toutes nos suites sont réservées. Inscrivez-vous pour être alerté en priorité des nouvelles disponibilités.",
+			button: "Rejoindre la liste prioritaire"
 		}
 	};
 
@@ -52,7 +52,7 @@ export default function AuthModal({ isOpen, onClose, mode }: { isOpen: boolean, 
 
 	return (
 		<AnimatePresence>
-			
+
 			{isOpen && (
 				<>
 					{/* Fond sombre avec flou artistique */}
@@ -131,19 +131,14 @@ export default function AuthModal({ isOpen, onClose, mode }: { isOpen: boolean, 
 									{mode === 'alert' ? '✨' : '📩'}
 								</div>
 								<h2 className="text-xl font-light tracking-widest uppercase mb-4" style={{ color: 'var(--text-primary)' }}>
-									{mode === 'alert' ? 'Demande Enregistrée' : 'Lien d’accès envoyé'}
+									{mode === 'alert' ? 'Inscription confirmée' : 'Lien envoyé'}
 								</h2>
+
 								<p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
 									{mode === 'alert' ? (
-										<>
-											Vous faites désormais partie de la <strong>liste prioritaire</strong>. <br />
-											Vous recevrez une invitation exclusive dès l'ouverture de la prochaine collection.
-										</>
+										<>Vous êtes maintenant sur la <strong>liste prioritaire</strong>. <br />Vous serez alerté en premier des nouvelles suites disponibles.</>
 									) : (
-										<>
-											Nous venons de vous envoyer votre lien magique. <br />
-											Consultez votre boîte mail pour accéder immédiatement au cercle.
-										</>
+										<>Un lien magique vient d’être envoyé à votre boîte mail. <br />Cliquez dessus pour accéder au Cercle immédiatement.</>
 									)}
 								</p>
 

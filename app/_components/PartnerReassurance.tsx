@@ -88,7 +88,7 @@ export default function PartnerReassurance() {
                     </div>
                     
                     <button
-                        onClick={() => window.location.href = 'mailto:partenaires@loisirs-prive.fr?subject=Test de distribution privée'}
+                        onClick={() => window.location.href = 'mailto:collaboration@loisirs-prive.fr?subject=Test de distribution privée'}
                         className="whitespace-nowrap px-14 py-6 font-bold text-xs tracking-[0.3em] uppercase transition-all hover:scale-105 active:scale-95 shadow-xl"
                         style={{ 
                             backgroundColor: 'var(--accent-gold)', 

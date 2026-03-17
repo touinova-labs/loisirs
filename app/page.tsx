@@ -21,6 +21,7 @@ import { useBidApi } from '@/hooks/useBid'
 import { UserData, useUser } from '@/hooks/UserContext'
 import SearchBar from './_components/SearchBar'
 import PartnerReassurance from './_components/PartnerReassurance'
+import { EmptyState } from './_components/EmptyState'
 
 export default function Home() {
     // --- ÉTATS & HOOKS ---
@@ -88,125 +89,130 @@ export default function Home() {
             <Navbar user={user} onAuthClick={() => setAuthMode("login")} />
 
             {/* --- HERO SECTION OPTIMISÉE MOBILE --- */}
-            <>
-                {/* SECTION 1 : HERO */}
-                <section className="relative h-[65vh] md:h-[80vh] flex items-center md:items-end pb-12 md:pb-24 px-6 overflow-hidden">
-                    {/* Background & Overlay */}
-                    <div className="absolute inset-0 z-0">
-                        <img
-                            src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1600&q=80"
-                            className="w-full h-full object-cover brightness-[0.4] md:brightness-[0.6]"
-                            alt="Luxury Hotel"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)] via-transparent to-transparent" />
+            {/* SECTION 1 : HERO */}
+            <section className="relative h-[65vh] md:h-[80vh] flex items-center md:items-end pb-12 md:pb-24 px-6 overflow-hidden">
+                {/* Background & Overlay */}
+                <div className="absolute inset-0 z-0">
+                    <img
+                        src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1600&q=80"
+                        className="w-full h-full object-cover brightness-[0.4] md:brightness-[0.6]"
+                        alt="Luxury Hotel"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-primary)] via-transparent to-transparent" />
+                </div>
+
+                {/* Content Hero */}
+                <div className="relative z-10 w-full max-w-7xl mx-auto space-y-6 md:space-y-8 text-center md:text-left">
+                    {/* Badge d'audience live */}
+                    {/* <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-gold)] bg-black/30 backdrop-blur-md w-fit mx-auto md:mx-0">
+                        <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                        <span className="text-[8px] md:text-[10px] uppercase tracking-widest text-[var(--text-primary)]">
+                            Cercle Privé : {membersOnline} membres actifs
+                        </span>
+                    </div> */}
+
+                    {/* Titre & Texte */}
+                    <div className="space-y-4 md:space-y-6">
+                        <h1 className="text-4xl md:text-7xl italic uppercase tracking-tight leading-[1] bg-gradient-to-b from-white to-gray-300 bg-clip-text text-transparent">                            Séjours d’exception <br />
+                            réservés à <span style={{ color: 'var(--accent-gold)' }}>nos membres</span>
+                        </h1>
+
+                        <p className="text-[12px] md:text-lg font-medium italic max-w-sm md:max-w-2xl leading-relaxed text-white/90">
+                            Accédez à des disponibilités non visibles en ligne.<br />
+                            Réservez directement auprès des hôtels, sans intermédiaire.
+                        </p>
                     </div>
 
-                    {/* Content Hero */}
-                    <div className="relative z-10 w-full max-w-7xl mx-auto space-y-6 md:space-y-8">
-                        {/* Badge d'audience live */}
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--accent-gold)] bg-black/40 backdrop-blur-md w-fit">
-                            <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-                            <span className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-white">
-                                Cercle Privé : {membersOnline} membres actifs
-                            </span>
-                        </div>
+                    {/* Bouton CTA */}
+                    <button
+                        onClick={() => document.getElementById('catalogue')?.scrollIntoView({ behavior: 'smooth' })}
+                        className="mt-6 md:mt-8 h-12 md:h-16 px-6 md:px-12 bg-[var(--accent-gold)] text-black uppercase tracking-widest rounded-xl shadow-2xl flex items-center justify-center gap-2 md:gap-4 text-[10px] md:text-sm w-full sm:w-auto"
+                    >
+                        {/* Version mobile simplifiée */}
+                        <span>Voir les offres disponibles</span>
+                        <ArrowRight size={16} className="ml-2 md:ml-4" />
+                    </button>
+                </div>
+            </section>
 
-                        {/* Titre & Texte */}
-                        <div className="space-y-4 md:space-y-6">
-                            <h1 className="text-4xl md:text-8xl font-black italic uppercase tracking-tighter leading-[0.9] text-white">
-                                L'Exception <br /> <span style={{ color: 'var(--accent-gold)' }}>Hors-Radar.</span>
-                            </h1>
+            {/* SECTION 2 : BARRE DE RÉASSURANCE (Sortie du Hero) */}
+            <div className="relative z-20 -mt-10 md:-mt-16 px-6">
+                <div
+                    className="max-w-7xl mx-auto backdrop-blur-2xl border p-8 md:p-12 rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.7)]"
+                    style={{
+                        backgroundColor: 'var(--bg-secondary)',
+                        borderColor: 'var(--border-primary)'
+                    }}
+                >
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-6">
 
-                            <p className="text-[12px] md:text-xl font-bold italic text-gray-300 max-w-sm md:max-w-2xl leading-relaxed">
-                                Accédez aux disponibilités confidentielles des plus beaux établissements. Le luxe à sa juste valeur, <span className="text-white">hors de portée du grand public.</span>
+                        {/* Item 1 */}
+                        <div className="flex flex-col gap-3">
+                            <div className="flex items-center gap-2 text-[var(--accent-gold)]">
+                                <ShieldCheck size={18} />
+                                <span className="text-[11px] md:text-[12px] uppercase tracking-widest">Adhésion Libre</span>
+                            </div>
+                            <p style={{ color: 'var(--text-secondary)' }} className="text-[11px] text-[12px] font-bold italic leading-snug">
+                                Accès gratuit
                             </p>
                         </div>
 
-                        {/* Bouton CTA */}
-                        <button
-                            onClick={() => document.getElementById('catalogue')?.scrollIntoView({ behavior: 'smooth' })}
-                            className="h-12 md:h-16 px-8 md:px-12 bg-[var(--accent-gold)] text-black text-[10px] md:text-sm font-black uppercase tracking-widest rounded-xl shadow-2xl flex items-center gap-4 hover:scale-105 active:scale-95 transition-all w-fit"
-                        >
-                            Découvrir les lots actifs
-                            <ArrowRight size={18} />
-                        </button>
-                    </div>
-                </section>
-
-                {/* SECTION 2 : BARRE DE RÉASSURANCE (Sortie du Hero) */}
-                <div className="relative z-20 -mt-10 md:-mt-16 px-6">
-                    <div className="max-w-7xl mx-auto bg-black/80 backdrop-blur-2xl border border-white/10 p-8 md:p-12 rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.7)]">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-6">
-
-                            {/* Item 1 */}
-                            <div className="flex flex-col gap-3">
-                                <div className="flex items-center gap-2 text-[var(--accent-gold)]">
-                                    <ShieldCheck size={18} />
-                                    <span className="text-[11px] md:text-[12px] font-black uppercase tracking-widest">Adhésion Libre</span>
-                                </div>
-                                <p className="text-[11px] text-[12px] text-gray-400 font-bold italic leading-snug">
-                                    Accès au cercle sans frais <br className="hidden md:block" /> ni abonnement.
-                                </p>
+                        {/* Item 2 */}
+                        <div className="flex flex-col gap-3">
+                            <div className="flex items-center gap-2 text-[var(--accent-gold)]">
+                                <Zap size={18} />
+                                <span className="text-[11px] md:text-[12px] uppercase tracking-widest">Zéro Intermédiaire</span>
                             </div>
-
-                            {/* Item 2 */}
-                            <div className="flex flex-col gap-3">
-                                <div className="flex items-center gap-2 text-[var(--accent-gold)]">
-                                    <Zap size={18} />
-                                    <span className="text-[11px] md:text-[12px] font-black uppercase tracking-widest">Zéro Intermédiaire</span>
-                                </div>
-                                <p className="text-[13px] md:text-[13px] text-gray-400 font-bold italic leading-snug">
-                                    Réservation directe auprès <br className="hidden md:block" /> de l'établissement.
-                                </p>
-                            </div>
-
-                            {/* Item 3 */}
-                            <div className="flex flex-col gap-3">
-                                <div className="flex items-center gap-2 text-[var(--accent-gold)]">
-                                    <CheckCircle size={18} />
-                                    <span className="text-[11px] md:text-[12px] font-black uppercase tracking-widest">Lots Vérifiés</span>
-                                </div>
-                                <p className="text-[11px] text-[13px] text-gray-400 font-bold italic leading-snug">
-                                    Uniquement des hôtels <br className="hidden md:block" /> 4* & 5* sélectionnés.
-                                </p>
-                            </div>
-
-                            {/* Item 4 */}
-                            <div className="flex flex-col gap-3">
-                                <div className="flex items-center gap-2 text-[var(--accent-gold)]">
-                                    <Lock size={18} />
-                                    <span className="text-[11px] md:text-[12px] font-black uppercase tracking-widest">Prix Confidentiels</span>
-                                </div>
-                                <p className="text-[11px] text-[13px] text-gray-400 font-bold italic leading-snug">
-                                    Offres protégées et <br className="hidden md:block" /> invisibles sur le web.
-                                </p>
-                            </div>
-
+                            <p style={{ color: 'var(--text-secondary)' }} className="text-[13px] md:text-[13px] font-bold italic leading-snug">
+                                Réservation directe avec l'hôtel
+                            </p>
                         </div>
+
+                        {/* Item 3 */}
+                        <div className="flex flex-col gap-3">
+                            <div className="flex items-center gap-2 text-[var(--accent-gold)]">
+                                <CheckCircle size={18} />
+                                <span className="text-[11px] md:text-[12px] uppercase tracking-widest">Lots Vérifiés</span>
+                            </div>
+                            <p style={{ color: 'var(--text-secondary)' }} className="text-[11px] text-[13px] font-bold italic leading-snug">
+                                Hôtels soigneusement sélectionnés
+                            </p>
+                        </div>
+
+                        {/* Item 4 */}
+                        <div className="flex flex-col gap-3">
+                            <div className="flex items-center gap-2 text-[var(--accent-gold)]">
+                                <Lock size={18} />
+                                <span className="text-[11px] md:text-[12px] uppercase tracking-widest">Prix Confidentiels</span>
+                            </div>
+                            <p style={{ color: 'var(--text-secondary)' }} className="text-[11px] text-[13px] font-bold italic leading-snug">
+                                Tarifs privilégiés, non diffusés publiquement
+                            </p>
+                        </div>
+
                     </div>
                 </div>
-            </>
-
+            </div>
 
             <div id="catalogue" className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-16">
 
                 <header className="mb-8 md:mb-10"> {/* Réduit un peu pour garder la barre proche du titre */}
                     <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                         <div className="space-y-2 text-center md:text-left">
-                            <h2 className="text-3xl lg:text-6xl font-black italic uppercase tracking-tight leading-none">
-                                LE <span style={{ color: 'var(--accent-gold)' }}>CERCLE</span>
+                            <h2 className="text-3xl lg:text-6xl italic uppercase tracking-tight leading-none">
+                                OFFRES <span style={{ color: 'var(--accent-gold)' }}>DISPONIBLES</span>
                             </h2>
                             <div className="flex items-center justify-center md:justify-start gap-3">
-                                <p className="font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] opacity-50">
-                                    Accès exclusif aux nuitées d'exception
+                                <p style={{ color: 'var(--text-tertiary)' }} className="font-bold text-[10px] md:text-xs uppercase tracking-[0.2em]">
+                                    Disponibilités négociées directement avec les hôtels
                                 </p>
                                 <span className="h-1 w-1 rounded-full bg-[var(--accent-gold)] animate-pulse" />
                             </div>
                         </div>
 
                         <div className="hidden md:block">
-                            <span className="text-[10px] font-black uppercase tracking-[0.3em] opacity-30">
-                                Disponibilités : {auctions.length} hôtels
+                            <span style={{ color: 'var(--text-tertiary)' }} className="text-[10px] uppercase tracking-[0.3em">
+                                Offres en ligne : {auctions.length} hôtels
                             </span>
                         </div>
                     </div>
@@ -219,6 +225,12 @@ export default function Home() {
 
                 {/* GRILLE VOYAGEUR */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
+
+                    {loading && (
+                        <p style={{ color: 'var(--text-secondary)' }} className="text-center text-sm md:text-base mb-6">
+                            Chargement des offres exclusives pour nos membres…
+                        </p>
+                    )}
                     {loading ? (
                         // SKELETON LUXE AVEC SHIMMER
                         Array.from({ length: 3 }).map((_, i) => (
@@ -252,8 +264,65 @@ export default function Home() {
                             :
                             <EmptyState onBtnClick={() => setAuthMode("alert")} />
                     }
-                    <PartnerReassurance />
                 </div>
+                <section className="py-16 px-6 text-center max-w-5xl mx-auto space-y-8">
+                    <h2 className="text-3xl md:text-5xl uppercase tracking-tight">
+                        Pourquoi rejoindre notre Cercle
+                    </h2>
+                    <p style={{ color: 'var(--text-secondary)' }} className="italic text-lg md:text-xl leading-relaxed max-w-3xl mx-auto">
+                        Profitez d’expériences hôtelières uniques, avec un accès réservé et confidentiel. Réservez directement auprès des établissements sélectionnés pour nos membres.
+                    </p>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 mt-10">
+                        {/* Avantage 1 */}
+                        <div className="flex flex-col items-center gap-4 p-6 border rounded-2xl bg-[var(--bg-secondary)]">
+                            <ShieldCheck size={28} className="text-[var(--accent-gold)]" />
+                            <p style={{ color: 'var(--text-secondary)' }} className=" font-bold text-center">
+                                Accès exclusif et confidentiel aux offres
+                            </p>
+                        </div>
+
+                        {/* Avantage 2 */}
+                        <div className="flex flex-col items-center gap-4 p-6 border rounded-2xl bg-[var(--bg-secondary)]">
+                            <Zap size={28} className="text-[var(--accent-gold)]" />
+                            <p style={{ color: 'var(--text-secondary)' }} className=" font-bold text-center">
+                                Réservation directe avec l’hôtel, sans intermédiaire
+                            </p>
+                        </div>
+
+                        {/* Avantage 3 */}
+                        <div className="flex flex-col items-center gap-4 p-6 border rounded-2xl bg-[var(--bg-secondary)]">
+                            <CheckCircle size={28} className="text-[var(--accent-gold)]" />
+                            <p style={{ color: 'var(--text-secondary)' }} className=" font-bold text-center">
+                                Établissements soigneusement sélectionnés pour leur qualité
+                            </p>
+                        </div>
+
+                        {/* Avantage 4 */}
+                        <div className="flex flex-col items-center gap-4 p-6 border rounded-2xl bg-[var(--bg-secondary)]">
+                            <Lock size={28} className="text-[var(--accent-gold)]" />
+                            <p style={{ color: 'var(--text-secondary)' }} className=" font-bold text-center">
+                                Offres confidentielles, non visibles en ligne
+                            </p>
+                        </div>
+
+                        {/* Avantage 5 */}
+                        <div className="flex flex-col items-center gap-4 p-6 border rounded-2xl bg-[var(--bg-secondary)]">
+                            <GavelIcon size={28} className="text-[var(--accent-gold)]" />
+                            <p style={{ color: 'var(--text-secondary)' }} className="font-bold text-center">
+                                Tarifs privilégiés négociés en toute discrétion
+                            </p>
+                        </div>
+
+                        {/* Avantage 6 */}
+                        <div className="flex flex-col items-center gap-4 p-6 border rounded-2xl bg-[var(--bg-secondary)]">
+                            <Globe size={28} className="text-[var(--accent-gold)]" />
+                            <p style={{ color: 'var(--text-secondary)' }} className="font-bold text-center">
+                                Expériences uniques réservées uniquement à nos membres
+                            </p>
+                        </div>
+                    </div>
+                </section>
             </div>
 
             {/* --- BARRE MOBILE --- */}
@@ -276,7 +345,7 @@ export default function Home() {
                     style={{ color: filter === 'all' ? 'var(--accent-gold)' : 'var(--text-tertiary)' }}
                 >
                     <Globe size={20} />
-                    <span className="text-[7px] font-black uppercase tracking-[0.15em]">Cercle</span>
+                    <span className="text-[7px] uppercase tracking-[0.15em]">Cercle</span>
                 </button>
 
                 {/* BOUTON CENTRAL (ENCHÈRES) */}
@@ -306,7 +375,7 @@ export default function Home() {
                     style={{ color: user ? 'var(--accent-gold)' : 'var(--text-tertiary)' }}
                 >
                     <User size={20} />
-                    <span className="text-[7px] font-black uppercase tracking-[0.15em]">
+                    <span className="text-[7px] uppercase tracking-[0.15em]">
                         {user ? 'Profil' : 'Login'}
                     </span>
                 </button>
@@ -316,140 +385,3 @@ export default function Home() {
 }
 
 
-function EmptyState({ onBtnClick }: { onBtnClick: () => void }) {
-    const { user } = useUser()
-
-    return (
-        <div
-            className="col-span-full py-24 px-6 flex flex-col items-center justify-center border animate-card-entry text-center"
-            style={{
-                borderColor: 'var(--border-primary)',
-                borderRadius: 'var(--radius-card)',
-                backgroundColor: 'var(--bg-secondary)',
-                background: 'linear-gradient(to bottom, var(--bg-tertiary), transparent)'
-            }}
-        >
-            {/* Status Indicator */}
-            <div className="relative flex h-4 w-4 mb-8">
-                <span
-                    className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
-                    style={{ backgroundColor: 'var(--accent-gold)' }}
-                ></span>
-                <span
-                    className="relative inline-flex rounded-full h-4 w-4"
-                    style={{ backgroundColor: 'var(--accent-gold)' }}
-                ></span>
-            </div>
-
-            {/* Title */}
-            <div className="mb-6 space-y-3">
-                <p
-                    className="text-xs tracking-[0.3em] uppercase"
-                    style={{ color: 'var(--text-tertiary)' }}
-                >
-                    Accès actuellement fermé
-                </p>
-
-                <h3
-                    className="text-2xl md:text-3xl font-light tracking-[0.3em] uppercase"
-                    style={{ color: 'var(--text-primary)' }}
-                >
-                    Toutes les offres sont complètes
-                </h3>
-            </div>
-
-            {/* Body */}
-            <div className="max-w-2xl space-y-8">
-                <p
-                    className="text-lg md:text-xl leading-relaxed font-light"
-                    style={{ color: 'var(--text-secondary)' }}
-                >
-                    Les opportunités récemment proposées ont été entièrement réservées.
-                    <br className="hidden md:block" />
-                    L’accès est volontairement limité afin de préserver la discrétion et la qualité des séjours proposés.
-                </p>
-
-                <div className="flex flex-col items-center gap-4">
-                    <p
-                        className="text-xs md:text-sm tracking-[0.2em] uppercase font-medium"
-                        style={{ color: 'var(--text-tertiary)' }}
-                    >
-                        Disponibilités en cours d’allocation <span className="opacity-60"> — accès limité</span>
-                    </p>
-
-                    <div className="flex gap-4">
-                        <span
-                            className="px-3 py-1 border text-[10px] tracking-widest uppercase"
-                            style={{
-                                borderColor: 'var(--border-primary)',
-                                color: 'var(--text-primary)'
-                            }}
-                        >
-                            Enchères privées
-                        </span>
-
-                        <span
-                            className="px-3 py-1 border text-[10px] tracking-widest uppercase"
-                            style={{
-                                borderColor: 'var(--border-primary)',
-                                color: 'var(--text-primary)'
-                            }}
-                        >
-                            Ventes confidentielles
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-            {/* CTA */}
-            <div className="mt-12">
-                {user ? (
-                    <div className="flex flex-col items-center gap-4">
-                        <div
-                            className="px-10 py-4 border text-[11px] tracking-[0.25em] uppercase font-bold"
-                            style={{
-                                borderColor: 'var(--border-accent)',
-                                color: 'var(--accent-gold)',
-                                borderRadius: 'var(--radius-button)',
-                                backgroundColor: 'rgba(var(--accent-gold-rgb), 0.1)'
-                            }}
-                        >
-                            Accès prioritaire activé
-                        </div>
-
-                        <p
-                            className="text-[10px] uppercase tracking-[0.2em]"
-                            style={{ color: 'var(--text-tertiary)' }}
-                        >
-                            Invitation envoyée à{' '}
-                            <span style={{ color: 'var(--text-secondary)' }}>
-                                {user.email}
-                            </span>
-                        </p>
-                    </div>
-                ) : (
-                    <button
-                        className="px-12 py-5 border text-[11px] tracking-[0.3em] uppercase font-bold transition-all duration-500 ease-in-out hover:scale-105"
-                        style={{
-                            borderColor: 'var(--border-primary)',
-                            color: 'var(--text-primary)',
-                            borderRadius: 'var(--radius-button)',
-                            backgroundColor: 'transparent'
-                        }}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.backgroundColor = 'var(--text-primary)';
-                            e.currentTarget.style.color = 'var(--bg-primary)';
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.backgroundColor = 'transparent';
-                            e.currentTarget.style.color = 'var(--text-primary)';
-                        }}
-                        onClick={onBtnClick}
-                    >
-                        Demander un accès prioritaire
-                    </button>
-                )}
-            </div>
-        </div>
-    )
-}

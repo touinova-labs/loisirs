@@ -4,62 +4,114 @@
   /* PREMIUM THEME (Default - Light) */
   --bg-primary: #F9FAFB;
   --bg-secondary: #FFFFFF;
-  --bg-tertiary: #F3F4F6;
-  
-  --text-primary: #1E293B;
-  --text-secondary: #64748B;
+  --bg-tertiary: #F1F5F9;
+
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
   --text-tertiary: #94A3B8;
-  
+
   --accent-gold: #FBBF24;
   --accent-light: #FCD34D;
-  
+
   --border-primary: #E2E8F0;
   --border-accent: #FBBF24;
-  
-  --radius-card: 12px;
-  --radius-button: 8px;
-  
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+  --radius-card: 14px;
+  --radius-button: 10px;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 6px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 20px 30px rgba(0, 0, 0, 0.08);
 }
 
 html.theme-luxe {
-  /* LUXE THEME (Dark Elite) - Emerald Green */
+  /* DARK ELITE (plus contrasté + lisible) */
   --bg-primary: #020617;
-  --bg-secondary: #0F172A;
+  --bg-secondary: #0B1220;
   --bg-tertiary: #1E293B;
-  
+
   --text-primary: #F8FAFC;
-  --text-secondary: #94A3B8;
-  --text-tertiary: #64748B;
-  
+  --text-secondary: rgba(248, 250, 252, 0.85);
+  --text-tertiary: rgba(148, 163, 184, 0.65);
+
   --accent-gold: #10B981;
   --accent-light: #6EE7B7;
-  
-  --border-primary: #2D3748;
+
+  --border-primary: #1E293B;
   --border-accent: #10B981;
-  
-  --radius-card: 4px;
-  --radius-button: 4px;
-  
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.6);
+
+  --radius-card: 6px;
+  --radius-button: 6px;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 25px 40px rgba(0, 0, 0, 0.7);
 }
 
+html.theme-signature {
+  /* BLACK & GOLD (ultra luxe) */
+  --bg-primary: #000000;
+  --bg-secondary: #0A0A0A;
+  --bg-tertiary: #141414;
+
+  --text-primary: #FAFAFA;
+  --text-secondary: rgba(250, 250, 250, 0.75);
+  --text-tertiary: rgba(250, 250, 250, 0.45);
+
+  --accent-gold: #D4AF37;
+  --accent-light: #F5D76E;
+
+  --border-primary: #1A1A1A;
+  --border-accent: #D4AF37;
+
+  --radius-card: 8px;
+  --radius-button: 8px;
+
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.6);
+  --shadow-md: 0 10px 20px rgba(0, 0, 0, 0.7);
+  --shadow-lg: 0 30px 50px rgba(0, 0, 0, 0.85);
+}
+html.theme-airbnb {
+  /* BACKGROUNDS (ultra clean) */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #FFFFFF;
+  --bg-tertiary: #F7F7F7;
+  
+  /* TEXT (très lisible) */
+  --text-primary: #222222;
+  --text-secondary: #6A6A6A;
+  --text-tertiary: #B0B0B0;
+  
+  /* ACCENT (Airbnb coral) */
+  --accent-gold: #FF385C;
+  --accent-light: #FF7A8F;
+  
+  /* BORDERS */
+  --border-primary: #E5E5E5;
+  --border-accent: #FF385C;
+  
+  /* RADIUS (soft & friendly) */
+  --radius-card: 20px;
+  --radius-button: 999px; /* pill style */
+  
+  /* SHADOWS (soft, floating) */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
 body {
   background: var(--bg-primary);
   color: var(--text-primary);
   font-family: Arial, Helvetica, sans-serif;
 }
 
-
+/* Animations */
 @keyframes slideUpFade {
   from {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -71,19 +123,22 @@ body {
   animation: slideUpFade 0.6s ease-out forwards;
 }
 
-/* Shimmer effet pour le loading */
+/* Shimmer loading */
 .animate-shimmer {
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--bg-tertiary),
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      var(--bg-tertiary),
+      transparent);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
 }

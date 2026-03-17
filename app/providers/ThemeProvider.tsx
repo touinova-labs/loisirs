@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react'
 
-export type WebSiteTheme = 'theme-premium' | 'theme-luxe'
+export type WebSiteTheme =  'theme-luxe' | "theme-signature" | "theme-airbnb"
 
 interface ThemeContextType {
 	theme: WebSiteTheme
@@ -32,7 +32,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 		const html = document.documentElement
 
 		// Remove all theme classes
-		html.classList.remove('theme-premium', 'theme-luxe')
+		html.classList.remove('theme-signature', 'theme-luxe')
 
 		// Add new theme class
 		html.classList.add(newTheme)
@@ -42,7 +42,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 	}
 
 	const toggleTheme = () => {
-		const newTheme = theme === 'theme-premium' ? 'theme-luxe' : 'theme-premium'
+		const newTheme = theme === 'theme-signature' ? 'theme-luxe' : 'theme-signature'
 		setThemeState(newTheme)
 		applyTheme(newTheme)
 	}

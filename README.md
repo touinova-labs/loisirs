@@ -114,23 +114,16 @@ Monsieur le Directeur, mon travail marketing consiste à bâtir une audience de 
 
 Pour tes premiers contrats, tu ne vends pas une audience existante, tu vends une infrastructure de vente et une méthode d'acquisition.
 
-
 Nous ouvrons le club ce mois-ci avec une sélection de 5 établissements de prestige. Mon budget marketing est entièrement concentré sur la mise en avant de ces 5 premiers partenaires via des campagnes ultra-ciblées (Meta/Google Ads) sur une clientèle 'High Net Worth'
-
 
 Monsieur le Directeur, en nous confiant une chambre, vous bénéficiez gratuitement de notre force de frappe publicitaire. Je vais investir mon budget pour faire connaître votre établissement à une audience qui ne vous aurait peut-être pas trouvé autrement. Si je ne vends pas, l'exposition publicitaire est offerte.
 
-
-Type d'offre,Source,Technique
-Last Minute (-50%),Hotelbeds / Expedia EPS,"Filtrer via l'API les offres ""Non-Refundable"" à J-7."
-Offres Opaque,Priceline Partner Network,Des tarifs ultra-bas où le nom de l'hôtel n'est révélé qu'après l'enchère (très haut de gamme).
-Ventes Flash,Secret Escapes (API possible),Partenariats spécifiques pour des séjours de luxe avec des réductions allant jusqu'à 70%.
-
+------------
 
 Bonjour, je développe une plateforme d'enchères privées pour une clientèle haut de gamme. Plutôt que de créer ma propre agence, je cherche un partenaire expert qui gérera la partie technique et légale des voyages. Je m'occupe de la technologie, du marketing et de l'acquisition client. Vous me donnez vos offres exclusives ou vos invendus, je les transforme en enchères excitantes, et nous partageons la marge.
 
 Inscris-toi d'abord sur Duffel (Vols) et Expedia EPS ou Viator (Activités). C'est automatisé et tu auras tes clés API en 24h. Utilise-les pour finir ton Dashboard et faire tes premières ventes. Une fois que tu as un "vrai" site qui tourne avec des clients, Hotelbeds te signera le contrat en un clin d'œil.
-
+------------
 
 Source,Prix Bradés ?,Facilité d'accès,Idéal pour...
 Duffel,Rare (-5/10%),⭐⭐⭐⭐⭐,Les vols Business/First VIP
@@ -148,12 +141,7 @@ SkyAuction
 https://www.voyage-prive.com/login/index#signin
 
 
-
 Veux-tu que je te rédige un modèle de mail professionnel pour démarcher ta première agence de voyage partenaire ?
-
-
-
-
 Mise à jour de ton UI (Interface Enchère)
 Pour que l'utilisateur comprenne sans être découragé, utilise ces libellés :
 
@@ -197,81 +185,44 @@ Voici un modèle de mail de bienvenue conçu pour instaurer immédiatement ce se
 
 ---
 
-### Objet : Bienvenue au Cercle, [Prénom]. Votre accès est activé.
-
-**Corps du mail :**
-
-**Loisirs-Privé**
-*L'art du voyage confidentiel.*
-
----
-
-Félicitations [Prénom],
-
-Votre demande d'adhésion a été validée. Vous faites désormais partie de **Loisirs-Privé**, un cercle restreint de voyageurs exigeants pour qui le luxe ne doit souffrir d'aucun compromis.
-
-**Ce qui vous attend désormais :**
-
-* **L'Exclusivité :** Des suites royales et des villas privées négociées directement avec nos partenaires hôteliers, inaccessibles au grand public à ces conditions.
-* **L'Adrénaline :** Nos enchères de prestige où le dernier mot vous appartient.
-* **La Confidentialité :** Des tarifs protégés par le secret de notre communauté.
-
-**Votre première étape :**
-Le prochain lot d'exception vient d'être mis en ligne. Une Suite avec vue sur la lagune de Venise vous attend peut-être déjà.
-
-[ **ACCÉDER AUX ENCHÈRES EN COURS** ] *(Bouton doré)*
-
-*Note : Pour préserver la qualité de nos relations avec les établissements partenaires, nous vous rappelons que les tarifs affichés sur votre interface sont strictement confidentiels.*
-
-Bienvenue parmi nous. Le voyage commence ici.
-
-**L'équipe Loisirs-Privé**
-
----
-
-### Quelques astuces pour ce mail :
-
-1. **Le Design :** Utilise une police serif élégante (type Bodoni ou Playfair Display) pour les titres et beaucoup d'espaces blancs.
-2. **L'Expéditeur :** N'utilise pas `noreply@`. Utilise quelque chose comme `conciergerie@loisirs-prive.com` ou `le-cercle@...`.
-3. **L'image de signature :** Une signature minimaliste, peut-être juste ton logo en version dorée sur fond noir.
-
-**Souhaites-tu que je te prépare le code d'une "Landing Page" de confirmation d'inscription qui reprend cette esthétique pour accueillir l'utilisateur juste après son clic sur ta pub ?**
-
-
-
 Tes utilisateurs sont des gens qui aiment le beau et le confort, mais qui sont fiers de faire une "bonne affaire". Ils cherchent le frisson de s'offrir un 5* au prix d'un 3* standard.
 
 
 Bonjour, j'ai envoyé un dossier à l'attention de la Direction mardi après-midi comme convenu avec vos services. Je souhaitais simplement m'assurer qu'il leur a bien été transmis avant notre point téléphonique.
 
-
 ------------------------
-==============
+
+Bonjour, je suis [Ton Prénom] de Loisirs-Privé. Je cherche à parler au responsable hébergement pour tester une solution qui permet de valoriser vos chambres invendues. Le client paie directement à l’hôtel et cela ne passe pas par Booking.
+
+pourriez vous me mettre en contact avec lui
+triano.rg@orange.fr
+
+================
+
 Bonjour, je vais être très rapide.
 
-Je ne vous apporte pas de volume — je teste un modèle pour monétiser une chambre invendue, de manière totalement discrète.
+Je ne vous apporte pas de volume — je teste un modèle pour monétiser une chambre invendue, de manière totalement discrète et opaque.
 
-Vous gardez le contrôle du prix, le client paie directement chez vous, et s’il n’y a pas d’offre suffisante, rien ne se passe.
-
-Est-ce que vous seriez ouvert à tester sur une seule date ?
-----
-Vous définissez un prix minimum.
+Concretement, 
+Vous définissez un prix minimum pour la chambre ou la suite. (Prix minimal = revenu minimum acceptable pour cette chambre sur cette date)
 
 De mon côté, je collecte des demandes (ou des offres).
 
 Si une offre atteint votre seuil, je vous transmets la réservation — et le client paie directement chez vous.
 
 Sinon, la chambre reste simplement disponible dans vos canaux habituels.
+---
+Vous gardez le contrôle du prix, le client paie directement chez vous, et s’il n’y a pas d’offre suffisante, rien ne se passe.
+
+Est-ce que vous seriez ouvert à tester sur une seule date ?
 
 ------
 L’idée n’est pas de remplacer vos canaux.
 
-C’est simplement d’ajouter un flux discret, hors OTA, pour capter une demande différente — sans toucher à votre image ni à votre pricing public.
+C’est simplement d’ajouter un flux discret, pour capter une demande différente — sans toucher à votre image ni à votre pricing public.
 
 On parle vraiment d’un test isolé.
 
 -----
 Je suis en train de tester le modèle avec quelques établissements indépendants sur des cas très ciblés.
-
 ------
-
