@@ -243,3 +243,35 @@ Tes utilisateurs sont des gens qui aiment le beau et le confort, mais qui sont f
 
 
 Bonjour, j'ai envoyé un dossier à l'attention de la Direction mardi après-midi comme convenu avec vos services. Je souhaitais simplement m'assurer qu'il leur a bien été transmis avant notre point téléphonique.
+
+
+------------------------
+==============
+Bonjour, je vais être très rapide.
+
+Je ne vous apporte pas de volume — je teste un modèle pour monétiser une chambre invendue, de manière totalement discrète.
+
+Vous gardez le contrôle du prix, le client paie directement chez vous, et s’il n’y a pas d’offre suffisante, rien ne se passe.
+
+Est-ce que vous seriez ouvert à tester sur une seule date ?
+----
+Vous définissez un prix minimum.
+
+De mon côté, je collecte des demandes (ou des offres).
+
+Si une offre atteint votre seuil, je vous transmets la réservation — et le client paie directement chez vous.
+
+Sinon, la chambre reste simplement disponible dans vos canaux habituels.
+
+------
+L’idée n’est pas de remplacer vos canaux.
+
+C’est simplement d’ajouter un flux discret, hors OTA, pour capter une demande différente — sans toucher à votre image ni à votre pricing public.
+
+On parle vraiment d’un test isolé.
+
+-----
+Je suis en train de tester le modèle avec quelques établissements indépendants sur des cas très ciblés.
+
+------
+

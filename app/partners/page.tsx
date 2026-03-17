@@ -10,72 +10,58 @@ export default function PartnersPage() {
             <Navbar user={null} onAuthClick={() => { }} />
 
             {/* --- HERO : PERFORMANCE & DISCRÉTION --- */}
-            <section className="relative h-[95vh] flex flex-col items-center justify-center px-4 overflow-hidden border-b" style={{ backgroundColor: 'var(--bg-primary)', borderColor: 'var(--border-primary)' }}>
+            <section className="relative h-[85vh] flex flex-col items-center justify-center px-4 overflow-hidden border-b" style={{ backgroundColor: 'var(--bg-primary)', borderColor: 'var(--border-primary)' }}>
                 <div className="absolute inset-0">
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[500px] blur-[180px] rounded-full opacity-30" style={{ backgroundColor: 'rgba(251, 191, 36, 0.08)' }} />
                 </div>
 
-                <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center">
-                    {/* Le Titre Hybride : Impact & Prestige */}
-                    <h1 className="text-6xl md:text-[110px] font-black italic uppercase tracking-tighter leading-[0.85] text-center mb-16 select-none" style={{ color: 'var(--text-primary)' }}>
-                        <span className="block">Accélérateur de</span>
-                        <span className="block drop-shadow-lg" style={{ color: 'var(--accent-gold)' }}>RevPAR Discret<span style={{ color: 'var(--text-primary)' }}>.</span></span>
+                <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-center text-center">
+                    <h1 className="text-5xl md:text-[90px] font-black italic uppercase tracking-tighter leading-[0.9] mb-12 select-none" style={{ color: 'var(--text-primary)' }}>
+                        Accélérateur de <br />
+                        <span className="drop-shadow-lg" style={{ color: 'var(--accent-gold)' }}>RevPAR</span> <span style={{ color: 'var(--text-primary)' }}>Discret</span>
                     </h1>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-5xl w-full border-t pt-16" style={{ borderColor: 'var(--border-primary)' }}>
-                        <div className="space-y-4">
-                            <h2 className="text-3xl md:text-5xl font-black italic uppercase tracking-tighter leading-none" style={{ color: 'var(--text-primary)' }}>
-                                La Distribution <br /> <span style={{ color: 'var(--accent-gold)' }}>Hors-Radar</span>.
-                            </h2>
-                            <p className="font-bold italic text-xs md:text-sm uppercase tracking-widest max-w-md leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                                Sécurisez votre positionnement : un canal de vente sélectif n'exposant vos opportunités qu'à une <span style={{ color: 'var(--text-primary)' }}>audience de membres privés</span>, préservant ainsi votre intégrité tarifaire publique.
-                            </p>
-                        </div>
+                    <p className="font-bold italic text-sm md:text-base uppercase tracking-widest max-w-xl leading-relaxed mb-8" style={{ color: 'var(--text-secondary)' }}>
+                        Activez un flux de réservation supplémentaire tout en gardant vos tarifs publics intacts et votre distribution sous contrôle.
+                    </p>
 
-                        <div className="flex flex-col gap-5 lg:items-end">
-                            <Link href="mailto:partenaires@loisirs-prive.fr" className="h-20 w-full lg:w-80 rounded-lg flex items-center justify-center gap-4 text-[11px] font-bold uppercase tracking-widest hover:scale-105 transition-all duration-500 group shadow-md text-white" style={{ backgroundColor: 'var(--accent-gold)' }}>
-                                Ouvrir un Canal Partenaire
-                                <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform" />
-                            </Link>
-                            <div className="flex items-center gap-4 text-[9px] font-bold uppercase tracking-widest italic" style={{ color: 'var(--text-secondary)' }}>
-                                <span>Stratégie Anti-OTA</span>
-                                <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: 'var(--accent-gold)' }} />
-                                <span>Cercle de Membres Vérifiés</span>
-                            </div>
-                        </div>
-                    </div>
+                    <Link href="mailto:partenaires@loisirs-prive.fr" className="h-20 px-12 rounded-lg flex items-center justify-center gap-4 text-[12px] font-bold uppercase tracking-widest hover:scale-105 transition-all duration-500 shadow-md text-white" style={{ backgroundColor: 'var(--accent-gold)' }}>
+                        Contacter un Partenaire
+                        <ArrowRight size={20} />
+                    </Link>
                 </div>
             </section>
+
             {/* --- ARGUMENTS --- */}
-            <section className="py-40 max-w-7xl mx-auto px-6">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-20">
-                    <div className="group space-y-6">
-                        <div className="w-14 h-14 rounded-lg border flex items-center justify-center transition-colors duration-500" style={{ backgroundColor: 'rgba(0,0,0,0.02)', borderColor: 'var(--border-primary)', color: 'var(--accent-gold)' }}>
+            <section className="py-32 max-w-6xl mx-auto px-6">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 text-center">
+                    <div className="space-y-4">
+                        <div className="w-14 h-14 mx-auto rounded-lg border flex items-center justify-center" style={{ backgroundColor: 'rgba(0,0,0,0.02)', borderColor: 'var(--border-primary)', color: 'var(--accent-gold)' }}>
                             <CalendarClock size={28} />
                         </div>
                         <h3 className="text-2xl font-bold uppercase italic tracking-tighter" style={{ color: 'var(--text-primary)' }}>Planification</h3>
-                        <p className="text-[13px] font-medium leading-relaxed italic" style={{ color: 'var(--text-secondary)' }}>
-                            Anticipez vos besoins de remplissage. Nous travaillons sur des fenêtres de réservation à quelques semaines pour garantir une exposition marketing optimale auprès de nos membres.
+                        <p className="text-sm font-medium leading-relaxed italic" style={{ color: 'var(--text-secondary)' }}>
+                            Remplissez vos chambres sur les périodes stratégiques, uniquement auprès des bons clients.
                         </p>
                     </div>
 
-                    <div className="group space-y-6">
-                        <div className="w-14 h-14 rounded-lg border flex items-center justify-center transition-colors duration-500" style={{ backgroundColor: 'rgba(0,0,0,0.02)', borderColor: 'var(--border-primary)', color: 'var(--accent-gold)' }}>
+                    <div className="space-y-4">
+                        <div className="w-14 h-14 mx-auto rounded-lg border flex items-center justify-center" style={{ backgroundColor: 'rgba(0,0,0,0.02)', borderColor: 'var(--border-primary)', color: 'var(--accent-gold)' }}>
                             <BarChart3 size={28} />
                         </div>
                         <h3 className="text-2xl font-bold uppercase italic tracking-tighter" style={{ color: 'var(--text-primary)' }}>Yield Dynamique</h3>
-                        <p className="text-[13px] font-medium leading-relaxed italic" style={{ color: 'var(--text-secondary)' }}>
-                            Utilisez LoisirsPrivé pour lisser votre taux d'occupation. Enchères flash pour vos suites ou Ventes Privées pour vos chambres standards sur vos périodes creuses identifiées.
+                        <p className="text-sm font-medium leading-relaxed italic" style={{ color: 'var(--text-secondary)' }}>
+                            Maximisez le taux d’occupation sans cannibaliser vos ventes classiques. Valorisez vos suites et chambres selon leur rareté.
                         </p>
                     </div>
 
-                    <div className="group space-y-6">
-                        <div className="w-14 h-14 rounded-lg border flex items-center justify-center transition-colors duration-500" style={{ backgroundColor: 'rgba(0,0,0,0.02)', borderColor: 'var(--border-primary)', color: 'var(--accent-gold)' }}>
+                    <div className="space-y-4">
+                        <div className="w-14 h-14 mx-auto rounded-lg border flex items-center justify-center" style={{ backgroundColor: 'rgba(0,0,0,0.02)', borderColor: 'var(--border-primary)', color: 'var(--accent-gold)' }}>
                             <CheckCircle2 size={28} />
                         </div>
                         <h3 className="text-2xl font-bold uppercase italic tracking-tighter" style={{ color: 'var(--text-primary)' }}>Réservations Fermes</h3>
-                        <p className="text-[13px] font-medium leading-relaxed italic" style={{ color: 'var(--text-secondary)' }}>
-                            Contrairement aux plateformes classiques, nos ventes sont définitives et non-annulables. Garantissez votre CA sans risque de désistement ou de no-show.
+                        <p className="text-sm font-medium leading-relaxed italic" style={{ color: 'var(--text-secondary)' }}>
+                            Chaque réservation est définitive et sécurisée. Revenus garantis, zéro annulation ou no-show.
                         </p>
                     </div>
                 </div>
@@ -85,7 +71,7 @@ export default function PartnersPage() {
             <section className="py-32 rounded-3xl md:rounded-[4rem]" style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-primary)', boxShadow: '0 -20px 80px rgba(0,0,0,0.05)' }}>
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="text-center mb-24 space-y-4">
-                        <h2 className="text-5xl md:text-8xl font-black italic uppercase tracking-tighter leading-none">Deux leviers de <br /><span style={{ color: 'var(--accent-gold)' }}>performance.</span></h2>
+                        <h2 className="text-5xl md:text-7xl font-black italic uppercase tracking-tighter leading-none">Deux leviers de <span style={{ color: 'var(--accent-gold)' }}>performance</span></h2>
                         <p className="font-bold uppercase tracking-widest text-[10px]" style={{ color: 'var(--text-secondary)' }}>Choisissez la technique adaptée à vos stocks</p>
                     </div>
 
@@ -98,10 +84,10 @@ export default function PartnersPage() {
                                     <span className="text-5xl font-black italic uppercase tracking-tighter">Vente Privée</span>
                                 </div>
                                 <p className="font-bold italic leading-relaxed text-lg" style={{ color: 'var(--text-secondary)' }}>
-                                    Prix fixe négocié pour un volume de chambres défini. L'outil idéal pour remplir vos semaines creuses avec régularité et anticipation.
+                                    Remplissez vos semaines creuses à prix fixe, en toute prévisibilité et contrôle.
                                 </p>
                                 <div className="space-y-3 pt-4 border-t" style={{ borderColor: 'var(--border-primary)' }}>
-                                    {['Volume garanti', 'Visibilité ciblée', 'Marketing dédié sur mesure'].map((t, i) => (
+                                    {['Volume garanti', 'Visibilité ciblée', 'Marketing dédié'].map((t, i) => (
                                         <div key={i} className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--accent-gold)' }}>
                                             <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: 'var(--accent-gold)' }} /> {t}
                                         </div>
@@ -118,10 +104,10 @@ export default function PartnersPage() {
                                     <span className="text-5xl font-black italic uppercase tracking-tighter">Enchère Flash</span>
                                 </div>
                                 <p className="font-bold italic leading-relaxed text-lg" style={{ color: 'var(--text-secondary)' }}>
-                                    Maximisez la valeur de vos plus belles suites. Le système d'enchères crée l'urgence et valorise votre rareté auprès d'acheteurs qualifiés.
+                                    Maximisez la valeur de vos suites rares. Créez de l’urgence auprès d’acheteurs qualifiés.
                                 </p>
                                 <div className="space-y-3 pt-4 border-t" style={{ borderColor: 'var(--border-primary)' }}>
-                                    {['Prix de réserve confidentiel', 'Surplus de revenu possible', 'Positionnement Premium'].map((t, i) => (
+                                    {['Prix de réserve confidentiel', 'Revenus supplémentaires possibles', 'Positionnement Premium'].map((t, i) => (
                                         <div key={i} className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest" style={{ color: 'var(--accent-gold)' }}>
                                             <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: 'var(--accent-gold)' }} /> {t}
                                         </div>
@@ -133,21 +119,18 @@ export default function PartnersPage() {
                 </div>
             </section>
 
-            {/* --- SECTION FOCUS : SÉLECTION --- */}
-            <section className="py-48 max-w-6xl mx-auto px-6 space-y-40">
+            {/* --- SECTION SÉLECTION --- */}
+            <section className="py-40 max-w-6xl mx-auto px-6 space-y-32">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
                     <div className="relative">
                         <div className="absolute -left-10 -top-10 text-[120px] font-black select-none uppercase italic opacity-5" style={{ color: 'var(--text-primary)' }}>01</div>
                         <h2 className="text-5xl font-black italic uppercase tracking-tighter leading-none relative z-10" style={{ color: 'var(--text-primary)' }}>
-                            Paiement Direct <br /> <span style={{ fontSize: '1.2em', color: 'var(--accent-gold)' }}>Zéro Attente.</span>
+                            Paiement Direct <br /> <span style={{ fontSize: '1.2em', color: 'var(--accent-gold)' }}>Zéro Attente</span>
                         </h2>
                     </div>
                     <div className="space-y-6 border-l-2 pl-10" style={{ borderColor: 'rgba(251, 191, 36, 0.2)' }}>
                         <p className="text-lg font-medium italic leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                            Nous sommes un apporteur d'affaires, pas un collecteur de fonds.
-                        </p>
-                        <p className="text-sm font-bold italic leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                            Le client règle son séjour directement auprès de votre établissement. Vous gardez la main sur votre trésorerie et la relation client dès la confirmation de la vente.
+                            Le client règle directement auprès de votre établissement. Vous gardez la main sur la trésorerie et la relation client.
                         </p>
                     </div>
                 </div>
@@ -155,29 +138,26 @@ export default function PartnersPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
                     <div className="space-y-6 border-r-2 pr-10 text-right" style={{ borderColor: 'rgba(251, 191, 36, 0.2)' }}>
                         <p className="text-lg font-medium italic leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                            LoisirsPrivé référence des établissements 4* et 5* offrant une expérience client irréprochable.
-                        </p>
-                        <p className="text-sm font-bold italic leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                            Chaque établissement partenaire est sélectionné pour la qualité de ses prestations, assurant à nos membres une homogénéité de service et une valorisation mutuelle des adresses présentes sur le cercle.
+                            Sélection d’hôtels 4* et 5* pour assurer la qualité de service et la valorisation mutuelle.
                         </p>
                     </div>
                     <div className="relative text-right md:text-left">
                         <div className="absolute -right-10 -top-10 text-[120px] font-black select-none uppercase italic opacity-5" style={{ color: 'var(--text-primary)' }}>02</div>
                         <h2 className="text-5xl font-black italic uppercase tracking-tighter leading-none relative z-10" style={{ color: 'var(--text-primary)' }}>
-                            Un Cercle <br /> d'Hôtels <br /> <span style={{ fontSize: '1.2em', color: 'var(--accent-gold)' }}>D'Exception.</span>
+                            Cercle d'Hôtels <br /> <span style={{ fontSize: '1.2em', color: 'var(--accent-gold)' }}>D'Exception</span>
                         </h2>
                     </div>
                 </div>
             </section>
 
             {/* --- CTA --- */}
-            <section className="py-40 border-t" style={{ backgroundColor: `linear-gradient(to top, rgba(251, 191, 36, 0.03), transparent)`, borderColor: 'var(--border-primary)' }}>
+            <section className="py-32 border-t" style={{ backgroundColor: `linear-gradient(to top, rgba(251, 191, 36, 0.03), transparent)`, borderColor: 'var(--border-primary)' }}>
                 <div className="max-w-4xl mx-auto px-6 text-center space-y-12">
-                    <h2 className="text-5xl md:text-8xl font-black italic uppercase tracking-tighter leading-[0.85]" style={{ color: 'var(--text-primary)' }}>
+                    <h2 className="text-5xl md:text-7xl font-black italic uppercase tracking-tighter leading-[0.85]" style={{ color: 'var(--text-primary)' }}>
                         Prêt à booster <br /> <span style={{ color: 'var(--accent-gold)' }}>votre RevPAR ?</span>
                     </h2>
                     <div className="pt-10 flex flex-col items-center gap-6">
-                        <Link href="mailto:partenaires@loisirs-prive.fr" className="h-24 px-16 rounded-2xl flex items-center gap-6 text-xl font-black uppercase tracking-widest transition-all hover:scale-105 shadow-lg text-white" style={{ backgroundColor: 'var(--accent-gold)' }}>
+                        <Link href="mailto:partenaires@loisirs-prive.fr" className="h-20 px-12 rounded-2xl flex items-center gap-6 text-xl font-black uppercase tracking-widest transition-all hover:scale-105 shadow-lg text-white" style={{ backgroundColor: 'var(--accent-gold)' }}>
                             Devenir Partenaire
                             <ArrowRight size={28} />
                         </Link>

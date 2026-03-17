@@ -142,9 +142,9 @@ export default function Home() {
                             <div className="flex flex-col gap-3">
                                 <div className="flex items-center gap-2 text-[var(--accent-gold)]">
                                     <ShieldCheck size={18} />
-                                    <span className="text-[10px] md:text-[11px] font-black uppercase tracking-widest">Adhésion Libre</span>
+                                    <span className="text-[11px] md:text-[12px] font-black uppercase tracking-widest">Adhésion Libre</span>
                                 </div>
-                                <p className="text-[11px] md:text-xs text-gray-400 font-bold italic leading-snug">
+                                <p className="text-[11px] text-[12px] text-gray-400 font-bold italic leading-snug">
                                     Accès au cercle sans frais <br className="hidden md:block" /> ni abonnement.
                                 </p>
                             </div>
@@ -153,9 +153,9 @@ export default function Home() {
                             <div className="flex flex-col gap-3">
                                 <div className="flex items-center gap-2 text-[var(--accent-gold)]">
                                     <Zap size={18} />
-                                    <span className="text-[10px] md:text-[11px] font-black uppercase tracking-widest">Zéro Intermédiaire</span>
+                                    <span className="text-[11px] md:text-[12px] font-black uppercase tracking-widest">Zéro Intermédiaire</span>
                                 </div>
-                                <p className="text-[11px] md:text-xs text-gray-400 font-bold italic leading-snug">
+                                <p className="text-[13px] md:text-[13px] text-gray-400 font-bold italic leading-snug">
                                     Réservation directe auprès <br className="hidden md:block" /> de l'établissement.
                                 </p>
                             </div>
@@ -164,9 +164,9 @@ export default function Home() {
                             <div className="flex flex-col gap-3">
                                 <div className="flex items-center gap-2 text-[var(--accent-gold)]">
                                     <CheckCircle size={18} />
-                                    <span className="text-[10px] md:text-[11px] font-black uppercase tracking-widest">Lots Vérifiés</span>
+                                    <span className="text-[11px] md:text-[12px] font-black uppercase tracking-widest">Lots Vérifiés</span>
                                 </div>
-                                <p className="text-[11px] md:text-xs text-gray-400 font-bold italic leading-snug">
+                                <p className="text-[11px] text-[13px] text-gray-400 font-bold italic leading-snug">
                                     Uniquement des hôtels <br className="hidden md:block" /> 4* & 5* sélectionnés.
                                 </p>
                             </div>
@@ -175,9 +175,9 @@ export default function Home() {
                             <div className="flex flex-col gap-3">
                                 <div className="flex items-center gap-2 text-[var(--accent-gold)]">
                                     <Lock size={18} />
-                                    <span className="text-[10px] md:text-[11px] font-black uppercase tracking-widest">Prix Confidentiels</span>
+                                    <span className="text-[11px] md:text-[12px] font-black uppercase tracking-widest">Prix Confidentiels</span>
                                 </div>
-                                <p className="text-[11px] md:text-xs text-gray-400 font-bold italic leading-snug">
+                                <p className="text-[11px] text-[13px] text-gray-400 font-bold italic leading-snug">
                                     Offres protégées et <br className="hidden md:block" /> invisibles sur le web.
                                 </p>
                             </div>
@@ -316,76 +316,115 @@ export default function Home() {
 }
 
 
-
 function EmptyState({ onBtnClick }: { onBtnClick: () => void }) {
     const { user } = useUser()
 
     return (
-        <div className="col-span-full py-24 px-6 flex flex-col items-center justify-center border animate-card-entry text-center"
+        <div
+            className="col-span-full py-24 px-6 flex flex-col items-center justify-center border animate-card-entry text-center"
             style={{
                 borderColor: 'var(--border-primary)',
                 borderRadius: 'var(--radius-card)',
                 backgroundColor: 'var(--bg-secondary)',
                 background: 'linear-gradient(to bottom, var(--bg-tertiary), transparent)'
-            }}>
-
-            {/* Icône Statut : Utilise la couleur accent (Gold ou Émeraude) */}
+            }}
+        >
+            {/* Status Indicator */}
             <div className="relative flex h-4 w-4 mb-8">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
-                    style={{ backgroundColor: 'var(--accent-gold)' }}></span>
-                <span className="relative inline-flex rounded-full h-4 w-4"
-                    style={{ backgroundColor: 'var(--accent-gold)' }}></span>
+                <span
+                    className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+                    style={{ backgroundColor: 'var(--accent-gold)' }}
+                ></span>
+                <span
+                    className="relative inline-flex rounded-full h-4 w-4"
+                    style={{ backgroundColor: 'var(--accent-gold)' }}
+                ></span>
             </div>
 
-            {/* Titre : Adapté aux variables de texte et d'espacement */}
-            <h3 className="text-2xl md:text-3xl font-light tracking-[0.3em] uppercase mb-8"
-                style={{ color: 'var(--text-primary)' }}>
-                Nouvelle collection en préparation
-            </h3>
-
-            {/* Corps de texte : Plus lisible et contrasté */}
-            <div className="max-w-2xl space-y-8"> {/* Espace augmenté entre les paragraphes */}
-                <p className="text-lg md:text-xl leading-relaxed font-light"
-                    style={{ color: 'var(--text-secondary)' }}>
-                    Nos membres ont été très réactifs : toutes les offres sont <span className="font-normal" style={{ color: 'var(--text-primary)' }}>complètes</span>.
-                    <br className="hidden md:block" />
-                    Nous préparons actuellement les prochaines opportunités pour la semaine prochaine.
+            {/* Title */}
+            <div className="mb-6 space-y-3">
+                <p
+                    className="text-xs tracking-[0.3em] uppercase"
+                    style={{ color: 'var(--text-tertiary)' }}
+                >
+                    Accès actuellement fermé
                 </p>
 
-                <div className="flex flex-col items-center gap-3">
-                    <p className="text-xs md:text-sm tracking-[0.2em] uppercase font-medium"
-                        style={{ color: 'var(--text-tertiary)' }}>
-                        Prochaines ouvertures
+                <h3
+                    className="text-2xl md:text-3xl font-light tracking-[0.3em] uppercase"
+                    style={{ color: 'var(--text-primary)' }}
+                >
+                    Toutes les offres sont complètes
+                </h3>
+            </div>
+
+            {/* Body */}
+            <div className="max-w-2xl space-y-8">
+                <p
+                    className="text-lg md:text-xl leading-relaxed font-light"
+                    style={{ color: 'var(--text-secondary)' }}
+                >
+                    Les opportunités récemment proposées ont été entièrement réservées.
+                    <br className="hidden md:block" />
+                    L’accès est volontairement limité afin de préserver la discrétion et la qualité des séjours proposés.
+                </p>
+
+                <div className="flex flex-col items-center gap-4">
+                    <p
+                        className="text-xs md:text-sm tracking-[0.2em] uppercase font-medium"
+                        style={{ color: 'var(--text-tertiary)' }}
+                    >
+                        Disponibilités en cours d’allocation <span className="opacity-60"> — accès limité</span>
                     </p>
+
                     <div className="flex gap-4">
-                        <span className="px-3 py-1 border text-[10px] tracking-widest uppercase"
-                            style={{ borderColor: 'var(--border-primary)', color: 'var(--text-primary)' }}>
-                            Enchères Flash
+                        <span
+                            className="px-3 py-1 border text-[10px] tracking-widest uppercase"
+                            style={{
+                                borderColor: 'var(--border-primary)',
+                                color: 'var(--text-primary)'
+                            }}
+                        >
+                            Enchères privées
                         </span>
-                        <span className="px-3 py-1 border text-[10px] tracking-widest uppercase"
-                            style={{ borderColor: 'var(--border-primary)', color: 'var(--text-primary)' }}>
-                            Ventes Privées
+
+                        <span
+                            className="px-3 py-1 border text-[10px] tracking-widest uppercase"
+                            style={{
+                                borderColor: 'var(--border-primary)',
+                                color: 'var(--text-primary)'
+                            }}
+                        >
+                            Ventes confidentielles
                         </span>
                     </div>
                 </div>
             </div>
 
-            {/* Bouton d'action intelligent */}
+            {/* CTA */}
             <div className="mt-12">
                 {user ? (
                     <div className="flex flex-col items-center gap-4">
-                        <div className="px-10 py-4 border text-[11px] tracking-[0.25em] uppercase font-bold"
+                        <div
+                            className="px-10 py-4 border text-[11px] tracking-[0.25em] uppercase font-bold"
                             style={{
                                 borderColor: 'var(--border-accent)',
                                 color: 'var(--accent-gold)',
                                 borderRadius: 'var(--radius-button)',
-                                backgroundColor: 'rgba(var(--accent-gold-rgb), 0.1)' // Optionnel : fond léger
-                            }}>
-                            Vous êtes sur la liste prioritaire
+                                backgroundColor: 'rgba(var(--accent-gold-rgb), 0.1)'
+                            }}
+                        >
+                            Accès prioritaire activé
                         </div>
-                        <p className="text-[10px] uppercase tracking-[0.2em]"
-                            style={{ color: 'var(--text-tertiary)' }}>
-                            Notification active pour <span style={{ color: 'var(--text-secondary)' }}>{user.email}</span>
+
+                        <p
+                            className="text-[10px] uppercase tracking-[0.2em]"
+                            style={{ color: 'var(--text-tertiary)' }}
+                        >
+                            Invitation envoyée à{' '}
+                            <span style={{ color: 'var(--text-secondary)' }}>
+                                {user.email}
+                            </span>
                         </p>
                     </div>
                 ) : (
@@ -407,7 +446,7 @@ function EmptyState({ onBtnClick }: { onBtnClick: () => void }) {
                         }}
                         onClick={onBtnClick}
                     >
-                        Être alerté de l'ouverture
+                        Demander un accès prioritaire
                     </button>
                 )}
             </div>
