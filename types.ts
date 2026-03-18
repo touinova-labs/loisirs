@@ -16,7 +16,7 @@ export interface AuctionAttributes {
   value_real?: number; // Pour afficher "Valeur réelle : 120€"
   is_private?: boolean; // Indique si l'expérience est privée (uniquement pour les expériences)
   has_delivery: boolean; // Indique si //  la livraison est disponible
-  
+
 }
 
 export interface Auction {
@@ -41,8 +41,10 @@ export interface Auction {
   partner_name: string
   booking_url: string
   partner_email: string
-  total_bids : number
+  total_bids: number
   enabled: boolean
+  min_bid_increment: number;
+  bid_step_type: 'fixed' | "percentage"
 }
 
 

@@ -19,8 +19,6 @@ export async function GET(
             .eq('id', id)
             .single()
 
-        console.log("hh", auctionError, auction)
-
         if (auctionError || !auction) {
             return NextResponse.json({ error: 'Enchère non trouvée' }, { status: 404 })
         }

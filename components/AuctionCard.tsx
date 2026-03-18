@@ -35,9 +35,9 @@ export default function AuctionCard({ auction, isConnected = false, onAuthClick 
 
       const parts = [];
       if (d > 0) parts.push(`${d}j`);
-      if (h > 0 || d > 0) parts.push(`${h}h`); 
+      if (h > 0 || d > 0) parts.push(`${h}h`);
       if (m > 0 || h > 0 || d > 0) parts.push(`${m}m`);
-      parts.push(`${s}s`); 
+      parts.push(`${s}s`);
 
       setTimerText(parts.join(" "));
     };
@@ -224,20 +224,7 @@ export default function AuctionCard({ auction, isConnected = false, onAuthClick 
           </div>
 
           {/* BOTTOM ROW: Action Button */}
-          <Link
-            href={`/ventes/${auction.id}`}
-            className={`w-full h-12 flex items-center justify-between px-6 rounded-lg transition-all duration-500 font-black text-[9px] uppercase tracking-[0.2em] shadow-sm ${auction.status !== 'active' && auction.status !== 'upcoming'
-              ? 'bg-gray-200 text-gray-500 cursor-not-allowed opacity-50'
-              : !isConnected
-                ? 'bg-[var(--text-primary)] text-[var(--bg-primary)] hover:bg-[var(--accent-gold)] hover:text-white'
-                : 'bg-[var(--bg-tertiary)] border border-[var(--border-primary)] text-[var(--text-primary)] hover:border-[var(--accent-gold)] hover:shadow-lg hover:-translate-y-0.5'
-              }`}
-          >
-            <span>
-              {auction.status === 'upcoming' ? 'Aperçu du lot' : auction.status === 'active' ? (isConnected ? 'Accéder à la vente' : 'S\'inscrire / Connexion') : 'Vente Clôturée'}
-            </span>
-            <ArrowRight size={14} strokeWidth={3} className="group-hover:translate-x-1 transition-transform" />
-          </Link>
+          <AuctionAction auction={auction} isConnected={isConnected} onAuthClick={onAuthClick} />
         </div>
       </div>
     </div>
@@ -255,3 +242,39 @@ function Feature({ icon, text, highlight = false, opacity = "opacity-60" }: { ic
     </div>
   );
 }
+
+const AuctionAction = ({ auction, isConnected, onAuthClick }: AuctionCardProps) => {
+  // 1. Cas : Vente clôturée (Désactivé)
+  if (auction.status !== 'active' && auction.status !== 'upcoming') {
+    return (
+      <button disabled className="w-full h-12 flex items-center justify-between px-6 rounded-lg bg-gray-200 text-gray-500 cursor-not-allowed opacity-50 font-black text-[9px] uppercase tracking-[0.2em]">
+        <span>Vente Clôturée</span>
+        <ArrowRight size={14} strokeWidth={3} />
+      </button>
+    );
+  }
+
+  // 2. Cas : Non connecté (Déclenche la Modal)
+  if (!isConnected) {
+    return (
+      <button
+        onClick={onAuthClick}
+        className="w-full h-12 flex items-center justify-between px-6 rounded-lg transition-all duration-500 font-black text-[9px] uppercase tracking-[0.2em] shadow-sm bg-[var(--text-primary)] text-[var(--bg-primary)] hover:bg-[var(--accent-gold)] hover:text-white"
+      >
+        <span>S'inscrire / Connexion</span>
+        <ArrowRight size={14} strokeWidth={3} className="hover:translate-x-1 transition-transform" />
+      </button>
+    );
+  }
+
+  // 3. Cas : Connecté (Lien vers la vente ou l'aperçu)
+  return (
+    <Link
+      href={`/ventes/${auction.id}`}
+      className="w-full h-12 flex items-center justify-between px-6 rounded-lg transition-all duration-500 font-black text-[9px] uppercase tracking-[0.2em] shadow-sm bg-[var(--bg-tertiary)] border border-[var(--border-primary)] text-[var(--text-primary)] hover:border-[var(--accent-gold)] hover:shadow-lg hover:-translate-y-0.5"
+    >
+      <span>{auction.status === 'upcoming' ? 'Aperçu du lot' : 'Accéder à la vente'}</span>
+      <ArrowRight size={14} strokeWidth={3} className="hover:translate-x-1 transition-transform" />
+    </Link>
+  );
+};

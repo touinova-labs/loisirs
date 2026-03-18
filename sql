@@ -53,13 +53,17 @@ DECLARE
     v_end_at TIMESTAMPTZ;
     v_status TEXT;
     v_first_name TEXT;
+    v_min_increment DECIMAL;
+    v_required_min_amount DECIMAL;
 BEGIN
     -- 1. Verrouillage et récupération avec vérification d'existence
-    SELECT current_price, end_at, status 
-    INTO v_current_price, v_end_at, v_status
+    SELECT current_price, min_bid_increment, end_at, status 
+    INTO v_current_price, v_min_increment, v_end_at, v_status
     FROM auctions
     WHERE id = NEW.auction_id
     FOR UPDATE;
+
+    v_required_min_amount := v_current_price + v_min_increment;
 
     IF NOT FOUND THEN
         RAISE EXCEPTION 'ENCHERE_INTROUVABLE';
@@ -71,8 +75,8 @@ BEGIN
     END IF;
 
     -- Erreur : Prix insuffisant
-    IF NEW.amount <= v_current_price THEN
-        RAISE EXCEPTION 'MISE_INSUFFISANTE:%', v_current_price;
+    IF NEW.amount < v_required_min_amount THEN
+        RAISE EXCEPTION 'MISE_INSUFFISANTE: Le minimum requis est % €', v_required_min_amount;
     END IF;
 
     -- Anti-sniping
@@ -207,4 +211,12 @@ ALTER TABLE bids ADD COLUMN IF NOT EXISTS user_nickname TEXT;
 ALTER TABLE profiles ADD COLUMN IF NOT EXISTS accepted_newsletter BOOLEAN DEFAULT FALSE;
 
 ALTER TABLE auctions ADD COLUMN IF NOT EXISTS enabled BOOLEAN DEFAULT FALSE;
+
+
+
+ALTER TABLE auctions 
+ADD COLUMN IF NOT EXISTS min_bid_increment DECIMAL(10,2) DEFAULT 10.00,
+ADD COLUMN IF NOT EXISTS bid_step_type TEXT DEFAULT 'fixed'; -- 'fixed' ou 'percentage'
+
+
 

@@ -61,14 +61,13 @@ export default function AuctionDetailsPage() {
 
     const { bid, loading: isBidding } = useBidApi(showToast)
 
-    const handlePlaceBid = async () => {
+    const handlePlaceBid = async (bidAmount: number) => {
         if (!user) {
             setIsAuthOpen(true)
             return
         }
         if (auction) {
-            if(auction.type == "auction"){
-                const bidAmount = auction.current_price + 1
+            if (auction.type == "auction") {
                 await bid(user.id, auction.id, bidAmount)
             }
         }
@@ -155,6 +154,7 @@ export default function AuctionDetailsPage() {
                             winnerData={winnerData}
                             user={user}
                             onPlaceBid={handlePlaceBid}
+                            onSignIn={() => setIsAuthOpen(true)}
                         />
                     </div>
 
@@ -166,7 +166,7 @@ export default function AuctionDetailsPage() {
             </div>
 
             {/* MOBILE ACTION BAR */}
-            <MobileActionBar auction={auction} attr={attr} isFixedPrice={isFixedPrice} user={user} onPlaceBid={handlePlaceBid} />
+            <MobileActionBar auction={auction} attr={attr} isFixedPrice={isFixedPrice} isConnected={!!user} onPlaceBid={handlePlaceBid} />
 
             {/* RESULT MODAL */}
             <AuctionResultModal winnerData={winnerData} user={user} isFinished={isFinished} auction_id={auction.id} />
