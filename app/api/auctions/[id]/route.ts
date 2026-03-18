@@ -49,6 +49,14 @@ export async function GET(
         // On crée un nouvel objet pour éviter de muter l'original par accident
         let sanitizedAuction = { ...auction }
 
+        if (sanitizedAuction.attributes) {
+            sanitizedAuction.attributes = {
+                ...sanitizedAuction.attributes,
+                lat: null,
+                lng: null
+            }
+        }
+
         if (!user) {
             // Masquage strict des prix
             sanitizedAuction.current_price = null

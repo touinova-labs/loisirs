@@ -18,15 +18,23 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
 	metadataBase: new URL("https://loisirs-prive.fr"),
 	title: {
-		default: "LoisirsPrivé | L'Art de l'Enchère pour Séjours d'Exception",
-		template: "%s | LoisirsPrivé"
+		default: "Loisirs-Privé | Expériences Hôtelières Exclusives",
+		template: "%s | Loisirs-Privé"
 	},
-	description: "Accédez à une sélection exclusive de séjours et expériences d'exception en ventes privées et enchères. Privilèges réservés aux membres.",
-	applicationName: "LoisirsPrivé",
-	keywords: ["ventes privées", "enchères", "séjours de luxe", "expériences exclusives", "privilèges"],
-	authors: [{ name: "LoisirsPrivé", url: "https://loisirs-prive.fr" }],
-	creator: "LoisirsPrivé",
-	publisher: "LoisirsPrivé",
+	description: "Découvrez des séjours et expériences hôtelières uniques, réservés aux membres. Accédez à des offres confidentielles et sécurisées, hors des parcours de réservation classiques.",
+	applicationName: "Loisirs-Privé",
+	keywords: [
+		"séjours exclusifs",
+		"expériences hôtelières",
+		"accès réservé",
+		"membres",
+		"confidentialité",
+		"voyage de luxe",
+		"séjour premium"
+	],
+	authors: [{ name: "Loisirs-Privé", url: "https://loisirs-prive.fr" }],
+	creator: "Loisirs-Privé",
+	publisher: "Loisirs-Privé",
 	formatDetection: {
 		email: false,
 		telephone: false,
@@ -36,7 +44,7 @@ export const metadata: Metadata = {
 	appleWebApp: {
 		capable: true,
 		statusBarStyle: "black-translucent",
-		title: "LoisirsPrivé",
+		title: "Loisirs-Privé",
 	},
 	icons: {
 		icon: [
@@ -48,7 +56,7 @@ export const metadata: Metadata = {
 			{
 				rel: "mask-icon",
 				url: "/safari-pinned-tab.svg",
-				color: "#d4af37",
+				color: "#10B981",
 			},
 		],
 	},
@@ -62,29 +70,14 @@ export const metadata: Metadata = {
 		locale: "fr_FR",
 		url: "https://loisirs-prive.fr",
 		siteName: "LoisirsPrivé",
-		title: "LoisirsPrivé | L'Art de l'Enchère pour Séjours d'Exception",
-		description: "Accédez à une sélection exclusive de séjours et expériences d'exception en ventes privées et enchères.",
-		images: [
-			{
-				url: "/og-image.png",
-				width: 1200,
-				height: 630,
-				alt: "LoisirsPrivé - Enchères de Luxe",
-				type: "image/png",
-			},
-			{
-				url: "/og-image-square.png",
-				width: 800,
-				height: 800,
-				alt: "LoisirsPrivé - Enchères de Luxe",
-				type: "image/png",
-			},
-		],
+		title: "Loisirs-Privé | Expériences Hôtelières Exclusives",
+		description: "Découvrez des séjours et expériences hôtelières uniques, réservés aux membres. Accédez à des offres confidentielles et sécurisées, hors des parcours de réservation classiques.",
+		images: ["/og-image.png"],
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "LoisirsPrivé | L'Art de l'Enchère pour Séjours d'Exception",
-		description: "Accédez à une sélection exclusive de séjours et expériences d'exception.",
+		title: "Loisirs-Privé | Expériences Hôtelières Exclusives",
+		description: "Découvrez des séjours et expériences hôtelières uniques, réservés aux membres. Accédez à des offres confidentielles et sécurisées, hors des parcours de réservation classiques.",
 		images: ["/og-image.png"],
 		creator: "@loisirsprive",
 	},
@@ -107,9 +100,7 @@ export const metadata: Metadata = {
 	},
 };
 
-export default function RootLayout({
-	children,
-}: Readonly<{
+export default function RootLayout({ children, }: Readonly<{
 	children: React.ReactNode;
 }>) {
 	return (
@@ -129,7 +120,7 @@ export default function RootLayout({
 							<Link href="/legal/mentions-legales">Mentions Légales</Link>
 							<Link href="/partners">Proposer mes offres</Link>
 						</div>
-						<p className="flex justify-center">© 2026 LoisirsPrivé. Tous droits réservés.</p>
+						<p className="flex justify-center">© 2026 Loisirs-Privé. Tous droits réservés.</p>
 					</footer>
 				</ThemeProvider>
 			</body>

@@ -113,23 +113,22 @@ export default function Home() {
 
                     {/* Titre & Texte */}
                     <div className="space-y-4 md:space-y-6">
-                        <h1 className="text-4xl md:text-7xl italic uppercase tracking-tight leading-[1] bg-gradient-to-b from-white to-gray-300 bg-clip-text text-transparent">                            Séjours d’exception <br />
+                        <h1 className="text-4xl md:text-7xl italic uppercase tracking-tight leading-[1] bg-gradient-to-b from-white to-gray-300 bg-clip-text text-transparent">Séjours d’exception <br />
                             réservés à <span style={{ color: 'var(--accent-gold)' }}>nos membres</span>
                         </h1>
 
                         <p className="text-[12px] md:text-lg font-medium italic max-w-sm md:max-w-2xl leading-relaxed text-white/90">
-                            Accédez à des disponibilités non visibles en ligne.<br />
-                            Réservez directement auprès des hôtels, sans intermédiaire.
+                            Découvrez des expériences hôtelières soigneusement sélectionnées pour nos membres. Réservez directement auprès de l’établissement, en toute simplicité et en toute confiance.
                         </p>
                     </div>
 
                     {/* Bouton CTA */}
                     <button
                         onClick={() => document.getElementById('catalogue')?.scrollIntoView({ behavior: 'smooth' })}
-                        className="mt-6 md:mt-8 h-12 md:h-16 px-6 md:px-12 bg-[var(--accent-gold)] text-black uppercase tracking-widest rounded-xl shadow-2xl flex items-center justify-center gap-2 md:gap-4 text-[10px] md:text-sm w-full sm:w-auto"
+                        className="mt-6 md:mt-8 h-12 md:h-16 px-6 md:px-12 bg-[var(--accent-gold)] text-black uppercase tracking-widest rounded-xl shadow-2xl flex items-center justify-center gap-2 md:gap-4 text-[10px] md:text-sm w-full sm:w-auto
+               transform transition-transform duration-300 hover:scale-105"
                     >
-                        {/* Version mobile simplifiée */}
-                        <span>Voir les offres disponibles</span>
+                        <span>Voir les séjours disponibles</span>
                         <ArrowRight size={16} className="ml-2 md:ml-4" />
                     </button>
                 </div>
@@ -150,10 +149,10 @@ export default function Home() {
                         <div className="flex flex-col gap-3">
                             <div className="flex items-center gap-2 text-[var(--accent-gold)]">
                                 <ShieldCheck size={18} />
-                                <span className="text-[11px] md:text-[12px] uppercase tracking-widest">Adhésion Libre</span>
+                                <span className="text-[11px] md:text-[12px] uppercase tracking-widest">Accès exclusif</span>
                             </div>
                             <p style={{ color: 'var(--text-secondary)' }} className="text-[11px] text-[12px] font-bold italic leading-snug">
-                                Accès gratuit
+                                Pour nos membres uniquement, sans inscription payante
                             </p>
                         </div>
 
@@ -161,10 +160,10 @@ export default function Home() {
                         <div className="flex flex-col gap-3">
                             <div className="flex items-center gap-2 text-[var(--accent-gold)]">
                                 <Zap size={18} />
-                                <span className="text-[11px] md:text-[12px] uppercase tracking-widest">Zéro Intermédiaire</span>
+                                <span className="text-[11px] md:text-[12px] uppercase tracking-widest">Réservation directe</span>
                             </div>
                             <p style={{ color: 'var(--text-secondary)' }} className="text-[13px] md:text-[13px] font-bold italic leading-snug">
-                                Réservation directe avec l'hôtel
+                                Confirmation immédiate auprès de l’établissement, sans intermédiaire
                             </p>
                         </div>
 
@@ -172,10 +171,10 @@ export default function Home() {
                         <div className="flex flex-col gap-3">
                             <div className="flex items-center gap-2 text-[var(--accent-gold)]">
                                 <CheckCircle size={18} />
-                                <span className="text-[11px] md:text-[12px] uppercase tracking-widest">Lots Vérifiés</span>
+                                <span className="text-[11px] md:text-[12px] uppercase tracking-widest">Sélection soignée</span>
                             </div>
                             <p style={{ color: 'var(--text-secondary)' }} className="text-[11px] text-[13px] font-bold italic leading-snug">
-                                Hôtels soigneusement sélectionnés
+                                Établissements et expériences validés pour leur qualité et leur ambiance
                             </p>
                         </div>
 
@@ -183,10 +182,10 @@ export default function Home() {
                         <div className="flex flex-col gap-3">
                             <div className="flex items-center gap-2 text-[var(--accent-gold)]">
                                 <Lock size={18} />
-                                <span className="text-[11px] md:text-[12px] uppercase tracking-widest">Prix Confidentiels</span>
+                                <span className="text-[11px] md:text-[12px] uppercase tracking-widest">Confidentialité</span>
                             </div>
                             <p style={{ color: 'var(--text-secondary)' }} className="text-[11px] text-[13px] font-bold italic leading-snug">
-                                Tarifs privilégiés, non diffusés publiquement
+                                Les informations détaillées et tarifs ne sont révélés qu’après réservation, pour protéger les établissements
                             </p>
                         </div>
 
@@ -195,7 +194,6 @@ export default function Home() {
             </div>
 
             <div id="catalogue" className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-16">
-
                 <header className="mb-8 md:mb-10"> {/* Réduit un peu pour garder la barre proche du titre */}
                     <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                         <div className="space-y-2 text-center md:text-left">
@@ -269,40 +267,42 @@ export default function Home() {
                     <h2 className="text-3xl md:text-5xl uppercase tracking-tight">
                         Pourquoi rejoindre notre Cercle
                     </h2>
+
                     <p style={{ color: 'var(--text-secondary)' }} className="italic text-lg md:text-xl leading-relaxed max-w-3xl mx-auto">
-                        Profitez d’expériences hôtelières uniques, avec un accès réservé et confidentiel. Réservez directement auprès des établissements sélectionnés pour nos membres.
+                        Découvrez des offres hôtelières soigneusement sélectionnées. Les détails des établissements et de votre séjour sont révélés après confirmation, garantissant discrétion et sécurité.
                     </p>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 mt-10">
+
                         {/* Avantage 1 */}
                         <div className="flex flex-col items-center gap-4 p-6 border rounded-2xl bg-[var(--bg-secondary)]">
                             <ShieldCheck size={28} className="text-[var(--accent-gold)]" />
-                            <p style={{ color: 'var(--text-secondary)' }} className=" font-bold text-center">
-                                Accès exclusif et confidentiel aux offres
+                            <p style={{ color: 'var(--text-secondary)' }} className="font-bold text-center">
+                                Accès sécurisé aux offres exclusives
                             </p>
                         </div>
 
                         {/* Avantage 2 */}
                         <div className="flex flex-col items-center gap-4 p-6 border rounded-2xl bg-[var(--bg-secondary)]">
                             <Zap size={28} className="text-[var(--accent-gold)]" />
-                            <p style={{ color: 'var(--text-secondary)' }} className=" font-bold text-center">
-                                Réservation directe avec l’hôtel, sans intermédiaire
+                            <p style={{ color: 'var(--text-secondary)' }} className="font-bold text-center">
+                                Réservation directe avec l’établissement
                             </p>
                         </div>
 
                         {/* Avantage 3 */}
                         <div className="flex flex-col items-center gap-4 p-6 border rounded-2xl bg-[var(--bg-secondary)]">
                             <CheckCircle size={28} className="text-[var(--accent-gold)]" />
-                            <p style={{ color: 'var(--text-secondary)' }} className=" font-bold text-center">
-                                Établissements soigneusement sélectionnés pour leur qualité
+                            <p style={{ color: 'var(--text-secondary)' }} className="font-bold text-center">
+                                Sélection rigoureuse d’hôtels et d’expériences
                             </p>
                         </div>
 
                         {/* Avantage 4 */}
                         <div className="flex flex-col items-center gap-4 p-6 border rounded-2xl bg-[var(--bg-secondary)]">
                             <Lock size={28} className="text-[var(--accent-gold)]" />
-                            <p style={{ color: 'var(--text-secondary)' }} className=" font-bold text-center">
-                                Offres confidentielles, non visibles en ligne
+                            <p style={{ color: 'var(--text-secondary)' }} className="font-bold text-center">
+                                Offres confidentielles, visibles uniquement aux membres, introuvables ailleurs
                             </p>
                         </div>
 
@@ -310,17 +310,10 @@ export default function Home() {
                         <div className="flex flex-col items-center gap-4 p-6 border rounded-2xl bg-[var(--bg-secondary)]">
                             <GavelIcon size={28} className="text-[var(--accent-gold)]" />
                             <p style={{ color: 'var(--text-secondary)' }} className="font-bold text-center">
-                                Tarifs privilégiés négociés en toute discrétion
+                                Tarifs sécurisés, négociés avec discrétion
                             </p>
                         </div>
 
-                        {/* Avantage 6 */}
-                        <div className="flex flex-col items-center gap-4 p-6 border rounded-2xl bg-[var(--bg-secondary)]">
-                            <Globe size={28} className="text-[var(--accent-gold)]" />
-                            <p style={{ color: 'var(--text-secondary)' }} className="font-bold text-center">
-                                Expériences uniques réservées uniquement à nos membres
-                            </p>
-                        </div>
                     </div>
                 </section>
             </div>

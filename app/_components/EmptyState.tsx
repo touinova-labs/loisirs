@@ -28,11 +28,11 @@ export function EmptyState({ onBtnClick }: { onBtnClick: () => void }) {
             {/* Title */}
             <div className="mb-6 space-y-3">
                 <p className="text-xs tracking-[0.3em] uppercase opacity-50">
-                    Aucune offre disponible actuellement
+                    Sélections en cours
                 </p>
 
                 <h3 className="text-2xl md:text-3xl font-bold uppercase">
-                    Revenez bientôt
+                    Découvrez bientôt de nouvelles expériences
                 </h3>
             </div>
 
@@ -41,7 +41,10 @@ export function EmptyState({ onBtnClick }: { onBtnClick: () => void }) {
                 <p
                     className="text-sm md:text-lg leading-relaxed italic text-gray-400 max-w-md mx-auto"
                 >
-                    Les offres actuelles sont en cours d’allocation. Rejoignez le cercle pour être alerté en priorité dès qu’elles sont disponibles. 
+                    {user
+                        ? "Les disponibilités sont actuellement en préparation et vous seront présentées en priorité dès leur publication."
+                        : "Les disponibilités sont actuellement en préparation et réservées aux membres du cercle. Rejoignez le cercle pour être alerté en priorité dès qu’elles sont publiées."
+                    }
                 </p>
             </div>
 
@@ -62,7 +65,7 @@ export function EmptyState({ onBtnClick }: { onBtnClick: () => void }) {
                         </div>
 
                         <p className="text-[10px] uppercase tracking-[0.2em]" style={{ color: 'var(--text-tertiary)' }}>
-                            Invitation envoyée à{' '}
+                            Notifications envoyées à{' '}
                             <span style={{ color: 'var(--text-secondary)' }}>{user.email}</span>
                         </p>
                     </div>
