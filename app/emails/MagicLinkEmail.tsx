@@ -30,13 +30,15 @@ export const MagicLinkEmail = ({ magicLink, theme, is_new }: IProps) => {
 	};
 
 	const heading = is_new ? "Vos privilèges commencent ici" : "Ravi de vous revoir";
+
+
 	const previewText = is_new
 		? "Accès membre : Vos privilèges Loisirs Privé 🔑"
 		: "Bon retour parmi nous : Votre accès sécurisé 🔑";
 
 	const mainMessage = is_new
-		? "Votre invitation est prête. Finalisez votre adhésion pour profiter de nos"
-		: "Votre accès sécurisé est prêt. Retrouvez dès maintenant nos";
+		? "Votre invitation est prête. Finalisez votre adhésion pour profiter de notre"
+		: "Votre accès sécurisé est prêt. Retrouvez dès maintenant notre";
 
 	return (
 		<Html>
@@ -56,18 +58,20 @@ export const MagicLinkEmail = ({ magicLink, theme, is_new }: IProps) => {
 
 						<Text style={{ ...text, color: colors.textMuted }}>
 							{mainMessage}
-							<strong style={{ color: colors.textMain }}> ventes privées aux tarifs négociés</strong> et tentez de remporter nos
-							<strong style={{ color: colors.textMain }}> enchères exclusives</strong>.
+							<Text style={{ ...text, color: colors.textMuted }}>
+								<strong style={{ color: colors.textMain }}> sélection d’expériences hôtelières</strong>,
+								proposées de manière confidentielle à nos membres.
+							</Text>
 						</Text>
 
 						<Section style={buttonContainer}>
 							<Link href={magicLink} style={{ ...button, backgroundColor: colors.accent, color: isLuxe ? "#020617" : "#FFFFFF" }}>
-								ACCÉDER AU CLUB
+								Découvrir la sélection
 							</Link>
 						</Section>
 
 						<Text style={{ ...details, color: colors.textMuted }}>
-							Tarifs Négociés • Enchères de Prestige • Évasions
+							  Réservé aux membres • Sélection confidentielle • Expériences hôtelières
 						</Text>
 					</Section>
 
@@ -77,7 +81,7 @@ export const MagicLinkEmail = ({ magicLink, theme, is_new }: IProps) => {
 						</Text>
 						<Text style={{ ...footerNote, color: colors.textMuted }}>
 							Ce lien expire dans 15 minutes.<br />
-							<strong>Loisirs Privé : Le privilège des tarifs négociés.</strong>
+							<strong>Loisirs Privé : Expériences hôtelières réservées à nos membres.</strong>
 						</Text>
 					</Section>
 				</Container>

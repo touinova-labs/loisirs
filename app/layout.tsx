@@ -18,85 +18,35 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
 	metadataBase: new URL("https://loisirs-prive.fr"),
 	title: {
-		default: "Loisirs-Privé | Expériences Hôtelières Exclusives",
+		default: "Loisirs-Privé | Expériences hôtelières réservées à nos membres",
 		template: "%s | Loisirs-Privé"
 	},
-	description: "Découvrez des séjours et expériences hôtelières uniques, réservés aux membres. Accédez à des offres confidentielles et sécurisées, hors des parcours de réservation classiques.",
+	description: "Rejoignez un cercle réservé et découvrez des expériences hôtelières soigneusement sélectionnées. Des séjours proposés avec discrétion, accessibles uniquement à nos membres.",
 	applicationName: "Loisirs-Privé",
 	keywords: [
 		"séjours exclusifs",
 		"expériences hôtelières",
-		"accès réservé",
+		"accès privé",
 		"membres",
-		"confidentialité",
-		"voyage de luxe",
-		"séjour premium"
-	],
-	authors: [{ name: "Loisirs-Privé", url: "https://loisirs-prive.fr" }],
-	creator: "Loisirs-Privé",
-	publisher: "Loisirs-Privé",
-	formatDetection: {
-		email: false,
-		telephone: false,
-		address: false,
-	},
-	viewport: "width=device-width, initial-scale=1, maximum-scale=1",
-	appleWebApp: {
-		capable: true,
-		statusBarStyle: "black-translucent",
-		title: "Loisirs-Privé",
-	},
-	icons: {
-		icon: [
-			{ url: "/favicon.ico", sizes: "any" },
-			{ url: "/icon.svg", type: "image/svg+xml" },
-		],
-		apple: "/apple-touch-icon.png",
-		other: [
-			{
-				rel: "mask-icon",
-				url: "/safari-pinned-tab.svg",
-				color: "#10B981",
-			},
-		],
-	},
-	manifest: "/manifest.json",
-	themeColor: [
-		{ media: "(prefers-color-scheme: light)", color: "#F9FAFB" },
-		{ media: "(prefers-color-scheme: dark)", color: "#020617" },
+		"voyage confidentiel",
+		"séjour d'exception",
+		"hôtels premium"
 	],
 	openGraph: {
 		type: "website",
 		locale: "fr_FR",
 		url: "https://loisirs-prive.fr",
-		siteName: "LoisirsPrivé",
-		title: "Loisirs-Privé | Expériences Hôtelières Exclusives",
-		description: "Découvrez des séjours et expériences hôtelières uniques, réservés aux membres. Accédez à des offres confidentielles et sécurisées, hors des parcours de réservation classiques.",
+		siteName: "Loisirs-Privé",
+		title: "Loisirs-Privé | Expériences hôtelières réservées à nos membres",
+		description: "Rejoignez un cercle réservé et découvrez des expériences hôtelières soigneusement sélectionnées. Des séjours proposés avec discrétion, accessibles uniquement à nos membres.",
 		images: ["/og-image.png"],
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "Loisirs-Privé | Expériences Hôtelières Exclusives",
-		description: "Découvrez des séjours et expériences hôtelières uniques, réservés aux membres. Accédez à des offres confidentielles et sécurisées, hors des parcours de réservation classiques.",
+		title: "Loisirs-Privé | Expériences hôtelières réservées à nos membres",
+		description: "Entrez dans un cercle réservé et découvrez des séjours d’exception proposés de manière confidentielle.",
 		images: ["/og-image.png"],
 		creator: "@loisirsprive",
-	},
-	robots: {
-		index: true,
-		follow: true,
-		"max-image-preview": "large",
-		"max-snippet": -1,
-		"max-video-preview": -1,
-		googleBot: {
-			index: true,
-			follow: true,
-			"max-image-preview": "large",
-			"max-snippet": -1,
-			"max-video-preview": -1,
-		},
-	},
-	alternates: {
-		canonical: "https://loisirs-prive.fr",
 	},
 };
 

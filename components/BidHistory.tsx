@@ -21,7 +21,7 @@ export default function BidHistory({ bids }: { bids: Bid[] }) {
             <div className="flex items-center justify-between px-2">
                 <h3 className="text-[10px] font-semibold uppercase tracking-widest flex items-center gap-2" style={{ color: 'var(--text-secondary)' }}>
                     <History size={14} style={{ color: 'var(--accent-gold)' }} />
-                    Historique des offres
+                    Activité récente
                 </h3>
                 <span className="text-[9px] font-semibold py-0.5 px-2 rounded-full uppercase tracking-widest" style={{ backgroundColor: 'var(--accent-gold)', color: 'white', opacity: 0.9 }}>
                     Live
@@ -47,7 +47,7 @@ export default function BidHistory({ bids }: { bids: Bid[] }) {
                             </h4>
                             <p className="text-[9px] font-medium uppercase tracking-widest leading-relaxed italic"
                                 style={{ color: 'var(--text-secondary)' }}>
-                                Connectez-vous pour visualiser <br /> l'historique des enchères en temps réel.
+                                Connectez-vous pour visualiser <br /> l’activité des membres en temps réel.
                             </p>
                         </div>
 
@@ -64,7 +64,8 @@ export default function BidHistory({ bids }: { bids: Bid[] }) {
                             style={{ borderColor: 'var(--border-primary)', backgroundColor: 'var(--bg-tertiary)' }}>
                             <p className="text-[9px] font-semibold uppercase tracking-widest italic"
                                 style={{ color: 'var(--text-secondary)' }}>
-                                Aucune offre pour le moment.<br />Soyez le premier à miser !
+                                Aucune position pour le moment.<br />
+                                Soyez le premier à vous positionner.
                             </p>
                         </div>
                     ) : (
@@ -97,7 +98,7 @@ export default function BidHistory({ bids }: { bids: Bid[] }) {
                                             </div>
                                             <div className="flex flex-col">
                                                 <span className="text-[10px] font-semibold text-xs uppercase tracking-wider" style={{ color: 'var(--text-primary)' }}>
-                                                    {bid.user_nickname ? anonymizeName(bid.user_nickname) : "Enchérisseur"}
+                                                    {bid.user_nickname ? anonymizeName(bid.user_nickname) : "Membre"}
                                                 </span>
                                                 <span className="text-[8px] font-medium uppercase italic" style={{ color: 'var(--text-secondary)' }}>
                                                     {formatRelativeTime(bid.created_at)}
@@ -114,7 +115,7 @@ export default function BidHistory({ bids }: { bids: Bid[] }) {
                                             </span>
                                             {i === 0 && (
                                                 <div className="flex items-center gap-1 text-[7px] font-semibold uppercase tracking-tighter animate-pulse" style={{ color: 'var(--accent-gold)' }}>
-                                                    <TrendingUp size={8} /> Leader
+                                                    <TrendingUp size={8} /> En tête
                                                 </div>
                                             )}
                                         </div>
@@ -128,8 +129,8 @@ export default function BidHistory({ bids }: { bids: Bid[] }) {
 
 
             {/* Footer */}
-            <p className="text-[8px] font-medium uppercase tracking-widest text-center italic" style={{ color: 'var(--text-secondary)', opacity: 0.6 }}>
-                Mises sécurisées et certifiées par Loisirs-Privé
+            <p className="text-[8px] font-medium uppercase tracking-widest text-center italic" style={{ color: 'var(--text-secondary)', opacity: 0.9 }}>
+                Positions sécurisées et validées par Loisirs-Privé
             </p>
         </div>
     )

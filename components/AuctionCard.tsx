@@ -48,24 +48,19 @@ export default function AuctionCard({ auction, isConnected = false, onAuthClick 
   }, [auction, isFixed]);
 
   // 2. Mémos pour les libellés et styles
-  const discount = useMemo(() => {
-    const sell_price = isFixed ? (auction.buy_now_price || 0) : auction.current_price
-    return attr?.value_real ? Math.round(100 - ((sell_price) / attr.value_real) * 100) : 0
-  }
-    , [auction, attr, isFixed]);
 
   const statusConfig = useMemo(() => {
     switch (auction.status) {
       case 'active':
         return {
-          label: isFixed ? 'Vente Privée' : 'Enchère Live',
+          label: isFixed ? 'Accès immédiat' : 'En cours de sélection',
           style: isFixed ? 'bg-blue-600/30 border-blue-400/40 text-blue-100' : 'bg-[var(--accent-gold)]/20 border-[var(--accent-gold)]/50 text-white',
           dot: 'animate-pulse bg-current'
         };
       case 'upcoming':
-        return { label: 'Bientôt disponible', style: 'bg-black/40 border-white/20 text-white/70', dot: 'bg-blue-400' };
+        return { label: 'Prochainement ouvert', style: 'bg-black/40 border-white/20 text-white/70', dot: 'bg-blue-400' };
       default:
-        return { label: 'Adjugé', style: 'bg-black/40 border-white/20 text-white/50', dot: 'bg-gray-500' };
+        return { label: 'Sélection finalisée', style: 'bg-black/40 border-white/20 text-white/50', dot: 'bg-gray-500' };
     }
   }, [auction.status, isFixed]);
 
@@ -106,7 +101,7 @@ export default function AuctionCard({ auction, isConnected = false, onAuthClick 
 
               <div className="flex flex-col flex-grow min-w-0">
                 <span className="text-[7px] font-black uppercase tracking-[0.2em] text-white/50 leading-none mb-1">
-                  {auction.status === 'active' ? 'Temps restant' : 'Début de l\'offre'}
+                  {auction.status === 'active' ? 'Clôture dans' : 'Ouverture dans'}
                 </span>
 
                 <div className="flex items-baseline gap-1">
@@ -137,6 +132,9 @@ export default function AuctionCard({ auction, isConnected = false, onAuthClick 
             <span className="line-clamp-2 min-h-[2.2em] block">
               {auction.title}
             </span>
+            <p className="text-[9px] uppercase tracking-[0.3em] text-[var(--text-tertiary)]">
+              Expérience sélectionnée
+            </p>
           </h3>
 
           <div className="flex items-center gap-2 overflow-hidden">
@@ -149,9 +147,6 @@ export default function AuctionCard({ auction, isConnected = false, onAuthClick 
 
         {/* Atouts */}
         <div className="flex flex-wrap items-center gap-y-2.5 gap-x-4 mb-5 border-y border-[var(--border-primary)]/30 py-3">
-          {discount > 0 && isConnected && (
-            <span className="text-[10px] font-black text-[var(--accent-gold)] bg-[var(--accent-gold)]/10 px-2 py-0.5 rounded italic">-{discount}%</span>
-          )}
           {isHotel && attr?.rating && (
             <div className="flex items-center gap-1">
               <Star size={10} fill="var(--accent-gold)" className="text-[var(--accent-gold)]" />
@@ -179,7 +174,7 @@ export default function AuctionCard({ auction, isConnected = false, onAuthClick 
               <div className="flex items-center gap-1.5 px-2.5 py-1 bg-[var(--accent-gold)]/10 border border-[var(--accent-gold)]/20 rounded-md">
                 <Gavel size={10} className="text-[var(--accent-gold)] animate-pulse" strokeWidth={3} />
                 <span className="text-[9px] font-black text-[var(--accent-gold)] uppercase tracking-tight">
-                  {auction.total_bids || 0} {auction.total_bids > 1 ? 'offres' : 'offre'}
+                  {auction.total_bids || 0} {auction.total_bids > 1 ? 'positions' : 'position'}
                 </span>
               </div>
             )}
@@ -200,12 +195,9 @@ export default function AuctionCard({ auction, isConnected = false, onAuthClick 
                     </span>
                   )}
                 </div>
-                {/* Badge d'économie si connecté */}
-                {attr?.value_real && auction.status === 'active' && (
-                  <span className="text-[8px] font-black uppercase tracking-widest text-[var(--accent-gold)] mt-1">
-                    Économie estimée : {Math.round(100 - ((isFixed ? (auction.buy_now_price || 0) : auction.current_price) / attr.value_real) * 100)}%
-                  </span>
-                )}
+                <span className="text-[8px] font-black uppercase tracking-widest text-[var(--accent-gold)] mt-1">
+                  Accès confidentiel
+                </span>
               </div>
             ) : (
               <button
@@ -214,10 +206,10 @@ export default function AuctionCard({ auction, isConnected = false, onAuthClick 
               >
                 <div className="flex flex-col items-start">
                   <span className="text-xl font-black italic blur-[5px] opacity-20 tracking-tighter select-none">888 888€</span>
-                  <span className="text-[6px] font-black uppercase tracking-[0.3em] text-[var(--accent-gold)] opacity-0 group-hover/lock:opacity-100 transition-opacity">Membre uniquement</span>
+                  <span className="text-[6px] font-black uppercase tracking-[0.3em] text-[var(--accent-gold)] opacity-0 group-hover/lock:opacity-100 transition-opacity">Accès réservé</span>
                 </div>
                 <div className="flex items-center gap-2 bg-black/20 px-3 py-1.5 rounded-lg text-[8px] font-black uppercase text-[var(--accent-gold)] border border-white/5 group-hover/lock:scale-105 transition-transform">
-                  <Lock size={10} strokeWidth={3} /> Privé
+                  <Lock size={10} strokeWidth={3} /> Accès privé
                 </div>
               </button>
             )}
@@ -261,7 +253,7 @@ const AuctionAction = ({ auction, isConnected, onAuthClick }: AuctionCardProps) 
         onClick={onAuthClick}
         className="w-full h-12 flex items-center justify-between px-6 rounded-lg transition-all duration-500 font-black text-[9px] uppercase tracking-[0.2em] shadow-sm bg-[var(--text-primary)] text-[var(--bg-primary)] hover:bg-[var(--accent-gold)] hover:text-white"
       >
-        <span>S'inscrire / Connexion</span>
+        <span>Accéder au cercle</span>
         <ArrowRight size={14} strokeWidth={3} className="hover:translate-x-1 transition-transform" />
       </button>
     );
@@ -273,7 +265,7 @@ const AuctionAction = ({ auction, isConnected, onAuthClick }: AuctionCardProps) 
       href={`/ventes/${auction.id}`}
       className="w-full h-12 flex items-center justify-between px-6 rounded-lg transition-all duration-500 font-black text-[9px] uppercase tracking-[0.2em] shadow-sm bg-[var(--bg-tertiary)] border border-[var(--border-primary)] text-[var(--text-primary)] hover:border-[var(--accent-gold)] hover:shadow-lg hover:-translate-y-0.5"
     >
-      <span>{auction.status === 'upcoming' ? 'Aperçu du lot' : 'Accéder à la vente'}</span>
+      <span>{auction.status === 'upcoming' ? 'Voir en avant-première' : 'Découvrir la sélection'}</span>
       <ArrowRight size={14} strokeWidth={3} className="hover:translate-x-1 transition-transform" />
     </Link>
   );

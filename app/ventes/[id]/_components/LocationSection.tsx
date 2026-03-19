@@ -29,7 +29,9 @@ export function LocationSection({ auction, attr }: LocationSectionProps) {
 
             <p className="text-[9px] font-bold uppercase tracking-widest leading-tight italic" style={{ color: 'var(--text-secondary)' }}>
               Secteur approximatif <br />
-              <span style={{ color: 'var(--accent-gold)' }}>Adresse exacte disponible après la vente</span>
+              <span style={{ color: 'var(--accent-gold)' }}>
+                Localisation précise communiquée après confirmation
+              </span>
             </p>
           </div>
         </div>

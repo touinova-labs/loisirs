@@ -3,9 +3,7 @@ import { supabaseAdmin } from '@/lib/supabaseAdmin';
 
 export async function POST(req: Request) {
   try {
-    console.log("y")
     const { id, newStatus } = await req.json();
-console.log("yo")
     // 1. (Optionnel) Vérification de sécurité supplémentaire ici
     // ex: vérifier le cookie de session pour voir si l'email est admin
 

@@ -9,7 +9,7 @@ export function ConditionsSection({ attr }: ConditionsSectionProps) {
   return (
     <section className="p-8 border rounded-lg space-y-6" style={{ backgroundColor: 'rgba(0,0,0,0.02)', borderColor: 'var(--border-primary)' }}>
       <h3 className="text-sm font-bold uppercase tracking-widest flex items-center gap-2" style={{ color: 'var(--accent-gold)' }}>
-        <CheckCircle2 size={16} /> Conditions & Validité
+        <CheckCircle2 size={16} /> Détails & conditions de réservation
       </h3>
       <ul className="space-y-4">
         <li className="flex gap-4 text-xs font-bold italic" style={{ color: 'var(--text-secondary)' }}>

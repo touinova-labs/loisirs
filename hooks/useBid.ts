@@ -6,12 +6,12 @@ import { ToastType } from '@/components/Toast'
 
 // Messages d'erreur centralisés
 const ERROR_MESSAGES: Record<string, string> = {
-    'AUCTION_NOT_FOUND': 'Cette enchère n\'existe pas',
-    'AUCTION_ENDED': 'L\'enchère est clôturée',
-    'BID_TOO_LOW': 'Quelqu\'un a surenchéri entre-temps !',
-    'MISSING_PARAMS': 'Données manquantes',
-    'INVALID_AMOUNT': 'Le montant n\'est pas valide',
-    'INTERNAL_ERROR': 'Une erreur interne s\'est produite',
+    'AUCTION_NOT_FOUND': 'Cette offre n’est plus disponible.',
+    'AUCTION_ENDED': 'La période de sélection est clôturée.',
+    'BID_TOO_LOW': 'Un autre membre a confirmé son accès avant vous.',
+    'MISSING_PARAMS': 'Certaines informations sont manquantes, veuillez vérifier.',
+    'INVALID_AMOUNT': 'Le montant indiqué n’est pas valide.',
+    'INTERNAL_ERROR': 'Une erreur est survenue, merci de réessayer.',
 }
 
 // Helper pour l'appel API bid
@@ -37,7 +37,7 @@ async function placeBidToApi(
         const result = await response.json()
 
         if (result.success) {
-            showToast("Mise confirmée avec succès !", 'success')
+            showToast("votre posistion  confirmée avec succès !", 'success')
             return true
         } else {
             const message = ERROR_MESSAGES[result.code] || result.error || "Une erreur est survenue"

@@ -1,5 +1,7 @@
+'use client'
 import { ShoppingBag, Gavel, Timer, History } from 'lucide-react'
 import { Auction, AuctionAttributes } from '@/types'
+import { useState } from 'react'
 
 interface PricingSidebarProps {
 	auction: Auction
@@ -28,18 +30,18 @@ export function PricingSidebar({
 }: PricingSidebarProps) {
 	const isFixedPrice = auction.type === 'fixed'
 
-	// On calcule l'incrément réel selon le type
+	// Calcul du minimum de l'enchère
 	const minIncrement = auction.bid_step_type === "fixed"
 		? Number(auction.min_bid_increment)
 		: (Number(auction.current_price) * (Number(auction.min_bid_increment) / 100));
 
-	// Le prochain montant minimum autorisé
 	const nextMinAmount = Number(auction.current_price) + minIncrement;
 
 	return (
 		<div className="sticky top-24 space-y-6">
 			<div className="p-8 border rounded-lg shadow-lg space-y-6" style={{ backgroundColor: 'rgba(0,0,0,0.02)', borderColor: 'var(--border-primary)' }}>
-				{/* Titre et Badge Desktop */}
+
+				{/* Titre & Badge Premium */}
 				<div className="hidden lg:block space-y-2">
 					<h1 className="text-2xl font-bold italic uppercase leading-none tracking-tighter" style={{ color: 'var(--text-primary)' }}>
 						{auction.title}
@@ -47,7 +49,7 @@ export function PricingSidebar({
 					<div className="flex items-center gap-2">
 						<div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: 'var(--accent-gold)' }} />
 						<p className="text-[10px] font-medium uppercase tracking-widest" style={{ color: 'var(--text-secondary)' }}>
-							Offre Certifiée
+							Offre Premium Certifiée
 						</p>
 					</div>
 				</div>
@@ -63,22 +65,13 @@ export function PricingSidebar({
 								{isFixedPrice ? auction.buy_now_price : auction.current_price}€
 							</span>
 						</div>
-						{
-							isFixedPrice &&
-							<div className="text-right">
-								<span className="text-[10px] font-medium block uppercase" style={{ color: 'var(--text-secondary)' }}>
-									Valeur réelle
-								</span>
-								<span className="text-sm font-medium line-through" style={{ color: 'var(--text-secondary)' }}>
-									{attr.value_real || (auction.current_price * 1.6).toFixed(0)}€
-								</span>
-							</div>
-						}
 					</div>
 				) : (
 					<div className="pt-4 border-t space-y-3" style={{ borderColor: 'var(--border-primary)' }}>
 						<div className="flex items-center gap-3 p-4 rounded-lg" style={{ backgroundColor: 'rgba(168, 85, 247, 0.1)' }}>
-							<span className="text-sm font-bold uppercase" style={{ color: 'var(--accent-gold)' }}>Connectez-vous pour voir les tarifs</span>
+							<span className="text-sm font-bold uppercase" style={{ color: 'var(--accent-gold)' }}>
+								Connectez-vous pour découvrir vos tarifs exclusifs
+							</span>
 						</div>
 						<button
 							onClick={onSignIn}
@@ -90,29 +83,35 @@ export function PricingSidebar({
 					</div>
 				)}
 
-				{/* Résultat Enchère */}
-				{auction.status === 'finished_unpaid' && (
+				{/* Résultat Enchère / Position finale */}
+				{['finished_paid', 'completed', 'finished_unpaid', 'finished_reserve_not_met'].includes(auction.status) && user && (
 					<div className="mt-6">
 						{winnerData?.result_status === 'reserve_not_met' ? (
 							<div className="p-6 border rounded-lg" style={{ backgroundColor: 'rgba(251, 191, 36, 0.05)', borderColor: 'rgba(251, 191, 36, 0.3)', color: 'var(--accent-gold)' }}>
-								<p className="font-bold">⌛ Enchère terminée sans vainqueur</p>
-								<p className="text-sm">Le prix de réserve n'a pas été atteint pour cette offre.</p>
+								<p className="font-bold">Accès non attribué</p>
+								<p className="text-sm">
+									Aucune position n’a permis de confirmer ce séjour.
+								</p>
 							</div>
 						) : winnerData?.winner_id === user?.id ? (
 							<div className="p-6 rounded-lg text-white shadow-lg animate-in fade-in zoom-in duration-500" style={{ backgroundColor: 'var(--accent-gold)' }}>
-								<h2 className="text-2xl font-bold italic uppercase">Félicitations !</h2>
-								<p className="mb-4">Vous avez remporté l'enchère pour {winnerData?.winning_bid}€.</p>
+								<h2 className="text-2xl font-bold italic uppercase">
+									Accès confirmé
+								</h2>
+								<p className="mb-4">
+									Votre position a été retenue pour {winnerData?.winning_bid}€.
+								</p>
 								<a
 									href="https://buy.stripe.com/TON_LIEN"
 									className="inline-block px-6 py-3 rounded-lg font-bold uppercase text-sm"
 									style={{ backgroundColor: 'white', color: 'black' }}
 								>
-									Finaliser ma réservation (30€)
+									Finaliser mon séjour
 								</a>
 							</div>
 						) : (
 							<div className="p-4 rounded-lg text-center italic" style={{ backgroundColor: 'var(--bg-secondary)', color: 'var(--text-secondary)' }}>
-								Cette vente est terminée.
+								Une autre position a été retenue pour cette expérience.
 							</div>
 						)}
 					</div>
@@ -137,113 +136,123 @@ export function PricingSidebar({
 					)
 				)}
 
-
-
-				{/* Infos Timer et Enchères */}
+				{/* Timer et offres */}
 				<div className="flex items-center justify-center gap-4 pt-4" style={{ color: 'var(--text-secondary)' }}>
 					<div className="flex items-center gap-1 text-[10px] font-bold uppercase italic">
 						<Timer size={14} style={{ color: 'var(--accent-gold)' }} /> {timeLeft}
 					</div>
+
 					<div className="w-[1px] h-3" style={{ backgroundColor: 'var(--border-primary)' }} />
+
 					<div className="flex items-center gap-1 text-[10px] font-bold uppercase italic">
-						<History size={14} /> {bidsCount} offres
+						<History size={14} />
+						{bidsCount} {bidsCount > 1 ? "positions actives" : "position active"}
 					</div>
 				</div>
 			</div>
 		</div>
 	)
 }
-interface BidButtonProps {
-	nextAmount: number;
-	increment: number;
-	onConfirm: (amount: number) => void;
-	disabled: boolean;
-	isBidding: boolean
-}
 
-interface BuyNowButtonProps {
-	price: number;
-	onConfirm: (amount: number) => void;
-	disabled: boolean;
-}
-
-
-const BuyNowButton: React.FC<BuyNowButtonProps> = ({ price, onConfirm, disabled }) => (
+const BuyNowButton: React.FC<{ price: number; onConfirm: (amount: number) => void; disabled: boolean }> = ({ price, onConfirm, disabled }) => (
 	<button
 		onClick={() => onConfirm(price)}
 		disabled={disabled}
-		className="group w-full h-16 bg-black text-white rounded-xl flex items-center justify-center gap-4 transition-all hover:bg-[var(--accent-gold)] hover:scale-[1.02] active:scale-[0.98] shadow-xl disabled:opacity-50"
-	>
-		<ShoppingBag size={22} />
-		<div className="flex flex-col items-start">
-			<span className="text-[9px] uppercase tracking-[0.2em] font-bold opacity-70">
-				Réservation Immédiate
-			</span>
-			<span className="text-lg font-black tracking-wider">
-				Réserver à {price}€
+		className="w-full h-14 bg-[var(--accent-gold)] text-[var(--text-primary)] font-black rounded-xl shadow-lg flex items-center justify-center gap-2 transition-transform hover:scale-[1.02] active:scale-[0.98]"	>
+		<div className="flex items-center gap-3">
+			<ShoppingBag size={20} />
+			<span className="font-black uppercase tracking-wide text-sm">
+				Sécuriser ce séjour
 			</span>
 		</div>
+
+		<span className="text-lg font-black tabular-nums">
+			{price}€
+		</span>
 	</button>
 );
 
-const BidButton: React.FC<BidButtonProps> = ({
-	nextAmount,
-	increment,
-	onConfirm,
-	disabled,
-	isBidding
-}) => {
-	const formattedAmount = new Intl.NumberFormat('fr-FR').format(nextAmount);
-
+const BidButton: React.FC<{ nextAmount: number; increment: number; onConfirm: (amount: number) => void; disabled: boolean; isBidding: boolean }> = ({ nextAmount, increment, onConfirm, disabled, isBidding }) => {
+	const [selectedAmount, setSelectedAmount] = useState<number>()
+	const [customAmount, setCustomAmount] = useState<number>()
 	return (
-		<button
-			onClick={() => onConfirm(nextAmount)}
-			disabled={disabled}
-			className="group relative w-full h-16 bg-[var(--accent-gold)] text-black rounded-xl shadow-2xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden flex items-center justify-center gap-4 px-8"
-		>
-			{/* Icône Marteau - En noir profond pour contraster avec l'or */}
-			<Gavel
-				size={24}
-				strokeWidth={2.5}
-				className={`transition-transform duration-500 ${isBidding ? 'animate-bounce' : 'group-hover:rotate-[-15deg]'
-					}`}
-			/>
+		<div className="flex flex-col gap-3">
+			{/* 1. Explication */}
+			<p className="text-[12px] text-[var(--text-secondary)] italic text-center font-bold">
+				Indiquez le montant que vous souhaitez engager pour accéder à cette expérience.
+				L’accès est attribué aux positions retenues.
+			</p>
 
-			<div className="flex flex-col items-start justify-center">
-				<span className="text-[10px] md:text-[11px] uppercase tracking-[0.25em] font-black text-black/60 group-hover:text-black transition-colors">
-					{isBidding ? 'Transmission...' : 'Surenchérir'}
-				</span>
-				<span className="text-xl md:text-2xl font-[1000] tracking-tighter text-black uppercase">
-					{isBidding ? 'En cours' : `Placer ${formattedAmount}€`}
-				</span>
+			{/* 2. Choix du montant */}
+			<div className="flex items-center gap-2 justify-center">
+				<button
+					onClick={() => setSelectedAmount(nextAmount * 1.1)}
+					className={`px-3 py-1 rounded-lg border transition-colors 
+        ${selectedAmount === nextAmount * 1.1 ? 'bg-[var(--accent-gold)] text-[var(--text-primary)]' : 'bg-[var(--bg-secondary)] text-[var(--text-secondary)]'}
+      `}
+				>
+					{new Intl.NumberFormat('fr-FR').format(nextAmount * 1.1)}€
+				</button>
+				<button
+					onClick={() => setSelectedAmount(nextAmount * 1.5)}
+					className={`px-3 py-1 rounded-lg border transition-colors 
+        ${selectedAmount === nextAmount * 1.5 ? 'bg-[var(--accent-gold)] text-[var(--text-primary)]' : 'bg-[var(--bg-secondary)] text-[var(--text-secondary)]'}
+      `}
+				>
+					{new Intl.NumberFormat('fr-FR').format(nextAmount * 1.5)}€
+				</button>
+				<input
+					type="number"
+					placeholder={`${nextAmount}€`}
+					value={customAmount || ""}
+					onChange={(e) => {
+						const val = Number(e.target.value)
+						setCustomAmount(val)
+						setSelectedAmount(val)
+					}}
+					className="w-20 px-2 py-1 border border-[var(--border-primary)] rounded-lg text-[var(--text-primary)]"
+				/>
 			</div>
 
-			{/* Badge d'incrément - Noir sur Or pour une visibilité maximale */}
-			{!isBidding && (
-				<div className="absolute top-2 right-4 text-[10px] font-black border border-black/20 bg-black/5 px-2 py-0.5 rounded-full group-hover:bg-black group-hover:text-[var(--accent-gold)] transition-all">
-					+{increment}€
-				</div>
+			{/* 3. Affichage du montant choisi */}
+			{selectedAmount && (
+				<p className="text-sm font-bold text-center text-[var(--text-primary)]">
+					Votre position : {new Intl.NumberFormat('fr-FR').format(selectedAmount)}€
+				</p>
 			)}
 
-			{/* Effet Shimmer de luxe (Brillance blanche sur l'Or) */}
-			<div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
-		</button>
-	);
-};
+			{/* 4. Bouton principal */}
+			<button
+				onClick={() => onConfirm(selectedAmount || nextAmount)}
+				disabled={!selectedAmount}
+				className={`w-full h-14 bg-[var(--accent-gold)] text-[var(--text-primary)] font-black rounded-xl shadow-lg flex items-center justify-center gap-2 transition-transform
+				${!selectedAmount ? "opacity-50 cursor-not-allowed" : "hover:scale-[1.02] active:scale-[0.98]"}
+				`}
+			>
+				<Gavel size={18} />
+				<span className="uppercase tracking-wider text-sm">Demander cet accès</span>
+			</button>
+			<p className="text-[11px] text-[var(--text-secondary)] italic text-center">
+				Sans engagement tant que votre position n’est pas confirmée.
+			</p>
+		</div>
+	)
+}
+
 
 export const getPriceLabel = (isFixedPrice: boolean, status: string, bidCount: number) => {
 	if (isFixedPrice) return "Prix Membre";
 
 	switch (status) {
 		case 'upcoming':
-			return "Mise de départ";
+			return "Prochaine mise";
 		case 'active':
-			return bidCount > 0 ? "Offre actuelle" : "Première mise";
+			return bidCount > 0 ? "Position actuelle" : "Première opportunité";
 		case 'finished_reserve_not_met':
 		case 'finished_unpaid':
 		case 'finished_paid':
 		case 'completed':
-			return "Prix final";
+			return "Position finale";
 		default:
 			return "Valeur";
 	}

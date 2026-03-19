@@ -15,7 +15,7 @@ export async function GET(request: Request) {
         const { data: auctions, error } = await supabaseAdmin
             .from('auctions')
             .select('*')
-            .eq("enabled", true)
+            // .eq("enabled", true)
             .order('created_at', { ascending: false })
 
         if (error) throw error
