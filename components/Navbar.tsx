@@ -28,21 +28,36 @@ export default function Navbar({ user, onAuthClick }: NavbarProps) {
             }}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
 
-                <Link href="/" className="flex items-center gap-3 group cursor-pointer">
-                    {/* Conteneur du Logo avec effet de halo discret */}
-                    <div className="relative flex items-center justify-center w-12 h-12">
-                        {/* Halo lumineux au survol */}
+                <Link href="/" className="flex items-center group cursor-pointer select-none">
+
+                    {/* Logo container */}
+                    <div className="relative flex items-center justify-center w-8 h-8 shrink-0">
+
+                        {/* Subtle glow */}
                         <div
-                            className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-20 transition-all duration-500 blur-md scale-125"
+                            className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-20 transition-all duration-700 blur-lg"
                             style={{ backgroundColor: 'var(--accent-gold)' }}
                         />
-                        <Logo className="w-full h-full relative z-10 transition-transform duration-500 group-hover:scale-110" />
+
+                        <Logo className="w-full h-full relative z-10 transition-transform duration-500 ease-out group-hover:scale-[1.05]" />
                     </div>
 
-                    {/* Nom de la marque sur une seule ligne */}
-                    <span className="text-xl font-bold tracking-tighter" style={{ color: 'var(--text-primary)' }}>
-                        LOISIRS<span style={{ color: 'var(--accent-gold)' }} className="ml-0.5">PRIVÉ</span>
+                    {/* Brand name */}
+                    <span className="flex items-center text-[15px] md:text-[19px] ml-2 font-medium tracking-[-0.015em] leading-none">
+
+                        <span style={{ color: 'var(--text-primary)', opacity: 0.9 }}>
+                            LOISIRS
+                        </span>
+
+                        <span
+                            className="ml-1 transition-all duration-700 ease-out"
+                            style={{ color: 'var(--accent-gold)' }}
+                        >
+                            PRIVÉ
+                        </span>
+
                     </span>
+
                 </Link>
 
                 {/* RIGHT SECTION */}

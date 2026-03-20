@@ -1,7 +1,6 @@
 'use client'
 import { Timer, History } from 'lucide-react'
 import { BuyNowButton } from './PricingSidebar/BuyNowButton'
-import { ContactInfoPopup } from './PricingSidebar/BuyNowPopup'
 import { BidButton } from './PricingSidebar/BidButton'
 import { Auction } from '@/types'
 import { useState } from 'react';
@@ -15,6 +14,7 @@ interface PricingSidebarProps {
 	canBid: boolean;
 	winnerData?: any;
 	user?: any;
+	onBuyNowClick: () => void;
 	onPlaceBid: (amount: number) => void;
 	onSignIn: () => void;
 }
@@ -29,7 +29,8 @@ export function PricingSidebar({
 	winnerData,
 	user,
 	onPlaceBid,
-	onSignIn
+	onSignIn,
+	onBuyNowClick
 }: PricingSidebarProps) {
 	const isFixedPrice = auction.type === 'fixed';
 
@@ -41,16 +42,8 @@ export function PricingSidebar({
 	const nextMinAmount = Number(auction.current_price) + minIncrement;
 
 	// Popup state
-	const [showBuyNowPopup, setShowBuyNowPopup] = useState(false);
-	// ...existing code...
-	const handleBuyNow = () => setShowBuyNowPopup(true)
-	const handleClosePopup = () => setShowBuyNowPopup(false)
-	const handleBuyNowSubmit = (contactData: { name: string; email: string; phone: string }) => {
-		setShowBuyNowPopup(false)
-		// Pass contact info to onPlaceBid
-		onPlaceBid(Number(auction.buy_now_price))
-		// You can handle contactData here (send to API, etc.)
-	}
+	
+	
 
 	return (
 		<div className="sticky top-24 space-y-6">
@@ -138,13 +131,8 @@ export function PricingSidebar({
 						<>
 							<BuyNowButton
 								price={Number(auction.buy_now_price)}
-								onConfirm={handleBuyNow}
+								onConfirm={onBuyNowClick}
 								disabled={isBidding}
-							/>
-							<ContactInfoPopup
-								isOpen={showBuyNowPopup}
-								onClose={handleClosePopup}
-								onSubmit={handleBuyNowSubmit}
 							/>
 						</>
 					) : (

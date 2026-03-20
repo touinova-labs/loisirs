@@ -1,4 +1,5 @@
 import React from 'react'
+import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
 
 interface BuyNowPopupProps {
@@ -7,16 +8,17 @@ interface BuyNowPopupProps {
   onSubmit: (data: { name: string; email: string; phone: string }) => void
 }
 
-export const ContactInfoPopup: React.FC<BuyNowPopupProps> = ({ isOpen, onClose, onSubmit }) => {
+export const BuyNowPopup: React.FC<BuyNowPopupProps> = ({ isOpen, onClose, onSubmit }) => {
   const [name, setName] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [phone, setPhone] = React.useState('')
 
   if (!isOpen) return null
 
-  return (
+  if (typeof window === 'undefined' || !document.body) return null
+
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
-      
       <div className="w-full max-w-md rounded-2xl p-6 shadow-2xl border"
         style={{
           backgroundColor: 'var(--bg-secondary)',
@@ -24,8 +26,8 @@ export const ContactInfoPopup: React.FC<BuyNowPopupProps> = ({ isOpen, onClose, 
         }}
       >
         <p className="text-[10px] text-[var(--accent-gold)] uppercase tracking-widest">
-  Accès réservé
-</p>
+          Accès réservé
+        </p>
         {/* Header */}
         <div className="flex items-start justify-between mb-4">
           <div>
@@ -45,7 +47,7 @@ export const ContactInfoPopup: React.FC<BuyNowPopupProps> = ({ isOpen, onClose, 
         <p className="text-[13px] leading-relaxed mb-6"
           style={{ color: 'var(--text-secondary)' }}
         >
-          Renseignez vos coordonnées pour confirmer votre demande.  
+          Renseignez vos coordonnées pour confirmer votre demande.
           L’établissement vous contactera directement pour finaliser votre séjour.
         </p>
 
@@ -116,6 +118,7 @@ export const ContactInfoPopup: React.FC<BuyNowPopupProps> = ({ isOpen, onClose, 
           Vos informations sont transmises uniquement à l’établissement concerné
         </p>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

@@ -2,6 +2,7 @@
 
 import { Lock, ShoppingBag, Gavel } from 'lucide-react'
 import type { Auction, AuctionAttributes } from '@/types'
+import { is } from 'date-fns/locale'
 
 interface MobileActionBarProps {
 	auction: Auction
@@ -9,6 +10,8 @@ interface MobileActionBarProps {
 	isFixedPrice: boolean
 	isConnected: boolean
 	onPlaceBid: (amount: number) => void
+	onSignIn: () => void
+	onBuyNowClick: () => void
 	isBidding?: boolean
 }
 
@@ -16,6 +19,9 @@ export function MobileActionBar({
 	auction,
 	isConnected,
 	onPlaceBid,
+	onSignIn,
+	isFixedPrice,
+	onBuyNowClick,
 	isBidding = false
 }: MobileActionBarProps) {
 
@@ -37,7 +43,7 @@ export function MobileActionBar({
 		if (!isConnected) {
 			return (
 				<button
-					onClick={() => onPlaceBid(0)} // ouvrira modal connexion
+					onClick={() => onSignIn()}
 					className="flex-grow h-16 bg-[var(--text-primary)] text-[var(--bg-primary)] rounded-xl font-black uppercase text-[10px] tracking-[0.2em] shadow-xl flex items-center justify-center gap-2 active:scale-95 transition-all"
 				>
 					<Lock size={16} />
@@ -46,27 +52,58 @@ export function MobileActionBar({
 			);
 		}
 
+		if (!isFixedPrice)
+			return (
+				<div className='flex flex-col w-full'>
+					<button
+						onClick={() => onPlaceBid(nextMinAmount)}
+						disabled={!isBidding}
+						className={`w-full h-14 bg-[var(--accent-gold)] text-[var(--text-primary)] font-black rounded-xl shadow-lg flex items-center justify-center gap-2 transition-transform`}
+					>
+						<span className="uppercase tracking-wider text-sm">{isBidding ? 'Envoi...' : 'Confirmer ma position'}</span>
+						{!isBidding && (
+							<span className="tracking-tight text-center">
+								{formatCurrency(nextMinAmount)}
+							</span>
+						)}
+					</button>
+
+					{/* Explication courte */}
+					{!isBidding && (
+						<p className="text-[10px] text-center text-[var(--text-secondary)] leading-snug mt-2 px-2">
+							Montant engagé pour accéder à l’expérience. Accès selon positions retenues.
+						</p>
+					)}
+				</div>
+			);
 		return (
 			<div className='flex flex-col w-full'>
 				<button
-					onClick={() => onPlaceBid(nextMinAmount)}
-					disabled={!isBidding}
-					className={`w-full h-14 bg-[var(--accent-gold)] text-[var(--text-primary)] font-black rounded-xl shadow-lg flex items-center justify-center gap-2 transition-transform`}
-				>
-					<span className="uppercase tracking-wider text-sm">{isBidding ? 'Envoi...' : 'Confirmer ma position'}</span>
+					onClick={() => onBuyNowClick()}
+					disabled={isBidding}
+					className="
+    w-full h-14 
+    bg-[var(--accent-gold)] 
+    text-[var(--text-primary)] 
+    font-black rounded-xl shadow-lg 
+    flex items-center justify-center gap-2 
+    transition-all duration-300
+
+    disabled:opacity-40
+    disabled:cursor-not-allowed
+    disabled:shadow-none
+    disabled:scale-100
+
+    hover:scale-[1.02]
+    active:scale-[0.98]
+  "				>
+					<span className="uppercase tracking-wider text-sm">{isBidding ? 'Envoi...' : 'Sécuriser ce séjour'}</span>
 					{!isBidding && (
 						<span className="tracking-tight text-center">
-							{formatCurrency(nextMinAmount)}
+							{formatCurrency(Number(auction.buy_now_price))}
 						</span>
 					)}
 				</button>
-
-				{/* Explication courte */}
-				{!isBidding && (
-					<p className="text-[10px] text-center text-[var(--text-secondary)] leading-snug mt-2 px-2">
-						Montant engagé pour accéder à l’expérience. Accès selon positions retenues.
-					</p>
-				)}
 			</div>
 		);
 	};

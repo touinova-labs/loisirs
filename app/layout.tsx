@@ -48,6 +48,11 @@ export const metadata: Metadata = {
 		images: ["/og-image.png"],
 		creator: "@loisirsprive",
 	},
+	icons: {
+		icon: "/favicon.ico",
+		apple: "/apple-touch-icon.png",
+	},
+	manifest: "/manifest.json",
 };
 
 export default function RootLayout({ children, }: Readonly<{

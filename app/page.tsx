@@ -219,12 +219,6 @@ export default function Home() {
 
                 {/* GRILLE VOYAGEUR */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
-
-                    {loading && (
-                        <p style={{ color: 'var(--text-secondary)' }} className="text-center text-sm md:text-base mb-6">
-                            Chargement des offres exclusives pour nos membres…
-                        </p>
-                    )}
                     {loading ? (
                         // SKELETON LUXE AVEC SHIMMER
                         Array.from({ length: 3 }).map((_, i) => (

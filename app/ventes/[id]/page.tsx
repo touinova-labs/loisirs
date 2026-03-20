@@ -11,6 +11,7 @@ import AuctionGallery from '@/components/AuctionGallery'
 import BidHistory from '@/components/BidHistory'
 import Toast, { ToastType } from '@/components/Toast'
 import { AuctionResultModal } from '@/components/AuctionResultModal'
+
 import {
     HeaderNavigation,
     TitleSection,
@@ -24,6 +25,7 @@ import {
     ExperienceNotFound,
 } from './_components'
 import { useUser } from '@/hooks/UserContext'
+import { BuyNowPopup } from './_components/PricingSidebar/BuyNowPopup'
 
 // --- HELPERS ---
 const formatTimeLeft = (expiryDate: string): string => {
@@ -53,6 +55,7 @@ export default function AuctionDetailsPage() {
     const { auction, bids, loading, isAuthOpen, setIsAuthOpen, winnerData } = useAuctionData(id as string)
     const { user } = useUser()
     const [toast, setToast] = useState<{ msg: string | null; type: ToastType }>({ msg: null, type: null })
+    const [showBuyNowPopup, setShowBuyNowPopup] = useState(false);
 
     const showToast = (msg: string, type: ToastType) => {
         setToast({ msg, type })
@@ -75,6 +78,13 @@ export default function AuctionDetailsPage() {
 
     const [timeLeft, setTimeLeft] = useState('')
 
+    const handleBuyNow = () => setShowBuyNowPopup(true)
+    const handleClosePopup = () => setShowBuyNowPopup(false)
+    const handleBuyNowSubmit = (contactData: { name: string; email: string; phone: string }) => {
+        setShowBuyNowPopup(false)
+        // Pass contact info to onPlaceBid
+        // You can handle contactData here (send to API, etc.)
+    }
     useEffect(() => {
         if (auction?.end_at) {
             setTimeLeft(formatTimeLeft(auction.end_at))
@@ -154,6 +164,7 @@ export default function AuctionDetailsPage() {
                             user={user}
                             onPlaceBid={handlePlaceBid}
                             onSignIn={() => setIsAuthOpen(true)}
+                            onBuyNowClick={handleBuyNow}
                         />
                     </div>
 
@@ -165,10 +176,23 @@ export default function AuctionDetailsPage() {
             </div>
 
             {/* MOBILE ACTION BAR */}
-            <MobileActionBar auction={auction} attr={attr} isFixedPrice={isFixedPrice} isConnected={!!user} onPlaceBid={handlePlaceBid} />
+            <MobileActionBar
+                auction={auction} attr={attr}
+                isFixedPrice={isFixedPrice}
+                isConnected={!!user}
+                onPlaceBid={handlePlaceBid}
+                onSignIn={() => setIsAuthOpen(true)}
+                isBidding={isBidding}
+                onBuyNowClick={handleBuyNow}
+            />
 
             {/* RESULT MODAL */}
             <AuctionResultModal winnerData={winnerData} user={user} isFinished={isFinished} auction_id={auction.id} />
+            <BuyNowPopup
+                isOpen={showBuyNowPopup}
+                onClose={handleClosePopup}
+                onSubmit={handleBuyNowSubmit}
+            />
         </main>
     )
 }
