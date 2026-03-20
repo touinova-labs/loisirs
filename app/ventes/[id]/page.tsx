@@ -146,7 +146,6 @@ export default function AuctionDetailsPage() {
                     <div className="lg:col-span-4 mt-8 lg:mt-0">
                         <PricingSidebar
                             auction={auction}
-                            attr={attr}
                             timeLeft={timeLeft}
                             bidsCount={bids?.length || 0}
                             isBidding={isBidding}

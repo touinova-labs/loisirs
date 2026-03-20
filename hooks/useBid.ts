@@ -37,7 +37,7 @@ async function placeBidToApi(
         const result = await response.json()
 
         if (result.success) {
-            showToast("votre posistion  confirmée avec succès !", 'success')
+            showToast("Votre position a été confirmée avec succès !", 'success')
             return true
         } else {
             const message = ERROR_MESSAGES[result.code] || result.error || "Une erreur est survenue"
@@ -49,39 +49,6 @@ async function placeBidToApi(
         console.error(err)
         return false
     }
-}
-
-export function useBid(
-    auction: Auction | null,
-    user: any,
-    onAuthRequired: (() => void) | undefined,
-    showToast: (msg: string, type: ToastType) => void
-) {
-    const [loading, setLoading] = useState(false)
-
-    const placeBid = async (bidAmount?: number) => {
-        if (!auction) return false
-
-        // 1. Protection : Vérifier l'utilisateur
-        if (!user) {
-            onAuthRequired?.()
-            return false
-        }
-
-        setLoading(true)
-
-        try {
-            // 2. Calcul du montant (Incrément de 1€ par défaut ou montant custom)
-            const amount = bidAmount || (auction.current_price + 1)
-
-            // 3. Appel API via helper
-            return await placeBidToApi(auction.id, user.id, amount, showToast)
-        } finally {
-            setLoading(false)
-        }
-    }
-
-    return { placeBid, loading }
 }
 
 // Hook générique pour les pages sans enchère unique (comme la page d'accueil)

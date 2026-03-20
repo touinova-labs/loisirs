@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loisirs-Privé - Présentation Fondateur</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* THEME LUXE - DARK ELITE */
+        :root {
+            --bg-primary: #020617;
+            --bg-secondary: #0B1220;
+            --bg-tertiary: #1E293B;
+            --text-primary: #F8FAFC;
+            --text-secondary: rgba(248, 250, 252, 0.85);
+            --text-tertiary: rgba(148, 163, 184, 0.65);
+            --accent-gold: #10B981;
+            /* Emeraude */
+            --accent-light: #6EE7B7;
+            --border-primary: #1E293B;
+            --border-accent: #10B981;
+            --radius-card: 6px;
+        }
+
+        * {
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #000;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            -webkit-print-color-adjust: exact;
+            /* Force le fond à l'impression */
+            print-color-adjust: exact;
+        }
+
+        .presentation-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #000;
+        }
+
+        .slide-container {
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-primary);
+            display: flex;
+            flex-direction: column;
+            width: 100vw;
+            max-width: 1100px;
+            height: 100vh;
+            /* Une slide = une page */
+            padding: 60px 80px;
+            position: relative;
+            overflow: hidden;
+            page-break-after: always;
+        }
+
+        /* DECORATION */
+        .slide-container::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        h1,
+        h2,
+        .slide-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        h1 {
+            font-size: clamp(40px, 6vw, 75px);
+            letter-spacing: -2px;
+            line-height: 1.1;
+        }
+
+        .slide-title {
+            font-size: clamp(28px, 4vw, 45px);
+            margin-bottom: 40px;
+            border-left: 6px solid var(--accent-gold);
+            padding-left: 30px;
+        }
+
+        .subtitle {
+            color: var(--accent-gold);
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .content-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            padding: 30px;
+            border-radius: var(--radius-card);
+            height: 100%;
+        }
+
+        .card h3 {
+            color: var(--accent-gold);
+            font-size: 22px;
+            margin-top: 0;
+            margin-bottom: 12px;
+        }
+
+        /* HOW IT WORKS GRID */
+        .step-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .step-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            padding: 25px;
+            border-radius: 8px;
+        }
+
+        .step-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            color: var(--accent-gold);
+            opacity: 0.6;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .step-card h4 {
+            font-size: 18px;
+            margin: 0 0 8px 0;
+        }
+
+        .step-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* GRID 3 */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .icon-box {
+            background: var(--bg-tertiary);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 40px 25px;
+            text-align: center;
+            border-radius: var(--radius-card);
+        }
+
+        .icon-box i {
+            font-size: 35px;
+            color: var(--accent-light);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .icon-box h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .icon-box p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .footer-text {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-primary);
+            text-align: center;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .feature-list i {
+            color: var(--accent-gold);
+            margin-right: 12px;
+            font-size: 18px;
+            margin-top: 4px;
+        }
+
+        @page {
+            size: landscape;
+            margin: 0;
+        }
+
+        @media print {
+            body {
+                background: #000 !important;
+            }
+
+            .presentation-wrapper {
+                width: 100%;
+                height: auto;
+            }
+
+            .slide-container {
+                margin: 0;
+                border: none;
+                box-shadow: none;
+                width: 100vw;
+                height: 100vh;
+                max-width: none;
+                background-color: var(--bg-primary) !important;
+                page-break-after: always;
+                display: flex !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="presentation-wrapper">
+
+        <!-- Slide 1: Introduction -->
+        <div class="slide-container" id="slide1">
+            <div class="content-area" style="text-align: center;">
+                <span class="subtitle">Loisirs-Privé</span>
+                <h1>Le Canal Invisible.</h1>
+                <p
+                    style="font-size: 22px; max-width: 800px; margin: 30px auto; font-weight: 300; line-height: 1.6; color: var(--text-secondary);">
+                    Valorisez vos disponibilités non-publiques sans exposer vos tarifs, sans brader votre image, et sans
+                    cannibaliser vos ventes directes.
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Non-Discount -->
+        <div class="slide-container" id="slide2">
+            <h2 class="slide-title">L'Optimisation du RevPAR hors-marché</h2>
+            <div class="content-area">
+                <div class="two-column">
+                    <div class="card" style="border-top: 4px solid #ef4444;">
+                        <h3 style="color: #ef4444;">Pas un canal "Discount"</h3>
+                        <p>Nous refusons le modèle des marketplaces publiques. Chez nous, votre prix n'est pas "cassé",
+                            il est <strong>privatisé</strong> pour une audience qui valorise l'expérience avant le
+                            rabais.</p>
+                    </div>
+                    <div class="card" style="border-top: 4px solid var(--accent-gold);">
+                        <h3>Pas une OTA</h3>
+                        <p>Aucune indexation Google, aucune comparaison de prix possible. Nous sommes un club fermé qui
+                            protège votre ADR (Prix Moyen) global.</p>
+                    </div>
+                </div>
+                <div style="margin-top: 60px; text-align: center; color: var(--text-tertiary);">
+                    <p style="font-size: 16px; letter-spacing: 2px;">SOUVERAINETÉ • CONFIDENTIALITÉ • PERFORMANCE</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Comment ça marche -->
+        <div class="slide-container" id="slide3">
+            <h2 class="slide-title">Comment ça marche</h2>
+            <div class="content-area">
+                <p style="margin-bottom: 20px; font-size: 18px; color: var(--accent-light);">Un fonctionnement simple,
+                    sous contrôle total</p>
+                <div class="step-grid">
+                    <div class="step-card">
+                        <span class="step-number">01</span>
+                        <h4>Choisissez quand activer</h4>
+                        <p>Sélectionnez dates et chambres invendues uniquement. Contrôle total sur votre inventaire.</p>
+                    </div>
+                    <div class="step-card">
+                        <span class="step-number">02</span>
+                        <h4>Fixez un prix minimum</h4>
+                        <p>Ce prix inclut notre commission mais reste toujours inférieur ou égal au tarif public. Le
+                            membre reçoit une offre attractive sans jamais voir ni comparer les tarifs avant
+                            réservation.</p>
+                    </div>
+                    <div class="step-card">
+                        <span class="step-number">03</span>
+                        <h4>Validez visuels et expérience</h4>
+                        <p>Photos, descriptions et informations validées avant publication. Tout reste confidentiel
+                            jusqu’à réservation.</p>
+                    </div>
+                    <div class="step-card">
+                        <span class="step-number">04</span>
+                        <h4>Confirmation et paiement direct</h4>
+                        <p>Dès la réservation, vous recevez la confirmation immédiate. Le paiement s’effectue en direct
+                            à l’hôtel, vous gardez la pleine maîtrise de votre trésorerie.</p>
+                    </div>
+                </div>
+                <p style="margin-top: 25px; font-size: 13px; opacity: 0.7; text-align: center;">
+                    Contrôle total sur dates, prix et visuels. Aucune exposition publique, aucune comparaison, aucune
+                    cannibalisation.
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 4: Anti-Cannibalisation -->
+        <div class="slide-container" id="slide4">
+            <h2 class="slide-title">Une Audience Distincte</h2>
+            <div class="content-area">
+                <div class="two-column">
+                    <div>
+                        <p style="font-size: 18px; color: var(--text-primary); margin-bottom: 20px; font-weight: 600;">
+                            Pourquoi la cannibalisation est techniquement impossible ?
+                        </p>
+                        <ul class="feature-list">
+                            <li><i class="fa-solid fa-users-slash"></i>
+                                <div><strong>Parcours Isolés :</strong> Nos membres ne cherchent pas d'établissement
+                                    précis. Ils explorent des opportunités au sein d'un cercle privé.</div>
+                            </li>
+                            <li><i class="fa-solid fa-magnifying-glass-chart"></i>
+                                <div><strong>Zéro Comparaison :</strong> L'hôtel n'est pas identifiable avant
+                                    l'engagement. Le client n'attend pas de baisse de prix sur vos canaux.</div>
+                            </li>
+                            <li><i class="fa-solid fa-user-shield"></i>
+                                <div><strong>Cercle Fermé :</strong> Vos clients fidèles n'ont pas accès à ces offres
+                                    via les moteurs de recherche habituels.</div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card"
+                        style="display: flex; align-items: center; justify-content: center; background: rgba(16, 185, 129, 0.05); border: 1px dashed var(--accent-gold);">
+                        <p
+                            style="font-style: italic; opacity: 0.9; text-align: center; font-size: 16px; line-height: 1.6;">
+                            "Nos membres ne cherchent pas à comparer votre prix avec Booking. Ils cherchent une
+                            expérience confidentielle que vous seul décidez de rendre disponible au moment opportun."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Garanties Fondateur -->
+        <div class="slide-container" id="slide5">
+            <h2 class="slide-title">Garanties</h2>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="icon-box">
+                        <i class="fa-solid fa-ghost"></i>
+                        <h3>Confidentialité par le Design</h3>
+                        <p>Stratégie de visuels suggestifs et environnement "No-Index" pour empêcher toute comparaison
+                            directe ou identification avant l'engagement de réservation.</p>
+                    </div>
+                    <div class="icon-box">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <h3>Étanchéité Totale</h3>
+                        <p>Aucune interférence avec votre site direct ou vos contrats de parité. Le canal reste
+                            strictement invisible des robots.</p>
+                    </div>
+                    <div class="icon-box">
+                        <i class="fa-solid fa-wallet"></i>
+                        <h3>Paiement Direct</h3>
+                        <p>Vous encaissez le client directement. Nous ne retenons pas votre trésorerie, vous gardez le
+                            contrôle total.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Conclusion -->
+        <div class="slide-container" id="slide6" style="justify-content: center; text-align: center;">
+            <div class="content-area">
+                <i class="fa-solid fa-gem" style="font-size: 50px; color: var(--accent-gold); margin-bottom: 30px;"></i>
+                <h2>Testez l'invisible. Mesurez le réel.</h2>
+                <p style="font-size: 20px; max-width: 600px; margin: 20px auto; opacity: 0.8; line-height: 1.6;">
+                    Une seule chambre sur une seule date suffit pour constater la qualité de notre audience sans aucun
+                    risque pour votre image de marque.
+                </p>
+
+                <p style="color: var(--accent-light); font-size: 14px;margin-top: 30px; margin-bottom: 5px; font-weight: 600;">
+                    Vous avez des questions ?</p>
+                <p style="font-size: 18px; color: var(--text-primary); font-family: 'Inter', sans-serif;">
+                    collaboration@loisirs-prive.fr</p>
+                <p
+                    style="font-size: 20px; margin-top: 10px; color: var(--text-primary); font-family: 'Playfair Display', serif;">
+                    Loisirs-Privé</p>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

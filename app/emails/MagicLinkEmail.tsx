@@ -36,10 +36,6 @@ export const MagicLinkEmail = ({ magicLink, theme, is_new }: IProps) => {
 		? "Accès membre : Vos privilèges Loisirs Privé 🔑"
 		: "Bon retour parmi nous : Votre accès sécurisé 🔑";
 
-	const mainMessage = is_new
-		? "Votre invitation est prête. Finalisez votre adhésion pour profiter de notre"
-		: "Votre accès sécurisé est prêt. Retrouvez dès maintenant notre";
-
 	return (
 		<Html>
 			<Head />
@@ -57,21 +53,20 @@ export const MagicLinkEmail = ({ magicLink, theme, is_new }: IProps) => {
 						<Heading style={{ ...h1, color: colors.textMain }}>{heading}</Heading>
 
 						<Text style={{ ...text, color: colors.textMuted }}>
-							{mainMessage}
-							<Text style={{ ...text, color: colors.textMuted }}>
-								<strong style={{ color: colors.textMain }}> sélection d’expériences hôtelières</strong>,
-								proposées de manière confidentielle à nos membres.
-							</Text>
+							{is_new
+								? <>Votre accès est prêt. Découvrez notre <strong style={{ color: colors.textMain }}> sélection d’expériences hôtelières</strong>, proposées de manière confidentielle à nos membres.</>
+								: <>Retrouvez votre espace et accédez à notre <strong style={{ color: colors.textMain }}> sélection d’expériences hôtelières</strong>, proposées en toute discrétion à nos membres.</>
+							}
 						</Text>
 
 						<Section style={buttonContainer}>
 							<Link href={magicLink} style={{ ...button, backgroundColor: colors.accent, color: isLuxe ? "#020617" : "#FFFFFF" }}>
-								Découvrir la sélection
+								Découvrir les expériences
 							</Link>
 						</Section>
 
 						<Text style={{ ...details, color: colors.textMuted }}>
-							  Réservé aux membres • Sélection confidentielle • Expériences hôtelières
+							Accès sécurisé • Offres exclusives • Séjours vérifiés
 						</Text>
 					</Section>
 
@@ -81,7 +76,7 @@ export const MagicLinkEmail = ({ magicLink, theme, is_new }: IProps) => {
 						</Text>
 						<Text style={{ ...footerNote, color: colors.textMuted }}>
 							Ce lien expire dans 15 minutes.<br />
-							<strong>Loisirs Privé : Expériences hôtelières réservées à nos membres.</strong>
+							<strong>Loisirs Privé : Expériences d’exception réservées à nos membres.</strong>
 						</Text>
 					</Section>
 				</Container>

@@ -82,7 +82,7 @@ export default function OnboardingPage() {
 		>
 			<div className="absolute inset-0 opacity-30" style={{ background: `radial-gradient(circle at center, var(--accent-gold) 0%, transparent 70%)` }} />
 
-			<div className="w-full max-w-sm z-10">
+			<div className="w-full max-w-md z-10">
 				<div className="text-center mb-10">
 					<span className="text-2xl font-bold tracking-[8px]" style={{ color: "var(--accent-gold)" }}>L/P</span>
 				</div>
@@ -94,10 +94,10 @@ export default function OnboardingPage() {
 					style={{ backgroundColor: "var(--bg-secondary)", borderColor: "var(--border-primary)" }}
 				>
 					<h1 className="text-2xl font-semibold mb-2 text-center" style={{ color: "var(--text-primary)" }}>
-						Validez votre invitation
+						Finalisez votre entrée
 					</h1>
 					<p className="text-sm text-center mb-8" style={{ color: "var(--text-secondary)" }}>
-						L'art de séjourner dans le luxe au meilleur prix.
+						Accédez à une sélection d’expériences hôtelières proposée en toute discrétion à nos membres.
 					</p>
 
 					<form onSubmit={handleSubmit} className="space-y-4">
@@ -201,7 +201,7 @@ export default function OnboardingPage() {
 									{acceptedNewsletter && <Check size={10} color={isLuxe ? "white" : "black"} strokeWidth={4} />}
 								</div>
 								<p className="text-[10px] leading-relaxed select-none" style={{ color: "var(--text-secondary)" }}>
-									Je souhaite recevoir les invitations exclusives et les alertes de ventes privées par email.
+									Je souhaite recevoir les nouvelles expériences et sélections proposées à nos membres.
 								</p>
 							</div>
 						</div>
@@ -216,16 +216,18 @@ export default function OnboardingPage() {
 								color: isLuxe ? "var(--bg-primary)" : "var(--text-primary)",
 							}}
 						>
-							{loading ? "ACTIVATION..." : "Rejoignez le cercle"}
+							{loading ? "Activation..." : "Découvrir mes expériences"}
 						</button>
 					</form>
 				</motion.div>
 
 				{/* Footer Info */}
 				<div className="mt-8 flex items-center justify-center gap-4 opacity-60" style={{ color: "var(--text-tertiary)" }}>
-					<span className="text-[10px] uppercase tracking-tighter">Tarifs Négociés</span>
+					<span className="text-[10px] uppercase tracking-tighter">Sélection privée</span>
 					<span className="w-1 h-1 rounded-full bg-current" />
-					<span className="text-[10px] uppercase tracking-tighter">Enchères de Prestige</span>
+					<span className="text-[10px] uppercase tracking-tighter">Accès membre</span>
+					<span className="w-1 h-1 rounded-full bg-current" />
+					<span className="text-[10px] uppercase tracking-tighter">Expériences vérifiées</span>
 				</div>
 			</div>
 
